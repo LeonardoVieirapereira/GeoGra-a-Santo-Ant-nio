@@ -5,40 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>História Aprofundada - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
-        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
+        :root {
+            --primary: #2C3A2E;
+            --accent: #C5A059;
+            --bg-light: #F9F8F6;
+            --card-bg: #FFFFFF;
+            --text-dark: #222B27;
+            --text-muted: #5A6561;
+        }
 
-        .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
-        
-        /* BLOCO DE ANIMAÇÃO COM ÍCONE DE MÃO ESCREVENDO */
-        .writing-container { display: flex; align-items: center; position: relative; background: rgba(212, 175, 55, 0.12); padding: 1.2rem 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; overflow: hidden; height: 60px; }
-        .writing-hand { position: absolute; left: 0; font-size: 2.5rem; color: var(--primary); z-index: 10; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.1rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 100px;
+            line-height: 1.7;
+        }
 
-        h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
-        .btn-back:hover { transform: translateX(-5px); }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(249, 248, 246, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            box-sizing: border-box;
+        }
 
-        .history-card { background: #fcfbf7; border: 1px solid #eee; padding: 1.8rem; border-radius: 14px; margin-bottom: 1.5rem; transition: all 0.4s; }
-        .history-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-left: 4px solid var(--accent); }
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
 
-        @keyframes moveHand { 0% { left: 10px; } 100% { left: 78%; } }
-        @keyframes typing { from { width: 0; } to { width: 85%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto 4rem;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-back:hover {
+            transform: translateX(-4px);
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent);
+            margin-bottom: 2.5rem;
+        }
+
+        .history-card {
+            background: #FAF9F5;
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1.8rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .history-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+
+        .history-card h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+        }
+
+        .history-card p {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GEOGRAÇA</a>
         <ul class="nav-links">
-            <li><a href="historia.html" style="color:var(--accent);">História</a></li>
+            <li><a href="historia.html" style="color: var(--accent);">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
             <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
@@ -49,15 +161,10 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
         
-        <!-- MÃO ESCREVENDO COM ÍCONE -->
-        <div class="writing-container">
-            <i class="fa-solid fa-hand-holding-pen writing-hand"></i>
-            <div class="typewriter-text">Escrevendo a História de Santo Antônio...</div>
-        </div>
+        <h1>História & Memória</h1>
+        <p class="subtitle">A trajetória de fundação e consolidação de Santo Antônio da Platina</p>
+        <hr>
 
-        <h1>História Detalhada & Memória Colonizadora</h1>
-        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
-        
         <div class="history-card">
             <h2>1. Os Pioneiros e a Fundação (1829)</h2>
             <p>A história de Santo Antônio da Platina remonta à primeira metade do século XIX. Bandeirantes e famílias vindas de Minas Gerais e São Paulo adentraram o interior do Paraná em busca de terras férteis para lavoura e pecuária.</p>
