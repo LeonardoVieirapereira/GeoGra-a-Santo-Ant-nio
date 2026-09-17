@@ -5,22 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>História Aprofundada - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 90px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
+        
+        /* NAV */
         nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-        .nav-links { display: flex; list-style: none; gap: 2rem; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
+        
+        /* CANETA ESCREVENDO */
+        .writing-header { display: flex; align-items: center; gap: 15px; background: rgba(212, 175, 55, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; }
+        .hand-pen { font-size: 2rem; color: var(--primary); animation: writeHand 1.5s infinite alternate ease-in-out; }
+        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; animation: typing 4s steps(40) 1s forwards, blink 0.75s step-end infinite; }
+
         h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { transform: translateX(-5px); }
+
+        .history-card { background: #fcfbf7; border: 1px solid #eee; padding: 1.8rem; border-radius: 14px; margin-bottom: 1.5rem; transition: all 0.4s; }
+        .history-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-left: 4px solid var(--accent); }
+
+        @keyframes writeHand { 0% { transform: rotate(0deg) translate(0, 0); } 100% { transform: rotate(-20deg) translate(10px, -5px); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { from, to { border-color: transparent; } 50% { border-color: var(--accent); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a></div>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
         <ul class="nav-links">
             <li><a href="historia.html" style="color:var(--accent);">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
@@ -29,23 +48,37 @@
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
     </nav>
+
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
-        <h1>História Detalhada de Santo Antônio da Platina</h1>
-        <hr style="border: 1px solid var(--accent); margin-bottom: 2rem;">
         
-        <h2>1. Origens e Povoamento (1829)</h2>
-        <p>A colonização do território teve início na primeira metade do século XIX, quando pioneiros vindos principalmente de Minas Gerais e de São Paulo iniciaram a exploração das férteis terras do Norte Pioneiro do Paraná.</p>
-        
-        <h2>2. Etimologia do Nome</h2>
-        <p>O nome é composto por duas referências históricas e culturais:</p>
-        <ul>
-            <li><strong>Santo Antônio:</strong> Representa a profunda devoção católica dos primeiros povoadores e fundadores.</li>
-            <li><strong>Platina:</strong> Oriundo da descoberta de uma rocha brilhante na região que, na época, os povoadores julgaram se tratar de minério de prata.</li>
-        </ul>
+        <!-- ANIMAÇÃO DA MÃO ESCREVENDO -->
+        <div class="writing-header">
+            <i class="fa-solid fa-hand-holding-hand hand-pen"></i>
+            <div class="typewriter-text">Escrevendo a História de Santo Antônio...</div>
+        </div>
 
-        <h2>3. Emancipação Política e Desenvolvimento</h2>
-        <p>A elevação a município ocorreu com a instalação da sede em <strong>20 de agosto de 1914</strong>. Anos mais tarde, em <strong>24 de maio de 1929</strong>, foi oficialmente instalada a Comarca, consolidando a cidade como centro jurídico e administrativo regional.</p>
+        <h1>História Detalhada & Memória Colonizadora</h1>
+        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
+        
+        <div class="history-card">
+            <h2>1. Os Pioneiros e a Fundação (1829)</h2>
+            <p>A história de Santo Antônio da Platina remonta à primeira metade do século XIX. Bandeirantes e famílias vindas dos estados de Minas Gerais e São Paulo adentraram o interior do Paraná em busca de terras férteis para lavoura e pecuária. O povoamento consolidou-se em torno do Rio das Cinzas.</p>
+        </div>
+
+        <div class="history-card">
+            <h2>2. Origem e Significado do Nome</h2>
+            <p>O nome é carregado de duplo simbolismo cultural e religioso:</p>
+            <ul>
+                <li><strong>Santo Antônio:</strong> Escolhido em homenagem ao padroeiro de devoção da comunidade católica local.</li>
+                <li><strong>Platina:</strong> Batizada devido à expedição inicial ter encontrado minérios reluzentes com brilho semelhante à prata/platina nos rios da região.</li>
+            </ul>
+        </div>
+
+        <div class="history-card">
+            <h2>3. Emancipação Política e Comarca (1914 - 1929)</h2>
+            <p>O crescimento urbano e a forte produção agrícola aceleraram o processo de emancipação política. Em <strong>20 de agosto de 1914</strong>, o município foi oficialmente emancipado. Em <strong>24 de maio de 1929</strong>, foi criada sua Comarca, tornando-se o coração administrativo do Norte Pioneiro.</p>
+        </div>
     </div>
 </body>
 </html>
