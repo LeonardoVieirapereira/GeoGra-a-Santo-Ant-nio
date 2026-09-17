@@ -3,42 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicadores Socioeconômicos - GeoGraça</title>
+    <title>Indicadores - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
-        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        
-        .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
-        
-        .writing-container { display: flex; align-items: center; position: relative; background: rgba(212, 175, 55, 0.12); padding: 1.2rem 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; overflow: hidden; height: 60px; }
-        .writing-hand { position: absolute; left: 0; font-size: 2.5rem; color: var(--primary); z-index: 10; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.1rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
+        :root {
+            --primary: #2C3A2E;
+            --accent: #C5A059;
+            --bg-light: #F9F8F6;
+            --card-bg: #FFFFFF;
+            --text-dark: #222B27;
+            --text-muted: #5A6561;
+        }
 
-        h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 100px;
+            line-height: 1.7;
+        }
 
-        .stat-box { background: linear-gradient(135deg, var(--primary), #364439); color: white; padding: 2.5rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.06); transition: transform 0.3s; }
-        .stat-box:hover { transform: scale(1.02); }
-        .stat-number { font-size: 3rem; color: var(--accent); font-weight: bold; font-family: 'Cinzel', serif; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(249, 248, 246, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            box-sizing: border-box;
+        }
 
-        @keyframes moveHand { 0% { left: 10px; } 100% { left: 78%; } }
-        @keyframes typing { from { width: 0; } to { width: 85%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto 4rem;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-back:hover {
+            transform: translateX(-4px);
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent);
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-box {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            min-width: 180px;
+        }
+
+        .stat-info h3 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .stat-info p {
+            margin: 0;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .stat-box { flex-direction: column; text-align: center; }
+            .stat-number { min-width: auto; }
+        }
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GEOGRAÇA</a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
-            <li><a href="indicadores.html" style="color:var(--accent);">Indicadores</a></li>
+            <li><a href="indicadores.html" style="color: var(--accent);">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
@@ -47,27 +170,32 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
         
-        <div class="writing-container">
-            <i class="fa-solid fa-hand-holding-pen writing-hand"></i>
-            <div class="typewriter-text">Anotando os números socioeconômicos...</div>
-        </div>
-
-        <h1>Análise Socioeconômica & Estatísticas</h1>
-        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
+        <h1>Indicadores Socioeconômicos</h1>
+        <p class="subtitle">Métricas e dados do desenvolvimento municipal</p>
+        <hr>
 
         <div class="stat-box">
             <div class="stat-number">0,745</div>
-            <p><strong>Índice de Desenvolvimento Humano (IDHM)</strong><br>Nível elevado de desenvolvimento em educação e expectativa de vida.</p>
+            <div class="stat-info">
+                <h3>Índice de Desenvolvimento Humano (IDHM)</h3>
+                <p>Nível elevado de desenvolvimento urbano, saúde e acesso à educação.</p>
+            </div>
         </div>
 
         <div class="stat-box">
-            <div class="stat-number">R$ 183,6 Milhões</div>
-            <p><strong>Produto Interno Bruto (PIB IBGE)</strong><br>Forte participação do agronegócio e do setor terciário (serviços e comércio).</p>
+            <div class="stat-number">R$ 183,6 Mi</div>
+            <div class="stat-info">
+                <h3>Produto Interno Bruto (PIB IBGE)</h3>
+                <p>Forte dinamismo impulsionado pelo agronegócio e pelo setor de serviços.</p>
+            </div>
         </div>
 
         <div class="stat-box">
             <div class="stat-number">40.851</div>
-            <p><strong>População Estimada</strong><br>Polo regional centralizador no Norte Pioneiro.</p>
+            <div class="stat-info">
+                <h3>População Estimada</h3>
+                <p>Polo regional estratégico no Norte Pioneiro do Estado do Paraná.</p>
+            </div>
         </div>
     </div>
 </body>
