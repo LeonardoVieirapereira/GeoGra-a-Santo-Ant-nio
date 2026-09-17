@@ -5,24 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infraestrutura e Comércio - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 90px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
         nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
+        
+        .writing-header { display: flex; align-items: center; gap: 15px; background: rgba(74, 93, 78, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--primary); margin-bottom: 2rem; }
+        .hand-pen { font-size: 2rem; color: var(--primary); animation: writeHand 1.5s infinite alternate ease-in-out; }
+        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--primary); white-space: nowrap; overflow: hidden; animation: typing 4s steps(40) 1s forwards; }
+
         h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+
         ul.list-infra { list-style: none; padding: 0; }
-        ul.list-infra li { padding: 1rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        ul.list-infra li { padding: 1.2rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s; border-radius: 8px; }
+        ul.list-infra li:hover { background: #fdfbf5; }
+        ul.list-infra li span i { color: var(--accent); margin-right: 10px; }
+
+        @keyframes writeHand { 0% { transform: rotate(0deg) translate(0, 0); } 100% { transform: rotate(-20deg) translate(10px, -5px); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a></div>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
@@ -31,20 +44,26 @@
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
     </nav>
+
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
-        <h1>Pólo Regional de Serviços e Infraestrutura</h1>
-        <hr style="border: 1px solid var(--accent); margin-bottom: 2rem;">
+        
+        <div class="writing-header">
+            <i class="fa-solid fa-hand-holding-pen hand-pen"></i>
+            <div class="typewriter-text">Registrando a infraestrutura do município...</div>
+        </div>
+
+        <h1>Rede Urbana, Comércio & Infraestrutura</h1>
+        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
 
         <ul class="list-infra">
-            <li><span><i class="fa-solid fa-user-doctor"></i> Especialidades Médicas</span> <strong>92 Atendimentos</strong></li>
-            <li><span><i class="fa-solid fa-graduation-cap"></i> Ensino Superior</span> <strong>2 Instituições</strong></li>
-            <li><span><i class="fa-solid fa-store"></i> Magazines & Lojas de Grande Porte</span> <strong>13 Unidades</strong></li>
-            <li><span><i class="fa-solid fa-building"></i> Microempresas Cadastradas</span> <strong>80 Unidades</strong></li>
-            <li><span><i class="fa-solid fa-pills"></i> Farmácias e Drogarias</span> <strong>22 Estabelecimentos</strong></li>
-            <li><span><i class="fa-solid fa-building-columns"></i> Postos e Agências Bancárias</span> <strong>6 Instituições</strong></li>
-            <li><span><i class="fa-solid fa-gas-pump"></i> Postos de Combustível</span> <strong>9 Postos</strong></li>
-            <li><span><i class="fa-solid fa-car"></i> Frota Registrada</span> <strong>12.000+ Veículos</strong></li>
+            <li><span><i class="fa-solid fa-user-doctor"></i> Saúde & Especialidades Médicas</span> <strong>92 Atendimentos Médicos</strong></li>
+            <li><span><i class="fa-solid fa-graduation-cap"></i> Educação Superior</span> <strong>2 Universidades / Faculdade</strong></li>
+            <li><span><i class="fa-solid fa-store"></i> Comércio Varejista e Magazines</span> <strong>13 Lojas de Grande Porte</strong></li>
+            <li><span><i class="fa-solid fa-briefcase"></i> Empreendedorismo Local</span> <strong>80+ Microempresas</strong></li>
+            <li><span><i class="fa-solid fa-pills"></i> Farmácias e Rede Hospitalar</span> <strong>22 Estabelecimentos</strong></li>
+            <li><span><i class="fa-solid fa-building-columns"></i> Serviços Financeiros e Bancos</span> <strong>6 Agências Bancárias</strong></li>
+            <li><span><i class="fa-solid fa-car"></i> Frota Urbana Registrada</span> <strong>12.000+ Veículos</strong></li>
         </ul>
     </div>
 </body>
