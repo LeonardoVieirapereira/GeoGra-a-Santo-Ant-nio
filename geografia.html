@@ -16,9 +16,9 @@
         
         .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
         
-        .writing-header { display: flex; align-items: center; gap: 15px; background: rgba(74, 93, 78, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--primary); margin-bottom: 2rem; }
-        .hand-pen { font-size: 2rem; color: var(--primary); animation: writeHand 1.5s infinite alternate ease-in-out; }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--primary); white-space: nowrap; overflow: hidden; animation: typing 4s steps(40) 1s forwards; }
+        .writing-container { display: flex; align-items: center; position: relative; background: rgba(74, 93, 78, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--primary); margin-bottom: 2rem; overflow: hidden; height: 80px; }
+        .hand-image { position: absolute; left: 0; height: 110px; z-index: 10; pointer-events: none; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--primary); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
 
         h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
         .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
@@ -27,8 +27,8 @@
         .card { padding: 1.8rem; background: #fff; border: 1px solid #eee; border-radius: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: all 0.4s; }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); border-top: 4px solid var(--accent); }
 
-        @keyframes writeHand { 0% { transform: rotate(0deg) translate(0, 0); } 100% { transform: rotate(-20deg) translate(10px, -5px); } }
-        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes moveHand { 0% { left: -10px; } 100% { left: 80%; } }
+        @keyframes typing { from { width: 0; } to { width: 85%; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -47,8 +47,8 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
         
-        <div class="writing-header">
-            <i class="fa-solid fa-pen-nib hand-pen"></i>
+        <div class="writing-container">
+            <img src="https://pngimg.com/uploads/pen/pen_PNG12012.png" class="hand-image" alt="Mão com caneta">
             <div class="typewriter-text">Mapeando os aspectos físicos da região...</div>
         </div>
 
@@ -60,19 +60,19 @@
                 <h2><i class="fa-solid fa-ruler"></i> Território</h2>
                 <p><strong>Área Total:</strong> 721,625 km²</p>
                 <p><strong>Densidade:</strong> 56,6 hab/km²</p>
-                <p>Solo predominantemente de 'Terra Roxa', extremamente fértil e propício à cafeicultura e aos grãos.</p>
+                <p>Solo de 'Terra Roxa', de alta fertilidade e ideal para lavouras de grãos e café.</p>
             </div>
 
             <div class="card">
                 <h2><i class="fa-solid fa-sun"></i> Clima & Altitude</h2>
                 <p><strong>Clima:</strong> Subtropical Úmido Mesotérmico (Cfa).</p>
-                <p><strong>Altitude Média:</strong> 496 metros.</p>
-                <p>Verões quentes e chuvosos e invernos amenos com geadas ocasionais.</p>
+                <p><strong>Altitude:</strong> 496 metros.</p>
+                <p>Verões quentes e chuvas bem distribuídas ao longo do ano.</p>
             </div>
 
             <div class="card">
                 <h2><i class="fa-solid fa-water"></i> Hidrografia</h2>
-                <p>Bacia Hidrográfica do Rio Paranapanema, com destaque para a sub-bacia do <strong>Rio das Cinzas</strong> e o Rio Ubá, fundamentais para o abastecimento local.</p>
+                <p>Inserida na Bacia Hidrográfica do Rio Paranapanema, banhada principalmente pelo <strong>Rio das Cinzas</strong> e Rio Ubá.</p>
             </div>
         </div>
     </div>
