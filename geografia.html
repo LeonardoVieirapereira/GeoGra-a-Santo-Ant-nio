@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia Aprofundada - GeoGraça</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 90px; }
+        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
+        .btn-back { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .card { padding: 1.5rem; background: #fdfdfd; border: 1px solid #eee; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a></div>
+        <ul class="nav-links">
+            <li><a href="historia.html">História</a></li>
+            <li><a href="geografia.html" style="color:var(--accent);">Geografia</a></li>
+            <li><a href="indicadores.html">Indicadores</a></li>
+            <li><a href="infraestrutura.html">Infraestrutura</a></li>
+            <li><a href="localizacao.html">Localização</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
+        <h1>Geografia Físico-Territorial</h1>
+        <hr style="border: 1px solid var(--accent); margin-bottom: 2rem;">
+
+        <div class="grid">
+            <div class="card">
+                <h2><i class="fa-solid fa-ruler"></i> Território</h2>
+                <p><strong>Área:</strong> 721,625 km²</p>
+                <p><strong>Densidade Demográfica:</strong> ~56,6 hab/km²</p>
+                <p>Composição de relevo suave e terras roxas de alta fertilidade agrícola.</p>
+            </div>
+            <div class="card">
+                <h2><i class="fa-solid fa-sun"></i> Clima & Relevo</h2>
+                <p><strong>Clima:</strong> Subtropical Úmido Mesotérmico (Cfa).</p>
+                <p>Verões quentes e chuvas bem distribuídas, com invernos brandos.</p>
+                <p><strong>Altitude:</strong> 496 metros acima do nível do mar.</p>
+            </div>
+            <div class="card">
+                <h2><i class="fa-solid fa-id-card"></i> Identidade</h2>
+                <p><strong>Gentílico:</strong> Platinense</p>
+                <p><strong>Região:</strong> Norte Pioneiro Paranaense</p>
+                <p><strong>Fuso Horário:</strong> Horário Oficial de Brasília (UTC-3)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
