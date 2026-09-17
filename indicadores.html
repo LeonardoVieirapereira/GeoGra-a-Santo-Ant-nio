@@ -5,24 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indicadores Socioeconômicos - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #4A5D4E; --accent: #D4AF37; --bg-light: #F9F8F3; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 90px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
         nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(249, 248, 243, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
+        
+        .writing-header { display: flex; align-items: center; gap: 15px; background: rgba(212, 175, 55, 0.15); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; }
+        .hand-pen { font-size: 2rem; color: var(--accent); animation: writeHand 1.5s infinite alternate ease-in-out; }
+        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; animation: typing 4s steps(40) 1s forwards; }
+
         h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
-        .stat-box { background: var(--primary); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem; text-align: center; }
-        .stat-number { font-size: 2.5rem; color: var(--accent); font-weight: bold; font-family: 'Cinzel', serif; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+
+        .stat-box { background: linear-gradient(135deg, var(--primary), #364439); color: white; padding: 2.5rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.06); transition: transform 0.3s; }
+        .stat-box:hover { transform: scale(1.02); }
+        .stat-number { font-size: 3rem; color: var(--accent); font-weight: bold; font-family: 'Cinzel', serif; }
+
+        @keyframes writeHand { 0% { transform: rotate(0deg) translate(0, 0); } 100% { transform: rotate(-20deg) translate(10px, -5px); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <nav>
-        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a></div>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
@@ -31,24 +43,31 @@
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
     </nav>
+
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
-        <h1>Análise Socioeconômica</h1>
-        <hr style="border: 1px solid var(--accent); margin-bottom: 2rem;">
+        
+        <div class="writing-header">
+            <i class="fa-solid fa-feather-pointed hand-pen"></i>
+            <div class="typewriter-text">Anotando os números socioeconômicos...</div>
+        </div>
+
+        <h1>Análise Socioeconômica & Estatísticas</h1>
+        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
 
         <div class="stat-box">
             <div class="stat-number">0,745</div>
-            <p>Índice de Desenvolvimento Humano (IDH) - Médio/Alto</p>
+            <p><strong>Índice de Desenvolvimento Humano (IDHM)</strong><br>Considerado Alto, com destaque para a longevidade e alfabetização urbana.</p>
         </div>
 
         <div class="stat-box">
-            <div class="stat-number">R$ 183.614.059,00</div>
-            <p>Produto Interno Bruto (PIB Total registrado pelo IBGE)</p>
+            <div class="stat-number">R$ 183,6 Milhões</div>
+            <p><strong>Produto Interno Bruto (PIB Agrícola & Serviços)</strong><br>O comércio de serviços e o agronegócio representam a maior fatia da renda municipal.</p>
         </div>
 
         <div class="stat-box">
-            <div class="stat-number">R$ 4.540,97</div>
-            <p>PIB Per Capita</p>
+            <div class="stat-number">40.851</div>
+            <p><strong>População Estimada (IBGE)</strong><br>Consolidado como polo populacional e de serviços de saúde para cidades vizinhas.</p>
         </div>
     </div>
 </body>
