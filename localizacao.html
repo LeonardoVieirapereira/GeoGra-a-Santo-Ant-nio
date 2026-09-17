@@ -17,17 +17,17 @@
         
         .container { max-width: 1000px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
         
-        .writing-header { display: flex; align-items: center; gap: 15px; background: rgba(212, 175, 55, 0.15); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; }
-        .hand-pen { font-size: 2rem; color: var(--accent); animation: writeHand 1.5s infinite alternate ease-in-out; }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; animation: typing 4s steps(40) 1s forwards; }
+        .writing-container { display: flex; align-items: center; position: relative; background: rgba(212, 175, 55, 0.15); padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; overflow: hidden; height: 80px; }
+        .hand-image { position: absolute; left: 0; height: 110px; z-index: 10; pointer-events: none; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
 
         h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
         .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
 
         #map { height: 420px; width: 100%; border-radius: 16px; margin-top: 1.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
 
-        @keyframes writeHand { 0% { transform: rotate(0deg) translate(0, 0); } 100% { transform: rotate(-20deg) translate(10px, -5px); } }
-        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes moveHand { 0% { left: -10px; } 100% { left: 80%; } }
+        @keyframes typing { from { width: 0; } to { width: 85%; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -46,20 +46,19 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
         
-        <div class="writing-header">
-            <i class="fa-solid fa-compass hand-pen"></i>
+        <div class="writing-container">
+            <img src="https://pngimg.com/uploads/pen/pen_PNG12012.png" class="hand-image" alt="Mão com caneta">
             <div class="typewriter-text">Traçando as coordenadas geográficas...</div>
         </div>
 
         <h1>Localização e Vias de Acesso</h1>
         <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
 
-        <p>Santo Antônio da Platina está situada estrategicamente na mesorregião do Norte Pioneiro Paranaense, interligando importantes rodovias estaduais e federais (BR-153 / Transbrasiliana).</p>
+        <p>Santo Antônio da Platina está situada no Norte Pioneiro do Paraná, conectada pela BR-153 (Transbrasiliana).</p>
         
         <ul>
-            <li><strong>Distância até Curitiba (Capital do PR):</strong> ~380 km</li>
-            <li><strong>Distância até São Paulo (Capital de SP):</strong> ~400 km</li>
-            <li><strong>Distância até Londrina (PR):</strong> ~150 km</li>
+            <li><strong>Distância até Curitiba (PR):</strong> ~380 km</li>
+            <li><strong>Distância até São Paulo (SP):</strong> ~400 km</li>
         </ul>
 
         <h2>Mapa Interativo de Santo Antônio da Platina</h2>
