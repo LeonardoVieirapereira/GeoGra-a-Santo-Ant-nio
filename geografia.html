@@ -7,38 +7,81 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3B4A3E; --accent-dark: #B8860B; --bg-light: #F6F8F5; --text-dark: #2C3531; }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-light); 
-            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M20 20h10v10H20zM80 80h10v10H80z'/%3E%3Ccircle cx='30' cy='80' r='6'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Cpath d='M15 85l10-15 10 15zM75 25l10-15 10 15z'/%3E%3C/g%3E%3C/svg%3E");
-            color: var(--text-dark); 
-            margin: 0; 
-            padding-top: 100px; 
+        :root {
+            --primary: #2D3A30;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
+            --text-dark: #2C3531;
+            --card-bg: rgba(255, 255, 255, 0.94);
         }
 
-        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(246, 248, 245, 0.95); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.06); box-sizing: border-box; }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        
-        .container { max-width: 1050px; margin: 2rem auto; padding: 2.5rem; background: rgba(255, 255, 255, 0.96); border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.2); }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 90px;
+        }
 
-        .static-banner { background: #FCFBF7; border-left: 4px solid var(--accent-dark); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.15rem; color: var(--primary); font-weight: 600; margin: 0; letter-spacing: 0.5px; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 242, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--accent-dark);
+        }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); margin-top: 0; }
-        .content-box { line-height: 1.8; color: #444; font-size: 1.05rem; }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back:hover { color: var(--accent-dark); }
+
+        .static-banner {
+            background: #FCFBF7;
+            border-left: 5px solid var(--accent-dark);
+            border-radius: 8px;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+        }
+        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
+
+        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
+        .content-box { line-height: 1.8; color: #333; font-size: 1.1rem; }
+        .content-box p { margin-bottom: 1.5rem; }
     </style>
 </head>
 <body>
+
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça</a>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
-            <li><a href="geografia.html" style="color:var(--accent-dark);">Geografia</a></li>
+            <li><a href="geografia.html" class="active">Geografia</a></li>
             <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
@@ -52,13 +95,14 @@
             <p>Mapeando os aspectos físicos e naturais...</p>
         </div>
 
-        <h1>Geografia e Aspectos Naturais</h1>
+        <h1>GEOGRAFIA E ASPECTOS NATURAIS</h1>
         <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
 
         <div class="content-box">
-            <p>Localizada na Terceira Planície Paranaense (Planalto de Guarapuava), a cidade destaca-se por seu relevo suavemente ondulado e solo de latossolo vermelho de altíssima fertilidade.</p>
-            <p>O clima predominante é o Subtropical Úmido (Cfa), apresentando invernos amenos e verões quentes, favorecendo a diversidade de culturas agrícolas e a bacia hidrográfica do Rio Ubá e Rio das Cinzas.</p>
+            <p>Inserida na Terceira Planície Paranaense (Planalto de Guarapuava), a região conta com relevo levemente ondulado e solos latossolos de excepcional fertilidade agrícola.</p>
+            <p>Seu clima é o Subtropical Úmido (Cfa), caracterizado por verões quentes e chuvas bem distribuídas ao longo do ano. O município é banhado pelas bacias do Rio das Cinzas e Rio Ubá.</p>
         </div>
     </div>
+
 </body>
 </html>
