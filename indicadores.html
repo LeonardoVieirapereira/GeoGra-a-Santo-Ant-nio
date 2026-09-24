@@ -12,32 +12,25 @@
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.96);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
         }
 
+        @keyframes growBar {
+            from { width: 0%; }
+        }
+
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(248, 247, 242, 0.96);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            border-bottom: 2px solid var(--accent-dark);
+            position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
@@ -46,97 +39,36 @@
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
         .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 3rem;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(184, 134, 11, 0.3);
+            max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
-        .btn-back:hover { color: var(--accent-dark); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { color: var(--accent-dark); transform: translateX(-5px); }
 
         .banner-header {
-            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            color: #fff;
-            padding: 2.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            border-left: 6px solid var(--accent-dark);
+            background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
 
         .stat-card {
-            background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            border-radius: 18px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-            position: relative;
+            background: #FFF; border: 1px solid rgba(184, 134, 11, 0.3); border-radius: 18px; padding: 2rem; text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.03); position: relative; transition: transform 0.3s ease;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--accent-dark);
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
-        }
+        .stat-card:hover { transform: translateY(-6px); }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            font-family: 'Cinzel', serif;
-            margin: 10px 0;
-        }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--accent-dark); border-top-left-radius: 18px; border-top-right-radius: 18px; }
 
-        /* Gráfico em CSS */
-        .chart-section {
-            background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            border-radius: 18px;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); font-family: 'Cinzel', serif; margin: 10px 0; }
 
-        .bar-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .bar-bg {
-            background: #E0E0E0;
-            height: 22px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-light), var(--accent-dark));
-            border-radius: 10px;
-        }
+        .chart-section { background: #FFF; border: 1px solid rgba(184, 134, 11, 0.3); border-radius: 18px; padding: 2rem; margin-top: 3rem; }
+        .bar-group { margin-bottom: 1.2rem; }
+        .bar-label { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 5px; }
+        .bar-bg { background: #EAEAEA; height: 22px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #2D3A30, var(--accent-dark)); border-radius: 10px; animation: growBar 1.2s ease-out forwards; }
     </style>
 </head>
 <body>
@@ -159,34 +91,34 @@
 
         <div class="banner-header">
             <h1 style="font-family: 'Cinzel'; margin: 0;">INDICADORES SOCIOECONÔMICOS</h1>
-            <p style="margin: 10px 0 0 0; color: var(--accent);">Dados Oficiais e Perfil do IBGE / IPARDES</p>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Dados Oficiais e Estatísticas do IBGE / IPARDES</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <i class="fa-solid fa-users fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">46.503</div>
-                <p><strong>População Estimada (IBGE)</strong><br>Polo populacional de forte influência regional.</p>
+                <p><strong>População Estimada</strong><br>Polo regional do Norte Pioneiro.</p>
             </div>
 
             <div class="stat-card">
                 <i class="fa-solid fa-chart-line fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">0,718</div>
-                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Excelente padrão em Longevidade e Educação.</p>
+                <p><strong>IDHM (Alto)</strong><br>Excelente índice de Longevidade e Educação.</p>
             </div>
 
             <div class="stat-card">
                 <i class="fa-solid fa-coins fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">R$ 1,25 Bi</div>
-                <p><strong>PIB Total do Município</strong><br>Destaque para o Comércio, Serviços e Agropecuária.</p>
+                <p><strong>PIB Municipal</strong><br>Economia impulsionada por Serviços e Agropecuária.</p>
             </div>
         </div>
 
         <div class="chart-section">
-            <h3 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 0;"><i class="fa-solid fa-chart-bar" style="color: var(--accent-dark);"></i> Composição do PIB por Setor</h3>
+            <h3 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 0;"><i class="fa-solid fa-chart-bar" style="color: var(--accent-dark);"></i> Distribuição do PIB por Setor</h3>
 
             <div class="bar-group">
-                <div class="bar-label"><span>Serviços e Comércio</span><span>58%</span></div>
+                <div class="bar-label"><span>Comércio e Serviços</span><span>58%</span></div>
                 <div class="bar-bg"><div class="bar-fill" style="width: 58%;"></div></div>
             </div>
 
