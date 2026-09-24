@@ -12,32 +12,26 @@
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.96);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(248, 247, 242, 0.96);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            border-bottom: 2px solid var(--accent-dark);
+            position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
@@ -46,54 +40,48 @@
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
         .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 3rem;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(184, 134, 11, 0.3);
+            max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.3); animation: fadeInUp 0.8s ease-out;
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
-        .btn-back:hover { color: var(--accent-dark); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { color: var(--accent-dark); transform: translateX(-5px); }
 
         .banner-header {
-            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            color: #fff;
-            padding: 2.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            border-left: 6px solid var(--accent-dark);
+            background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
         }
 
-        .infra-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.8rem;
-            margin-top: 2rem;
-        }
+        .infra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem; margin-top: 2rem; }
 
         .infra-card {
             background: #FFF;
             border: 1px solid rgba(184, 134, 11, 0.3);
-            border-radius: 16px;
-            padding: 1.8rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .infra-card i {
-            font-size: 2.2rem;
-            color: var(--accent-dark);
-            margin-bottom: 1rem;
+        .infra-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-dark);
+            box-shadow: 0 15px 30px rgba(184, 134, 11, 0.22);
         }
 
-        .infra-card h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--primary);
-            margin: 0 0 10px 0;
+        .infra-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-dark);
         }
+
+        .infra-card i { font-size: 2.4rem; color: var(--accent-dark); margin-bottom: 1rem; transition: transform 0.3s; }
+        .infra-card:hover i { transform: scale(1.1) rotate(-5deg); }
+        .infra-card h3 { font-family: 'Cinzel', serif; color: var(--primary); margin: 0 0 10px 0; font-size: 1.3rem; }
+        .infra-card p { line-height: 1.6; color: #444; margin: 0; }
     </style>
 </head>
 <body>
@@ -122,26 +110,26 @@
         <div class="infra-grid">
             <div class="infra-card">
                 <i class="fa-solid fa-hospital-user"></i>
-                <h3>Polo de Saúde Regional</h3>
-                <p>Abriga o Hospital Regional do Norte Pioneiro e laboratórios de projeção estadual, prestando assistência médica de alta complexidade para mais de 20 municípios limítrofes.</p>
+                <h3>Polo Regional de Saúde</h3>
+                <p>Com o Hospital Regional do Norte Pioneiro e clínicas de alta tecnologia, atende a população de mais de 20 municípios no entorno.</p>
             </div>
 
             <div class="infra-card">
                 <i class="fa-solid fa-graduation-cap"></i>
-                <h3>Educação e Ensino Superior</h3>
-                <p>Conta com campus do IFPR (Instituto Federal do Paraná), Faculdade FANORPI, UENP (nas proximidades) e ampla rede pública e privada de ensino técnico e básico.</p>
+                <h3>Educação & Ensino Técnico</h3>
+                <p>Abriga campus do IFPR (Instituto Federal do Paraná), Faculdade FANORPI e polos universitários de destaque na formação profissional.</p>
             </div>
 
             <div class="infra-card">
                 <i class="fa-solid fa-wheat-awn"></i>
-                <h3>Expo-EFAPI e Eventos</h3>
-                <p>Possui o Parque de Exposições Alicio Dias dos Santos, onde é realizada a Expo-EFAPI, a maior Feira de Exposição Agropecuária e Negócios do Norte Pioneiro.</p>
+                <h3>Parque Expo-EFAPI</h3>
+                <p>Sede do Parque Alicio Dias dos Santos, onde acontece a Expo-EFAPI, maior feira agropecuária e industrial da região Norte Pioneira.</p>
             </div>
 
             <div class="infra-card">
                 <i class="fa-solid fa-road"></i>
-                <h3>Logística e Rodovias</h3>
-                <p>Conectividade estratégica pelas rodovias federais BR-153 (Transbrasiliana) e estaduais PR-092 e PR-439, garantindo rápido fluxo comercial para SP e Curitiba.</p>
+                <h3>Tronco Rodoviário BR-153</h3>
+                <p>Localização privilegiada na Rodovia Transbrasiliana (BR-153), garantindo escoamento eficiente de mercadorias entre São Paulo e o Sul.</p>
             </div>
         </div>
     </div>
