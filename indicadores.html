@@ -3,46 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicadores Socioeconômicos - GeoGraça</title>
+    <title>Indicadores - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3B4A3E; --accent: #D4AF37; --bg-light: #F6F8F5; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
-        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(246, 248, 245, 0.9); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.06); box-sizing: border-box; }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
-        
-        .container { max-width: 1050px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
-        
-        .writing-container { display: flex; align-items: center; position: relative; background: rgba(212, 175, 55, 0.12); padding: 1.2rem 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; overflow: hidden; height: 60px; }
-        .writing-hand { position: absolute; left: 0; font-size: 2.5rem; color: var(--primary); z-index: 10; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.1rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
+        :root {
+            --primary: #2D3A30;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
+            --text-dark: #2C3531;
+            --card-bg: rgba(255, 255, 255, 0.94);
+        }
 
-        h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 90px;
+        }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .stat-card { background: white; border: 1px solid #EAE8E1; border-radius: 18px; padding: 2rem; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.03); transition: all 0.3s; position: relative; overflow: hidden; }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--accent); }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
-        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); font-family: 'Cinzel', serif; margin: 10px 0; }
-        
-        .banner-ibge { background: linear-gradient(rgba(59, 74, 62, 0.85), rgba(59, 74, 62, 0.85)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; color: white; padding: 2.5rem; border-radius: 16px; margin-top: 2rem; text-align: center; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 242, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--accent-dark);
+        }
 
-        @keyframes moveHand { 0% { left: 10px; } 100% { left: 78%; } }
-        @keyframes typing { from { width: 0; } to { width: 85%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back:hover { color: var(--accent-dark); }
+
+        .static-banner {
+            background: #FCFBF7;
+            border-left: 5px solid var(--accent-dark);
+            border-radius: 8px;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+        }
+        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
+
+        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            border-radius: 18px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent-dark);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.18);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
+
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
-            <li><a href="indicadores.html" style="color:var(--accent);">Indicadores</a></li>
+            <li><a href="indicadores.html" class="active">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
@@ -50,39 +130,34 @@
 
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
-        
-        <div class="writing-container">
-            <i class="fa-solid fa-hand-holding-pen writing-hand"></i>
-            <div class="typewriter-text">Anotando os números socioeconômicos...</div>
+
+        <div class="static-banner">
+            <p>Anotando os números socioeconômicos...</p>
         </div>
 
-        <h1>Análise Socioeconômica & Estatísticas (IBGE)</h1>
-        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
+        <h1>ANÁLISE SOCIOECONÔMICA (IBGE)</h1>
+        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
 
         <div class="stats-grid">
             <div class="stat-card">
-                <i class="fa-solid fa-users fa-2x" style="color: var(--accent);"></i>
+                <i class="fa-solid fa-users fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">44.369</div>
-                <p><strong>População Total (Censo IBGE)</strong><br>Crescimento constante no polo do Norte Pioneiro.</p>
+                <p><strong>População Estimada</strong><br>Centro populacional expressivo do Norte Pioneiro.</p>
             </div>
 
             <div class="stat-card">
-                <i class="fa-solid fa-chart-line fa-2x" style="color: var(--accent);"></i>
+                <i class="fa-solid fa-chart-line fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">0,718</div>
-                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Elevado padrão em expectativa de vida e taxa de alfabetização.</p>
+                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Qualidade de vida com bons índices de alfabetização.</p>
             </div>
 
             <div class="stat-card">
-                <i class="fa-solid fa-coins fa-2x" style="color: var(--accent);"></i>
+                <i class="fa-solid fa-coins fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">R$ 41.422</div>
-                <p><strong>PIB Per Capita</strong><br>Destaque no agronegócio, serviços e setor bancário.</p>
+                <p><strong>PIB Per Capita</strong><br>Destaque no agronegócio e setor de comércio e serviços.</p>
             </div>
-        </div>
-
-        <div class="banner-ibge">
-            <h2>Polo Econômico e Educacional Regional</h2>
-            <p>Com mais de 13.000 pessoas formalmente ocupadas, o município se posiciona como um centro administrativo vital para as cidades vizinhas do Norte Pioneiro.</p>
         </div>
     </div>
+
 </body>
 </html>
