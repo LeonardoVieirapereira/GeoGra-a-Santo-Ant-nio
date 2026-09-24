@@ -12,32 +12,26 @@
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.96);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
         }
 
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(248, 247, 242, 0.96);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            border-bottom: 2px solid var(--accent-dark);
+            position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
@@ -46,81 +40,26 @@
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
         .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 3rem;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(184, 134, 11, 0.3);
+            max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.3); animation: slideInLeft 0.8s ease-out;
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
-        .btn-back:hover { color: var(--accent-dark); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { color: var(--accent-dark); transform: translateX(-5px); }
 
         .banner-header {
-            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            color: #fff;
-            padding: 2.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            border-left: 6px solid var(--accent-dark);
+            background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
         }
 
-        .timeline {
-            position: relative;
-            margin: 2rem 0;
-            padding-left: 30px;
-            border-left: 3px solid var(--accent-dark);
-        }
+        .timeline { position: relative; margin: 2rem 0; padding-left: 30px; border-left: 3px solid var(--accent-dark); }
+        .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 20px; transition: transform 0.3s ease; }
+        .timeline-item:hover { transform: translateX(8px); }
+        .timeline-item::before { content: ''; position: absolute; left: -39px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--accent-dark); border: 3px solid #fff; }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -39px;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--accent-dark);
-            border: 3px solid #fff;
-        }
-
-        .timeline-date {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: var(--accent-dark);
-            font-size: 1.2rem;
-        }
-
-        .timeline-title {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin: 5px 0 10px 0;
-            font-weight: 700;
-        }
-
-        .img-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .img-grid img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid var(--accent-dark);
-        }
+        .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .img-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-dark); transition: transform 0.4s ease; }
+        .img-grid img:hover { transform: scale(1.03); }
     </style>
 </head>
 <body>
@@ -149,41 +88,35 @@
         <p style="font-size: 1.1rem; line-height: 1.8;">A história de Santo Antônio da Platina está intimamente ligada ao avanço dos desbravadores paulistas e mineiros pelo Norte Pioneiro do Paraná, atraídos pela alta fertilidade das terras roxas e pelo cultivo promissor do café.</p>
 
         <div class="img-grid">
-            <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz Histórica">
-            <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=600&q=80" alt="Tradição e Cultura">
+            <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz Histórica" onerror="this.src='https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80'">
+            <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=600&q=80" alt="Documentos Históricos" onerror="this.src='https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80'">
         </div>
 
         <h2 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 3rem;"><i class="fa-solid fa-timeline" style="color: var(--accent-dark);"></i> Linha do Tempo Histórica</h2>
 
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-date">Finais do Século XIX</div>
-                <div class="timeline-title">Chegada dos Primeiros Pioneiros</div>
-                <p>Manoel da Silva e outros desbravadores estabelecem-se no vale do Ribeirão das Anhumas. Acredita-se que o nome "Platina" derivou de antigas especulações de geólogos sobre jazidas platiníferas na região.</p>
+                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">Finais do Século XIX</div>
+                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Chegada dos Primeiros Pioneiros</h3>
+                <p>Manoel da Silva e desbravadores estabelecem-se no vale do Ribeirão das Anhumas. Acredita-se que o nome "Platina" derivou de antigas especulações de geólogos sobre jazidas platiníferas na região.</p>
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-date">1900</div>
-                <div class="timeline-title">Criação do Distrito policial e Capela</div>
-                <p>É construída a primeira capela em honra a Santo Antônio de Pádua, marcando a fundação do povoado rural.</p>
+                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">1900</div>
+                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Criação do Distrito Policial e Capela</h3>
+                <p>É construída a primeira capela em honra a Santo Antônio de Pádua, marcando a fundação oficial do povoado.</p>
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-date">20 de Agosto de 1914</div>
-                <div class="timeline-title">Emancipação Política</div>
-                <p>Pela Lei Estadual nº 1.413, Santo Antônio da Platina é oficialmente elevada à categoria de município, desligando-se de Jacarezinho.</p>
+                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">20 de Agosto de 1914</div>
+                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Emancipação Política</h3>
+                <p>Pela Lei Estadual nº 1.413, Santo Antônio da Platina torna-se oficialmente um município emancipado.</p>
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-date">1929</div>
-                <div class="timeline-title">Pedra Fundamental da Igreja Matriz</div>
-                <p>Lançada a pedra fundamental da monumental Igreja Matriz em estilo românico. As pedras foram transportadas por carros de boi da própria comunidade.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-date">Década de 1970 - Atualidade</div>
-                <div class="timeline-title">Modernização e Polo do Norte Pioneiro</div>
-                <p>A transição da monocultura do café para a diversificação de grãos, expansão do comércio e consolidação como polo regional de saúde e educação.</p>
+                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">1929</div>
+                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Pedra Fundamental da Igreja Matriz</h3>
+                <p>Início da construção do monumental templo em estilo românico no centro da cidade.</p>
             </div>
         </div>
     </div>
