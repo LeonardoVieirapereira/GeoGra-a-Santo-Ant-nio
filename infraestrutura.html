@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -32,10 +32,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
@@ -55,22 +55,45 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
         .btn-back:hover { color: var(--accent-dark); }
 
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+            border-left: 6px solid var(--accent-dark);
         }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
 
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
-        .content-box { line-height: 1.8; color: #333; font-size: 1.1rem; }
-        .content-box p { margin-bottom: 1.5rem; }
+        .infra-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .infra-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .infra-card i {
+            font-size: 2.2rem;
+            color: var(--accent-dark);
+            margin-bottom: 1rem;
+        }
+
+        .infra-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -91,16 +114,35 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
-        <div class="static-banner">
-            <p>Avaliando o desenvolvimento e serviços urbanos...</p>
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">INFRAESTRUTURA & SERVIÇOS</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Saúde, Educação, Logística e Eventos de Porte Nacional</p>
         </div>
 
-        <h1>INFRAESTRUTURA E SERVIÇOS URBANOS</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
+        <div class="infra-grid">
+            <div class="infra-card">
+                <i class="fa-solid fa-hospital-user"></i>
+                <h3>Polo de Saúde Regional</h3>
+                <p>Abriga o Hospital Regional do Norte Pioneiro e laboratórios de projeção estadual, prestando assistência médica de alta complexidade para mais de 20 municípios limítrofes.</p>
+            </div>
 
-        <div class="content-box">
-            <p>A cidade abriga centros de ensino técnico e superior, além de unidades hospitalares que atendem toda a microrregião. Possui cobertura abrangente de saneamento básico, energia elétrica e redes de telecomunicações.</p>
-            <p>Destaca-se também pelo fácil escoamento de safras e bens de consumo por meio de rodovias estaduais e federais de grande relevância logística.</p>
+            <div class="infra-card">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h3>Educação e Ensino Superior</h3>
+                <p>Conta com campus do IFPR (Instituto Federal do Paraná), Faculdade FANORPI, UENP (nas proximidades) e ampla rede pública e privada de ensino técnico e básico.</p>
+            </div>
+
+            <div class="infra-card">
+                <i class="fa-solid fa-wheat-awn"></i>
+                <h3>Expo-EFAPI e Eventos</h3>
+                <p>Possui o Parque de Exposições Alicio Dias dos Santos, onde é realizada a Expo-EFAPI, a maior Feira de Exposição Agropecuária e Negócios do Norte Pioneiro.</p>
+            </div>
+
+            <div class="infra-card">
+                <i class="fa-solid fa-road"></i>
+                <h3>Logística e Rodovias</h3>
+                <p>Conectividade estratégica pelas rodovias federais BR-153 (Transbrasiliana) e estaduais PR-092 e PR-439, garantindo rápido fluxo comercial para SP e Curitiba.</p>
+            </div>
         </div>
     </div>
 
