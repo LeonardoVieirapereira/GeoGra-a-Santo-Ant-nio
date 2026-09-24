@@ -3,393 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoGraça: Santo Antônio - Geografia e História</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <title>GeoGraça - Santo Antônio da Platina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet CSS (Mapa Interativo) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4A5D4E;      /* Verde Oliva Profundo */
-            --primary-light: #6B826F;
-            --accent: #D4AF37;       /* Dourado / Platina */
-            --bg-light: #F9F8F3;     /* Creme suave */
-            --bg-card: #FFFFFF;
+            --primary: #2D3A30;
+            --accent: #D4AF37;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --text-muted: #66706B;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --card-bg: rgba(255, 255, 255, 0.94);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
+            /* Padrão em vetor de ícones geográficos/históricos em dourado escuro (#B8860B) */
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3C!-- Bússola / Pin --%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3C!-- Livro / História --%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3C!-- Gráfico / Indicadores --%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3C!-- Globo / Geografia --%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
+            margin: 0;
+            padding-top: 90px;
         }
 
-        /* --- NAVEGAÇÃO --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.2rem 8%;
+            padding: 1rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(249, 248, 243, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(248, 247, 242, 0.95);
+            backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--accent-dark);
         }
 
         .logo {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--primary);
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .logo i {
-            color: var(--accent);
-        }
-
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.8rem;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             position: relative;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: var(--transition);
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-dark);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(74, 93, 78, 0.92), rgba(44, 53, 49, 0.85)), 
-                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1600') center/cover no-repeat;
-            color: white;
-            padding: 0 1rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            animation: fadeInUp 1.2s ease-out;
-        }
-
-        .hero-subtitle {
-            font-family: 'Cinzel', serif;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .hero h2 {
-            font-weight: 300;
-            font-size: 1.8rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-        }
-
-        .quote-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            padding: 1.5rem 2rem;
-            border-left: 4px solid var(--accent);
-            border-radius: 0 12px 12px 0;
+        .container {
+            max-width: 1100px;
             margin: 2rem auto;
-            max-width: 650px;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .quote-author {
-            display: block;
-            margin-top: 0.5rem;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.9rem 2.2rem;
-            background: var(--accent);
-            color: var(--text-dark);
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
-            background: #e5bd38;
-        }
-
-        /* --- SEÇÕES GERAIS --- */
-        section {
-            padding: 6rem 8%;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header .line {
-            width: 80px;
-            height: 3px;
-            background: var(--accent);
-            margin: 0.5rem auto 1rem;
-            border-radius: 2px;
-        }
-
-        /* --- CARDS HISTÓRIA --- */
-        .timeline-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(74, 93, 78, 0.1);
-            color: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        /* --- ESTATÍSTICAS E DADOS --- */
-        .stats-section {
-            background: var(--primary);
-            color: white;
+            padding: 3rem;
+            background: var(--card-bg);
             border-radius: 24px;
-            margin: 2rem 8%;
-            padding: 4rem 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .stats-grid {
+        .main-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .main-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .main-header p {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--accent-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .title-divider {
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+            width: 150px;
+            margin: 15px auto 0 auto;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            margin-bottom: 2.5rem;
+            border: 3px solid var(--accent-dark);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .hero-banner {
+            background: linear-gradient(rgba(45, 58, 48, 0.9), rgba(45, 58, 48, 0.9)), url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 4px solid var(--accent-dark);
+        }
+
+        .hero-banner h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            margin-top: 0;
+            color: #FFF;
+        }
+
+        .hero-banner p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 2.8rem;
-            font-family: 'Cinzel', serif;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        /* --- INFRAESTRUTURA GRID --- */
-        .infra-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
         }
 
-        .infra-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            transition: var(--transition);
-        }
-
-        .infra-card:hover {
-            transform: scale(1.03);
-            border-left: 4px solid var(--accent);
-        }
-
-        .infra-card i {
-            font-size: 1.8rem;
-            color: var(--primary-light);
-        }
-
-        .infra-info h4 {
-            font-size: 1.2rem;
-            color: var(--text-dark);
-        }
-
-        .infra-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* --- MAPA SEÇÃO --- */
-        #map {
-            height: 450px;
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #2C3531;
-            color: white;
+        .menu-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
             text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
-        footer p {
-            opacity: 0.8;
-            font-size: 0.9rem;
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-dark);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.2);
+            background: #FCFBF7;
         }
 
-        footer .dedication {
-            color: var(--accent);
-            font-weight: 600;
-            margin-top: 0.5rem;
-            font-size: 1.05rem;
+        .menu-card i {
+            font-size: 2.5rem;
+            color: var(--accent-dark);
+            margin-bottom: 1rem;
         }
 
-        /* --- ANIMAÇÕES SCROLL --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero h2 { font-size: 1.3rem; }
-            .nav-links { display: none; }
-            section { padding: 4rem 5%; }
+        .menu-card h3 {
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- NAV BAR -->
     <nav>
-        <div class="logo">
-            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-earth-americas"></i>
-                <span>GeoGraça: Santo Antônio</span>
-            </a>
-        </div>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
@@ -399,270 +214,45 @@
         </ul>
     </nav>
 
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <div class="hero-content">
-            <span class="hero-subtitle">Portal Geográfico & Histórico</span>
+    <div class="container">
+        <div class="main-header">
             <h1>GeoGraça</h1>
-            <h2>Santo Antônio da Platina</h2>
-            
-            <div class="quote-box">
-                <p>"O poder está dentro de você enquanto você acreditar."</p>
-                <span class="quote-author">— Fernando Lapolli</span>
-            </div>
-
-            <a href="#historia" class="btn">Explorar Conteúdo <i class="fa-solid fa-arrow-down"></i></a>
-        </div>
-    </header>
-
-    <!-- HISTÓRIA -->
-    <section id="historia" class="reveal">
-        <div class="section-header">
-            <h2>Origens & História</h2>
-            <div class="line"></div>
-            <p>Uma viagem através do tempo e da memória de nossa terra</p>
+            <p>Portal Geográfico & Histórico de Santo Antônio da Platina</p>
+            <div class="title-divider"></div>
         </div>
 
-        <div class="timeline-grid">
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-                <h3>Primeiros Colonizadores</h3>
-                <p>A região começou a ser povoada por volta de <strong>1829</strong> por famílias de pioneiros mineiros e paulistas que buscavam novas oportunidades nas férteis terras do estado.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-gem"></i></div>
-                <h3>Origem do Nome</h3>
-                <p><strong>Santo Antônio:</strong> Homenagem ao santo de devoção dos colonizadores.<br>
-                <strong>Platina:</strong> Nome dado em virtude do achado de uma pedra brilhante que julgaram ser prata.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                <h3>Marcos Históricos</h3>
-                <p>Sede municipal instalada em <strong>20 de agosto de 1914</strong>.<br>
-                A comarca oficial da cidade foi estabelecida em <strong>24 de maio de 1929</strong>.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- DADOS GEOGRÁFICOS -->
-    <section id="geografia" class="reveal">
-        <div class="section-header">
-            <h2>Dados Geográficos</h2>
-            <div class="line"></div>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <div class="timeline-grid">
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-ruler-combined"></i></div>
-                <h3>Área Territorial</h3>
-                <p><strong>721,625 Km²</strong> de extensão com relevo privilegiado no estado do Paraná.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-cloud-sun"></i></div>
-                <h3>Clima & Altitude</h3>
-                <p>Clima <strong>Subtropical úmido mesotérmico</strong> a uma altitude média de <strong>496 metros</strong> do nível do mar.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h3>Gentílico e Fuso</h3>
-                <p>Quem nasce na cidade é chamado de <strong>Platinense</strong>.<br>
-                Horário oficial alinhado ao fuso de Brasília.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- INDICADORES SOCIOECONÔMICOS -->
-    <section id="indicadores" class="reveal">
-        <div class="stats-section">
-            <div class="section-header" style="color: white;">
-                <h2 style="color: white;">Indicadores Socioeconômicos</h2>
-                <div class="line"></div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3 class="counter" data-target="0.745">0</h3>
-                    <p>Índice de Desenvolvimento Humano (IDH)</p>
-                </div>
-                <div class="stat-item">
-                    <h3>R$ <span class="counter" data-target="183614059">0</span></h3>
-                    <p>PIB Total (Fonte IBGE)</p>
-                </div>
-                <div class="stat-item">
-                    <h3>R$ <span class="counter" data-target="4540">0</span></h3>
-                    <p>PIB Per Capita</p>
-                </div>
-                <div class="stat-item">
-                    <h3 class="counter" data-target="40851">0</h3>
-                    <p>População Estimada</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INFRAESTRUTURA URBANA -->
-    <section id="infraestrutura" class="reveal">
-        <div class="section-header">
-            <h2>Pólo Comercial & Serviços</h2>
-            <div class="line"></div>
-            <p>Cidade referência no setor médico, comercial e educacional no Norte Pioneiro</p>
+        <div class="hero-banner">
+            <h2>Bem-vindo ao GeoGraça</h2>
+            <p>Explore a rica trajetória histórica, os dados geográficos e os principais indicadores socioeconômicos do município de Santo Antônio da Platina - PR.</p>
         </div>
 
-        <div class="infra-grid">
-            <div class="infra-card">
-                <i class="fa-solid fa-hospital-user"></i>
-                <div class="infra-info">
-                    <h4>92</h4>
-                    <p>Especialidades Médicas</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <div class="infra-info">
-                    <h4>2</h4>
-                    <p>Instituições de Ensino Superior</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-store"></i>
-                <div class="infra-info">
-                    <h4>13</h4>
-                    <p>Magazines</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-briefcase"></i>
-                <div class="infra-info">
-                    <h4>80</h4>
-                    <p>Micro-Empresas</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-prescription-bottle-medical"></i>
-                <div class="infra-info">
-                    <h4>22</h4>
-                    <p>Farmácias</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-building-columns"></i>
-                <div class="infra-info">
-                    <h4>6</h4>
-                    <p>Postos Bancários</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-gas-pump"></i>
-                <div class="infra-info">
-                    <h4>9</h4>
-                    <p>Postos de Gasolina</p>
-                </div>
-            </div>
-
-            <div class="infra-card">
-                <i class="fa-solid fa-car"></i>
-                <div class="infra-info">
-                    <h4>12.000+</h4>
-                    <p>Veículos Automotores</p>
-                </div>
-            </div>
+        <div class="menu-grid">
+            <a href="historia.html" class="menu-card">
+                <i class="fa-solid fa-book-bookmark"></i>
+                <h3>História</h3>
+            </a>
+            <a href="geografia.html" class="menu-card">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3>Geografia</h3>
+            </a>
+            <a href="indicadores.html" class="menu-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3>Indicadores</h3>
+            </a>
+            <a href="infraestrutura.html" class="menu-card">
+                <i class="fa-solid fa-city"></i>
+                <h3>Infraestrutura</h3>
+            </a>
+            <a href="localizacao.html" class="menu-card">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Localização</h3>
+            </a>
         </div>
-    </section>
+    </div>
 
-    <!-- MAPA INTERATIVO -->
-    <section id="mapa" class="reveal">
-        <div class="section-header">
-            <h2>Localização Estratégica</h2>
-            <div class="line"></div>
-            <p>Aproximadamente 380 km de Curitiba e 400 km de São Paulo</p>
-        </div>
-
-        <div id="map"></div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; Projeto Escolar - Geografia de Santo Antônio da Platina</p>
-        <p class="dedication">GeoGraça: Projeto desenvolvido em homenagem à Professora Graça 🎓</p>
-    </footer>
-
-    <!-- Leaflet JS (Mapa) -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script>
-        // --- MAPA INTERATIVO ---
-        const lat = -23.2952;
-        const lng = -50.0789;
-
-        const map = L.map('map').setView([lat, lng], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Marcador Principal
-        L.marker([lat, lng]).addTo(map)
-            .bindPopup('<b>Santo Antônio da Platina</b><br>Pólo Comercial e Médico.')
-            .openPopup();
-
-        // --- ANIMAÇÃO REVEAL AO ROLAR ---
-        function revealOnScroll() {
-            const reveals = document.querySelectorAll('.reveal');
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 150;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
-
-        // --- ANIMAÇÃO DE CONTADORES NÚMERICOS ---
-        let animated = false;
-        window.addEventListener('scroll', () => {
-            const statsSection = document.querySelector('.stats-section');
-            if (statsSection) {
-                const pos = statsSection.getBoundingClientRect().top;
-                
-                if(pos < window.innerHeight && !animated) {
-                    animated = true;
-                    const counters = document.querySelectorAll('.counter');
-                    counters.forEach(counter => {
-                        const target = +counter.getAttribute('data-target');
-                        const isDecimal = target % 1 !== 0;
-                        const duration = 2000;
-                        const step = target / (duration / 16);
-
-                        let current = 0;
-                        const updateCounter = () => {
-                            current += step;
-                            if (current < target) {
-                                counter.innerText = isDecimal ? current.toFixed(3) : Math.ceil(current).toLocaleString('pt-BR');
-                                requestAnimationFrame(updateCounter);
-                            } else {
-                                counter.innerText = isDecimal ? target.toFixed(3) : target.toLocaleString('pt-BR');
-                            }
-                        };
-                        updateCounter();
-                    });
-                }
-            }
-        });
-    </script>
 </body>
 </html>
