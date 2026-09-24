@@ -6,13 +6,15 @@
     <title>Localização - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS para Mapa Interativo -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -32,10 +34,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
@@ -55,22 +57,54 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
         .btn-back:hover { color: var(--accent-dark); }
 
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+            border-left: 6px solid var(--accent-dark);
         }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
 
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
-        .content-box { line-height: 1.8; color: #333; font-size: 1.1rem; }
-        .content-box p { margin-bottom: 1.5rem; }
+        #map-full {
+            height: 500px;
+            width: 100%;
+            border-radius: 20px;
+            border: 3px solid var(--accent-dark);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+            margin: 2rem 0;
+        }
+
+        .dist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .dist-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .dist-card h4 {
+            margin: 0;
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+        }
+
+        .dist-card p {
+            margin: 5px 0 0 0;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
     </style>
 </head>
 <body>
@@ -91,17 +125,57 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
-        <div class="static-banner">
-            <p>Geolocalização e conexão rodoviária...</p>
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">LOCALIZAÇÃO & MAPA INTERATIVO</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Coordenadas: 23° 17' 42" S | 50° 04' 37" O</p>
         </div>
 
-        <h1>LOCALIZAÇÃO GEOGRÁFICA</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
+        <p style="font-size: 1.1rem; line-height: 1.7;">Clique nos pontos do mapa interativo abaixo para explorar os principais patrimônios, pontos turísticos e vias de acesso de Santo Antônio da Platina:</p>
 
-        <div class="content-box">
-            <p>Com coordenadas 23° 08' 49" S e 49° 58' 08" O, Santo Antônio da Platina situa-se estrategicamente no entroncamento da BR-153 (Rodovia Transbrasiliana) com a PR-092, ligando o Paraná ao estado de São Paulo.</p>
+        <div id="map-full"></div>
+
+        <h3 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 2.5rem;"><i class="fa-solid fa-route" style="color: var(--accent-dark);"></i> Distâncias Principais</h3>
+        <div class="dist-grid">
+            <div class="dist-card">
+                <h4>Curitiba (Capital)</h4>
+                <p>362 km</p>
+            </div>
+            <div class="dist-card">
+                <h4>Londrina - PR</h4>
+                <p>140 km</p>
+            </div>
+            <div class="dist-card">
+                <h4>Jacarezinho - PR</h4>
+                <p>28 km</p>
+            </div>
+            <div class="dist-card">
+                <h4>Ourinhos - SP</h4>
+                <p>75 km</p>
+            </div>
         </div>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map-full').setView([-23.295, -50.077], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var locais = [
+            { lat: -23.2952, lng: -50.0772, title: "Igreja Matriz Santo Antônio", desc: "Marco Zero e Cartão Postal da cidade." },
+            { lat: -23.2875, lng: -50.0710, title: "Morro do Bim", desc: "Ponto culminante com o monumento ao Cristo Redentor." },
+            { lat: -23.2910, lng: -50.0820, title: "Estação Ferroviária", desc: "Tombada como Patrimônio Histórico do PR." },
+            { lat: -23.3015, lng: -50.0735, title: "Santuário N. Sra. das Graças", desc: "Rota do Rosário e turismo religioso." },
+            { lat: -23.2980, lng: -50.0650, title: "Parque de Exposições Expo-EFAPI", desc: "Sede de grandes eventos pecuários e shows." }
+        ];
+
+        locais.forEach(function(item) {
+            L.marker([item.lat, item.lng]).addTo(map)
+                .bindPopup("<div style='text-align:center;'><b>" + item.title + "</b><br>" + item.desc + "</div>");
+        });
+    </script>
 </body>
 </html>
