@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicadores - GeoGraça</title>
+    <title>GeoGraça - Santo Antônio da Platina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2D3A30;
+            --accent: #D4AF37;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
@@ -18,7 +19,8 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            /* Padrão em vetor de ícones geográficos/históricos em dourado escuro (#B8860B) */
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3C!-- Bússola / Pin --%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3C!-- Livro / História --%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3C!-- Gráfico / Indicadores --%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3C!-- Globo / Geografia --%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
@@ -40,10 +42,36 @@
             border-bottom: 2px solid var(--accent-dark);
         }
 
-        .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-dark);
+        }
 
         .container {
             max-width: 1100px;
@@ -55,61 +83,119 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
-        .btn-back:hover { color: var(--accent-dark); }
-
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
-        }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
-
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.25);
-            border-radius: 18px;
-            padding: 2rem;
+        .main-header {
             text-align: center;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 2.5rem;
         }
 
-        .stat-card::before {
-            content: '';
+        .main-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .main-header p {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--accent-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .title-divider {
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+            width: 150px;
+            margin: 15px auto 0 auto;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            margin-bottom: 2.5rem;
+            border: 3px solid var(--accent-dark);
+        }
+
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: var(--accent-dark);
+            height: 100%;
+            border: 0;
         }
 
-        .stat-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.18);
+        .hero-banner {
+            background: linear-gradient(rgba(45, 58, 48, 0.9), rgba(45, 58, 48, 0.9)), url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 4px solid var(--accent-dark);
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
+        .hero-banner h2 {
             font-family: 'Cinzel', serif;
-            margin: 10px 0;
+            font-size: 2.2rem;
+            margin-top: 0;
+            color: #FFF;
+        }
+
+        .hero-banner p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-dark);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.2);
+            background: #FCFBF7;
+        }
+
+        .menu-card i {
+            font-size: 2.5rem;
+            color: var(--accent-dark);
+            margin-bottom: 1rem;
+        }
+
+        .menu-card h3 {
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -122,40 +208,49 @@
         <ul class="nav-links">
             <li><a href="historia.html">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
-            <li><a href="indicadores.html" class="active">Indicadores</a></li>
+            <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
-
-        <div class="static-banner">
-            <p>Anotando os números socioeconômicos...</p>
+        <div class="main-header">
+            <h1>GeoGraça</h1>
+            <p>Portal Geográfico & Histórico de Santo Antônio da Platina</p>
+            <div class="title-divider"></div>
         </div>
 
-        <h1>ANÁLISE SOCIOECONÔMICA (IBGE)</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fa-solid fa-users fa-2x" style="color: var(--accent-dark);"></i>
-                <div class="stat-number">44.369</div>
-                <p><strong>População Estimada</strong><br>Centro populacional expressivo do Norte Pioneiro.</p>
-            </div>
+        <div class="hero-banner">
+            <h2>Bem-vindo ao GeoGraça</h2>
+            <p>Explore a rica trajetória histórica, os dados geográficos e os principais indicadores socioeconômicos do município de Santo Antônio da Platina - PR.</p>
+        </div>
 
-            <div class="stat-card">
-                <i class="fa-solid fa-chart-line fa-2x" style="color: var(--accent-dark);"></i>
-                <div class="stat-number">0,718</div>
-                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Qualidade de vida com bons índices de alfabetização.</p>
-            </div>
-
-            <div class="stat-card">
-                <i class="fa-solid fa-coins fa-2x" style="color: var(--accent-dark);"></i>
-                <div class="stat-number">R$ 41.422</div>
-                <p><strong>PIB Per Capita</strong><br>Destaque no agronegócio e setor de comércio e serviços.</p>
-            </div>
+        <div class="menu-grid">
+            <a href="historia.html" class="menu-card">
+                <i class="fa-solid fa-book-bookmark"></i>
+                <h3>História</h3>
+            </a>
+            <a href="geografia.html" class="menu-card">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3>Geografia</h3>
+            </a>
+            <a href="indicadores.html" class="menu-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3>Indicadores</h3>
+            </a>
+            <a href="infraestrutura.html" class="menu-card">
+                <i class="fa-solid fa-city"></i>
+                <h3>Infraestrutura</h3>
+            </a>
+            <a href="localizacao.html" class="menu-card">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Localização</h3>
+            </a>
         </div>
     </div>
 
