@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -32,25 +32,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
 
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
@@ -65,49 +55,72 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 1.8rem;
-            color: var(--primary);
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
         .btn-back:hover { color: var(--accent-dark); }
 
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+            border-left: 6px solid var(--accent-dark);
         }
-        .static-banner p {
+
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+            padding-left: 30px;
+            border-left: 3px solid var(--accent-dark);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -39px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-dark);
+            border: 3px solid #fff;
+        }
+
+        .timeline-date {
             font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            color: var(--primary);
             font-weight: 700;
-            margin: 0;
-            letter-spacing: 0.5px;
+            color: var(--accent-dark);
+            font-size: 1.2rem;
         }
 
-        h1 {
-            font-family: 'Cinzel', serif;
+        .timeline-title {
+            font-size: 1.3rem;
             color: var(--primary);
-            font-size: 2.2rem;
-            margin-top: 0;
+            margin: 5px 0 10px 0;
+            font-weight: 700;
         }
 
-        .content-box {
-            line-height: 1.8;
-            color: #333;
-            font-size: 1.1rem;
+        .img-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
 
-        .content-box p { margin-bottom: 1.5rem; }
+        .img-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--accent-dark);
+        }
     </style>
 </head>
 <body>
@@ -128,16 +141,50 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
-        <div class="static-banner">
-            <p>Escrevendo a História de Santo Antônio da Platina...</p>
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">HISTÓRIA & ORIGENS PLATINENSES</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Mais de um século de tradição, fé e pioneirismo no Paraná</p>
         </div>
 
-        <h1>HISTÓRIA DETALHADA & MEMÓRIA COLONIZADORA</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
+        <p style="font-size: 1.1rem; line-height: 1.8;">A história de Santo Antônio da Platina está intimamente ligada ao avanço dos desbravadores paulistas e mineiros pelo Norte Pioneiro do Paraná, atraídos pela alta fertilidade das terras roxas e pelo cultivo promissor do café.</p>
 
-        <div class="content-box">
-            <p>A colonização de Santo Antônio da Platina teve início no final do século XIX, movida pela expansão cafeeira e pela busca por terras férteis do solo de terra roxa no Norte Pioneiro do Paraná.</p>
-            <p>Com sua emancipação política consolidada em 1914, o município despontou rapidamente como polo regional administrativo, comercial e cultural, acolhendo imigrantes italianos, espanhóis e japoneses que enriqueceram a identidade platinense.</p>
+        <div class="img-grid">
+            <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz Histórica">
+            <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=600&q=80" alt="Tradição e Cultura">
+        </div>
+
+        <h2 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 3rem;"><i class="fa-solid fa-timeline" style="color: var(--accent-dark);"></i> Linha do Tempo Histórica</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Finais do Século XIX</div>
+                <div class="timeline-title">Chegada dos Primeiros Pioneiros</div>
+                <p>Manoel da Silva e outros desbravadores estabelecem-se no vale do Ribeirão das Anhumas. Acredita-se que o nome "Platina" derivou de antigas especulações de geólogos sobre jazidas platiníferas na região.</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">1900</div>
+                <div class="timeline-title">Criação do Distrito policial e Capela</div>
+                <p>É construída a primeira capela em honra a Santo Antônio de Pádua, marcando a fundação do povoado rural.</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">20 de Agosto de 1914</div>
+                <div class="timeline-title">Emancipação Política</div>
+                <p>Pela Lei Estadual nº 1.413, Santo Antônio da Platina é oficialmente elevada à categoria de município, desligando-se de Jacarezinho.</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">1929</div>
+                <div class="timeline-title">Pedra Fundamental da Igreja Matriz</div>
+                <p>Lançada a pedra fundamental da monumental Igreja Matriz em estilo românico. As pedras foram transportadas por carros de boi da própria comunidade.</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Década de 1970 - Atualidade</div>
+                <div class="timeline-title">Modernização e Polo do Norte Pioneiro</div>
+                <p>A transição da monocultura do café para a diversificação de grãos, expansão do comércio e consolidação como polo regional de saúde e educação.</p>
+            </div>
         </div>
     </div>
 
