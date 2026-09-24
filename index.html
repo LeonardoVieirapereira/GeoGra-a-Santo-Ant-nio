@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoGraça - Santo Antônio da Platina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS para o Mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
+            --primary-light: #2D3A30;
             --accent: #D4AF37;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            /* Padrão em vetor de ícones geográficos/históricos em dourado escuro (#B8860B) */
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3C!-- Bússola / Pin --%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3C!-- Livro / História --%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3C!-- Gráfico / Indicadores --%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3C!-- Globo / Geografia --%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.15'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
@@ -34,10 +36,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
@@ -66,7 +68,6 @@
             color: var(--text-dark);
             font-weight: 600;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -74,7 +75,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 2rem auto;
             padding: 3rem;
             background: var(--card-bg);
@@ -90,15 +91,15 @@
 
         .main-header h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
+            font-size: 3rem;
             color: var(--primary);
             margin: 0 0 10px 0;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .main-header p {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--accent-dark);
             font-weight: 700;
             text-transform: uppercase;
@@ -110,8 +111,46 @@
             border: none;
             height: 3px;
             background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
-            width: 150px;
+            width: 200px;
             margin: 15px auto 0 auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(rgba(26, 38, 29, 0.85), rgba(26, 38, 29, 0.85)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 4px solid var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .hero-banner h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4rem;
+            margin-top: 0;
+        }
+
+        .hero-banner p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 2.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid var(--accent-dark);
+            padding-left: 15px;
         }
 
         .video-container {
@@ -121,7 +160,7 @@
             overflow: hidden;
             border-radius: 20px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             border: 3px solid var(--accent-dark);
         }
 
@@ -134,41 +173,25 @@
             border: 0;
         }
 
-        .hero-banner {
-            background: linear-gradient(rgba(45, 58, 48, 0.9), rgba(45, 58, 48, 0.9)), url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 3rem;
-            border-radius: 18px;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 4px solid var(--accent-dark);
-        }
-
-        .hero-banner h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            margin-top: 0;
-            color: #FFF;
-        }
-
-        .hero-banner p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
+        #map-home {
+            height: 420px;
+            width: 100%;
+            border-radius: 20px;
+            border: 3px solid var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
         }
 
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .menu-card {
             background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.25);
+            border: 1px solid rgba(184, 134, 11, 0.3);
             border-radius: 16px;
             padding: 2rem 1.5rem;
             text-align: center;
@@ -181,12 +204,12 @@
         .menu-card:hover {
             transform: translateY(-8px);
             border-color: var(--accent-dark);
-            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.2);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.25);
             background: #FCFBF7;
         }
 
         .menu-card i {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             color: var(--accent-dark);
             margin-bottom: 1rem;
         }
@@ -195,7 +218,46 @@
             font-family: 'Cinzel', serif;
             margin: 0;
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent-dark);
+        }
+
+        .gallery-card div {
+            padding: 1.2rem;
+        }
+
+        .gallery-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+        }
+
+        .gallery-card p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -217,22 +279,19 @@
     <div class="container">
         <div class="main-header">
             <h1>GeoGraça</h1>
-            <p>Portal Geográfico & Histórico de Santo Antônio da Platina</p>
+            <p>Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
             <div class="title-divider"></div>
         </div>
 
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
         <div class="hero-banner">
-            <h2>Bem-vindo ao GeoGraça</h2>
-            <p>Explore a rica trajetória histórica, os dados geográficos e os principais indicadores socioeconômicos do município de Santo Antônio da Platina - PR.</p>
+            <h2>Capital do Norte Pioneiro</h2>
+            <p>Descubra a história enriquecedora, as deslumbrantes paisagens naturais, a força do agronegócio e a infraestrutura completa de um dos municípios mais dinâmicos do Paraná.</p>
         </div>
 
+        <h3 class="section-title"><i class="fa-solid fa-compass"></i> Explore por Categoria</h3>
         <div class="menu-grid">
             <a href="historia.html" class="menu-card">
-                <i class="fa-solid fa-book-bookmark"></i>
+                <i class="fa-solid fa-landmark"></i>
                 <h3>História</h3>
             </a>
             <a href="geografia.html" class="menu-card">
@@ -244,7 +303,7 @@
                 <h3>Indicadores</h3>
             </a>
             <a href="infraestrutura.html" class="menu-card">
-                <i class="fa-solid fa-city"></i>
+                <i class="fa-solid fa-building-columns"></i>
                 <h3>Infraestrutura</h3>
             </a>
             <a href="localizacao.html" class="menu-card">
@@ -252,7 +311,61 @@
                 <h3>Localização</h3>
             </a>
         </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-camera"></i> Pontos de Destaque</h3>
+        <div class="photo-gallery">
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz">
+                <div>
+                    <h4>Igreja Matriz Santo Antônio</h4>
+                    <p>Construída em estilo românico a partir de 1929 no Marco Zero da cidade.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Morro do Bim">
+                <div>
+                    <h4>Morro do Bim</h4>
+                    <p>Ponto mais elevado do perímetro urbano com visão panorâmica e mirante do Cristo Redentor.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Campos Agrícolas">
+                <div>
+                    <h4>Solo Sagrado e Agronegócio</h4>
+                    <p>Campos agrícolas férteis de Terra Roxa que sustentam a economia regional.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-map"></i> Mapa Interativo de Santo Antônio da Platina</h3>
+        <div id="map-home"></div>
+
+        <h3 class="section-title"><i class="fa-solid fa-video"></i> Conheça a Cidade em Vídeo</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map-home').setView([-23.295, -50.077], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var pontos = [
+            { lat: -23.2952, lng: -50.0772, title: "Igreja Matriz Santo Antônio de Pádua", desc: "Marco Zero da cidade, fundado em 1929." },
+            { lat: -23.2875, lng: -50.0710, title: "Morro do Bim", desc: "Ponto turístico com mirante panorâmico e Cristo." },
+            { lat: -23.2910, lng: -50.0820, title: "Estação Ferroviária Histórica", desc: "Patrimônio Cultural do Estado do Paraná." },
+            { lat: -23.3015, lng: -50.0735, title: "Santuário Nossa Senhora das Graças", desc: "Importante ponto de peregrinação da Rota do Rosário." }
+        ];
+
+        pontos.forEach(function(p) {
+            L.marker([p.lat, p.lng]).addTo(map)
+                .bindPopup("<b>" + p.title + "</b><br>" + p.desc);
+        });
+    </script>
 </body>
 </html>
