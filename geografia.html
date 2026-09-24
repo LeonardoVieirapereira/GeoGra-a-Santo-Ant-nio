@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -32,10 +32,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
@@ -55,22 +55,45 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
         .btn-back:hover { color: var(--accent-dark); }
 
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+            border-left: 6px solid var(--accent-dark);
         }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
 
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
-        .content-box { line-height: 1.8; color: #333; font-size: 1.1rem; }
-        .content-box p { margin-bottom: 1.5rem; }
+        .geo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .geo-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .geo-card i {
+            font-size: 2.2rem;
+            color: var(--accent-dark);
+            margin-bottom: 1rem;
+        }
+
+        .geo-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -91,16 +114,35 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
-        <div class="static-banner">
-            <p>Mapeando os aspectos físicos e naturais...</p>
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">GEOGRAFIA & MEIO AMBIENTE</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Solo Fértil, Relevo Ondulado e Bacias Hidrográficas</p>
         </div>
 
-        <h1>GEOGRAFIA E ASPECTOS NATURAIS</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
+        <div class="geo-grid">
+            <div class="geo-card">
+                <i class="fa-solid fa-mountain"></i>
+                <h3>Relevo e Altitude</h3>
+                <p>Localizado no Terceiro Planalto Paranaense (Planalto de Guarapuava), o relevo varia de suavemente ondulado a forte ondulado nas proximidades do Morro do Bim e do Morro do Gavião, atingindo altitudes médias de 496 a 520 metros.</p>
+            </div>
 
-        <div class="content-box">
-            <p>Inserida na Terceira Planície Paranaense (Planalto de Guarapuava), a região conta com relevo levemente ondulado e solos latossolos de excepcional fertilidade agrícola.</p>
-            <p>Seu clima é o Subtropical Úmido (Cfa), caracterizado por verões quentes e chuvas bem distribuídas ao longo do ano. O município é banhado pelas bacias do Rio das Cinzas e Rio Ubá.</p>
+            <div class="geo-card">
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+                <h3>Clima Subtropical (Cfa)</h3>
+                <p>Clima Subtropical Úmido Mesotérmico. Verões quentes com chuvas concentradas e invernos amenos com geadas ocasionais. A temperatura média anual gira em torno de 20.5 °C.</p>
+            </div>
+
+            <div class="geo-card">
+                <i class="fa-solid fa-water"></i>
+                <h3>Hidrografia</h3>
+                <p>O município é favorecido pela Bacia do Rio das Cinzas, pelos rios Ubá, Jacaré e Ribeirão das Anhumas, garantindo abastecimento e irrigação agrícola abundante.</p>
+            </div>
+
+            <div class="geo-card">
+                <i class="fa-solid fa-seedling"></i>
+                <h3>Solo de Terra Roxa</h3>
+                <p>Predomínio de Latossolos Vermelhos derivados do basalto (Terra Roxa), altamente produtivos e ideais para culturas de soja, milho, café, cana-de-açúcar e fruticultura.</p>
+            </div>
         </div>
     </div>
 
