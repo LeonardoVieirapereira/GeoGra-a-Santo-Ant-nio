@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2D3A30;
+            --primary: #1A261D;
             --accent-dark: #B8860B;
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -32,10 +32,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 247, 242, 0.95);
+            background: rgba(248, 247, 242, 0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             box-sizing: border-box;
             border-bottom: 2px solid var(--accent-dark);
         }
@@ -55,20 +55,18 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: color 0.3s; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; }
         .btn-back:hover { color: var(--accent-dark); }
 
-        .static-banner {
-            background: #FCFBF7;
-            border-left: 5px solid var(--accent-dark);
-            border-radius: 8px;
-            padding: 1.2rem 1.8rem;
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.8), rgba(26, 38, 29, 0.8)), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+            border-left: 6px solid var(--accent-dark);
         }
-        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin: 0; letter-spacing: 0.5px; }
-
-        h1 { font-family: 'Cinzel', serif; color: var(--primary); font-size: 2.2rem; margin-top: 0; }
 
         .stats-grid {
             display: grid;
@@ -79,14 +77,12 @@
 
         .stat-card {
             background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.25);
+            border: 1px solid rgba(184, 134, 11, 0.3);
             border-radius: 18px;
             padding: 2rem;
             text-align: center;
             box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .stat-card::before {
@@ -97,11 +93,8 @@
             width: 100%;
             height: 5px;
             background: var(--accent-dark);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.18);
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
         }
 
         .stat-number {
@@ -110,6 +103,39 @@
             color: var(--primary);
             font-family: 'Cinzel', serif;
             margin: 10px 0;
+        }
+
+        /* Gráfico em CSS */
+        .chart-section {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .bar-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .bar-bg {
+            background: #E0E0E0;
+            height: 22px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent-dark));
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -131,30 +157,52 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
-        <div class="static-banner">
-            <p>Anotando os números socioeconômicos...</p>
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">INDICADORES SOCIOECONÔMICOS</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Dados Oficiais e Perfil do IBGE / IPARDES</p>
         </div>
-
-        <h1>ANÁLISE SOCIOECONÔMICA (IBGE)</h1>
-        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
 
         <div class="stats-grid">
             <div class="stat-card">
                 <i class="fa-solid fa-users fa-2x" style="color: var(--accent-dark);"></i>
-                <div class="stat-number">44.369</div>
-                <p><strong>População Estimada</strong><br>Centro populacional expressivo do Norte Pioneiro.</p>
+                <div class="stat-number">46.503</div>
+                <p><strong>População Estimada (IBGE)</strong><br>Polo populacional de forte influência regional.</p>
             </div>
 
             <div class="stat-card">
                 <i class="fa-solid fa-chart-line fa-2x" style="color: var(--accent-dark);"></i>
                 <div class="stat-number">0,718</div>
-                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Qualidade de vida com bons índices de alfabetização.</p>
+                <p><strong>IDHM (Alto Desenvolvimento)</strong><br>Excelente padrão em Longevidade e Educação.</p>
             </div>
 
             <div class="stat-card">
                 <i class="fa-solid fa-coins fa-2x" style="color: var(--accent-dark);"></i>
-                <div class="stat-number">R$ 41.422</div>
-                <p><strong>PIB Per Capita</strong><br>Destaque no agronegócio e setor de comércio e serviços.</p>
+                <div class="stat-number">R$ 1,25 Bi</div>
+                <p><strong>PIB Total do Município</strong><br>Destaque para o Comércio, Serviços e Agropecuária.</p>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 0;"><i class="fa-solid fa-chart-bar" style="color: var(--accent-dark);"></i> Composição do PIB por Setor</h3>
+
+            <div class="bar-group">
+                <div class="bar-label"><span>Serviços e Comércio</span><span>58%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 58%;"></div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-label"><span>Agropecuária</span><span>22%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 22%;"></div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-label"><span>Indústria</span><span>12%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 12%;"></div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-label"><span>Administração Pública</span><span>8%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 8%;"></div></div>
             </div>
         </div>
     </div>
