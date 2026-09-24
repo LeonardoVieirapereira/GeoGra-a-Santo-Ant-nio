@@ -3,46 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>História Aprofundada - GeoGraça</title>
+    <title>História - GeoGraça</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3B4A3E; --accent: #D4AF37; --bg-light: #F6F8F5; --text-dark: #2C3531; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; padding-top: 100px; }
-        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(246, 248, 245, 0.9); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.06); box-sizing: border-box; }
+        :root { --primary: #3B4A3E; --accent-dark: #B8860B; --bg-light: #F6F8F5; --text-dark: #2C3531; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-light); 
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M20 20h10v10H20zM80 80h10v10H80z'/%3E%3Ccircle cx='30' cy='80' r='6'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Cpath d='M15 85l10-15 10 15zM75 25l10-15 10 15z'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark); 
+            margin: 0; 
+            padding-top: 100px; 
+        }
+
+        nav { position: fixed; top: 0; width: 100%; padding: 1.2rem 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(246, 248, 245, 0.95); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.06); box-sizing: border-box; }
         .logo { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
         .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        .container { max-width: 1050px; margin: 2rem auto; padding: 2.5rem; background: white; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
         
-        .writing-container { display: flex; align-items: center; position: relative; background: rgba(212, 175, 55, 0.12); padding: 1.2rem 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); margin-bottom: 2rem; overflow: hidden; height: 60px; }
-        .writing-hand { position: absolute; left: 0; font-size: 2.5rem; color: var(--primary); z-index: 10; animation: moveHand 4s steps(40) 1s infinite alternate; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
-        .typewriter-text { font-family: 'Caveat', cursive; font-size: 2.1rem; color: var(--primary); border-right: 3px solid var(--accent); white-space: nowrap; overflow: hidden; margin-left: 10px; animation: typing 4s steps(40) 1s infinite alternate; }
+        .container { max-width: 1050px; margin: 2rem auto; padding: 2.5rem; background: rgba(255, 255, 255, 0.96); border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.2); }
 
-        h1, h2 { font-family: 'Cinzel', serif; color: var(--primary); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
-        .btn-back:hover { transform: translateX(-5px); }
+        .static-banner { background: #FCFBF7; border-left: 4px solid var(--accent-dark); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+        .static-banner p { font-family: 'Cinzel', serif; font-size: 1.15rem; color: var(--primary); font-weight: 600; margin: 0; letter-spacing: 0.5px; }
 
-        .hero-img { width: 100%; height: 350px; object-fit: cover; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        
-        .history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .history-card { background: #FCFBF7; border: 1px solid #EAE8E1; border-radius: 16px; overflow: hidden; transition: all 0.4s; }
-        .history-card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-content { padding: 1.5rem; }
-        .history-card:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); border-left: 4px solid var(--accent); }
-
-        @keyframes moveHand { 0% { left: 10px; } 100% { left: 78%; } }
-        @keyframes typing { from { width: 0; } to { width: 85%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; color: var(--primary); font-weight: bold; text-decoration: none; }
+        h1 { font-family: 'Cinzel', serif; color: var(--primary); margin-top: 0; }
+        .content-box { line-height: 1.8; color: #444; font-size: 1.05rem; }
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas"></i> GeoGraça</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça</a>
         <ul class="nav-links">
-            <li><a href="historia.html" style="color:var(--accent);">História</a></li>
+            <li><a href="historia.html" style="color:var(--accent-dark);">História</a></li>
             <li><a href="geografia.html">Geografia</a></li>
             <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
@@ -53,42 +48,16 @@
     <div class="container">
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
         
-        <div class="writing-container">
-            <i class="fa-solid fa-hand-holding-pen writing-hand"></i>
-            <div class="typewriter-text">Escrevendo a História de Santo Antônio...</div>
+        <div class="static-banner">
+            <p>Escrevendo a História de Santo Antônio da Platina...</p>
         </div>
 
         <h1>História Detalhada & Memória Colonizadora</h1>
-        <hr style="border: none; height: 2px; background: var(--accent); margin-bottom: 2rem;">
+        <hr style="border: none; height: 2px; background: var(--accent-dark); margin-bottom: 2rem;">
 
-        <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1200&q=80" alt="Paisagem de florestas antigas e colonização" class="hero-img">
-
-        <p style="font-size: 1.1rem; line-height: 1.7; color: #4A5568;">A trajetória histórica de <strong>Santo Antônio da Platina</strong> reflete a expansão pioneira do Norte do Paraná. O povoamento e desenvolvimento da região estão intrinsicamente ligados aos fluxos migratórios do século XIX, às fazendas de café e à construção da ferrovia que integrou o município ao país.</p>
-
-        <div class="history-grid">
-            <div class="history-card">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Pioneiros e agricultura">
-                <div class="card-content">
-                    <h2>1. A Marcha dos Pioneiros</h2>
-                    <p>Durante o século XIX, bandeirantes e famílias vindas do sul de Minas Gerais e São Paulo exploraram o Norte Pioneiro do Paraná em busca de terras férteis para lavouras de grãos e expansão da cafeicultura.</p>
-                </div>
-            </div>
-
-            <div class="history-card">
-                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Lavouras de café">
-                <div class="card-content">
-                    <h2>2. O Ouro Verde & A Ferrovia</h2>
-                    <p>Com o ciclo do café, o povoado expandiu-se vertiginosamente. A inauguração da estação ferroviária impulsionou a comercialização e o fluxo de imigrantes italianos, alemães e espanhóis.</p>
-                </div>
-            </div>
-
-            <div class="history-card">
-                <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80" alt="Emancipação Política">
-                <div class="card-content">
-                    <h2>3. Emancipação & Polo Regional</h2>
-                    <p>Em <strong>20 de agosto de 1914</strong>, o município conquistou a emancipação política. Em 1929, elevou-se a Comarca, consolidando-se como referência administrativa e comercial no Norte Pioneiro.</p>
-                </div>
-            </div>
+        <div class="content-box">
+            <p>A colonização de Santo Antônio da Platina iniciou-se no final do século XIX, impulsionada pelo avanço da cafeicultura e pela busca por terras férteis de terra roxa no Norte Pioneiro do Paraná.</p>
+            <p>O município teve sua emancipação política consolidada em 1914, tornando-se rapidamente um centro de convergência econômica, cultura e rota comercial importante na região norte paranaense.</p>
         </div>
     </div>
 </body>
