@@ -1,302 +1,406 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoGraça - Santo Antônio da Platina</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        :root {
-            --primary: #1A261D;
-            --primary-light: #2D3A30;
-            --accent: #D4AF37;
-            --accent-dark: #B8860B;
-            --bg-light: #F8F7F2;
-            --text-dark: #2C3531;
-            --card-bg: rgba(255, 255, 255, 0.96);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santo Antônio da Platina - PR</title>
+  <style>
+    /* --- VARIÁVEIS DE TEMA (PADRÃO: ENSOLARADO) --- */
+    :root {
+      --bg-color: #f4f7f6;
+      --text-color: #2c3e50;
+      --card-bg: #ffffff;
+      --accent-color: #f39c12;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
-            color: var(--text-dark);
-            margin: 0;
-            padding-top: 90px;
-            overflow-x: hidden;
-        }
+    /* Temas Climáticos */
+    body.theme-sol {
+      --bg-color: #fff9e6;
+      --text-color: #4a3b00;
+      --card-bg: #ffffff;
+      --accent-color: #e67e22;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    body.theme-chuva {
+      --bg-color: #1a252f;
+      --text-color: #ecf0f1;
+      --card-bg: #2c3e50;
+      --accent-color: #3498db;
+      --font-family: 'Courier New', Courier, monospace;
+    }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
-        }
+    body.theme-tempestade {
+      --bg-color: #0f0f1d;
+      --text-color: #e0e0fc;
+      --card-bg: #1c1c3c;
+      --accent-color: #9b59b6;
+      --font-family: 'Impact', Charcoal, sans-serif;
+    }
 
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(248, 247, 242, 0.96);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            border-bottom: 2px solid var(--accent-dark);
-        }
+    body.theme-neblina {
+      --bg-color: #e0e6ed;
+      --text-color: #34495e;
+      --card-bg: #f2f5f8;
+      --accent-color: #7f8c8d;
+      --font-family: 'Georgia', serif;
+    }
 
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.3s;
-        }
+    /* --- ESTILOS GERAIS --- */
+    * {
+      box-sizing: border-box;
+      transition: background-color 0.4s, color 0.4s, font-family 0.4s;
+    }
 
-        .logo:hover { transform: scale(1.03); }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+    /* --- CANVAS DE ANIMAÇÃO DE FUNDO --- */
+    #weather-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        .container {
-            max-width: 1150px;
-            margin: 2rem auto;
-            padding: 3rem;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    /* --- MENU DE CONFIGURAÇÕES (...) --- */
+    .settings-container {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 100;
+    }
 
-        .main-header { text-align: center; margin-bottom: 2.5rem; }
-        .main-header h1 { font-family: 'Cinzel', serif; font-size: 3rem; color: var(--primary); margin: 0; }
-        .main-header p { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--accent-dark); font-weight: 700; text-transform: uppercase; margin-top: 5px; }
+    .dots-btn {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
 
-        .title-divider {
-            border: none;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
-            width: 200px;
-            margin: 15px auto 0 auto;
-        }
+    .settings-dropdown {
+      display: none;
+      position: absolute;
+      top: 55px;
+      left: 0;
+      background-color: var(--card-bg);
+      border: 1px solid var(--accent-color);
+      border-radius: 8px;
+      padding: 15px;
+      width: 220px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
 
-        .hero-banner {
-            background: linear-gradient(rgba(26, 38, 29, 0.85), rgba(26, 38, 29, 0.85)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 3.5rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 4px solid var(--accent-dark);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            animation: pulseGlow 4s infinite;
-        }
+    .settings-dropdown.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
 
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin: 2.5rem 0 1.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 5px solid var(--accent-dark);
-            padding-left: 15px;
-        }
+    .settings-dropdown h4 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 5px;
+    }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
+    .settings-dropdown select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid var(--accent-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: inherit;
+      cursor: pointer;
+    }
 
-        .menu-card {
-            background: #FFF;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-dark);
-            transition: all 0.4s ease;
-        }
+    /* --- CONTEÚDO PRINCIPAL --- */
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+      position: relative;
+      z-index: 2;
+    }
 
-        .menu-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--accent-dark);
-            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.25);
-            background: #FCFBF7;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
 
-        .menu-card i { font-size: 2.6rem; color: var(--accent-dark); margin-bottom: 1rem; transition: transform 0.3s; }
-        .menu-card:hover i { transform: rotate(8deg) scale(1.1); }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
 
-        .photo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      animation: slideUp 0.6s ease-out;
+    }
 
-        .gallery-card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(184, 134, 11, 0.25);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
+    @media (min-width: 768px) {
+      .card {
+        flex-direction: row;
+        align-items: center;
+      }
+      .card.reverse {
+        flex-direction: row-reverse;
+      }
+      .card-text {
+        flex: 1;
+      }
+      .card-img {
+        flex: 1;
+      }
+    }
 
-        .gallery-card:hover { transform: translateY(-5px); }
+    .card-img img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
 
-        .gallery-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 3px solid var(--accent-dark);
-            transition: transform 0.5s ease;
-        }
+    /* --- ANIMAÇÕES --- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .gallery-card:hover img { transform: scale(1.06); }
-
-        .gallery-card div { padding: 1.2rem; }
-
-        #map-home {
-            height: 420px;
-            width: 100%;
-            border-radius: 20px;
-            border: 3px solid var(--accent-dark);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            border: 3px solid var(--accent-dark);
-        }
-
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    </style>
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<body>
+<body class="theme-sol">
 
-    <nav>
-        <a href="index.html" class="logo">
-            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
-        </a>
-        <ul class="nav-links">
-            <li><a href="historia.html">História</a></li>
-            <li><a href="geografia.html">Geografia</a></li>
-            <li><a href="indicadores.html">Indicadores</a></li>
-            <li><a href="infraestrutura.html">Infraestrutura</a></li>
-            <li><a href="localizacao.html">Localização</a></li>
-        </ul>
-    </nav>
+  <!-- Canvas de Animação Climática -->
+  <canvas id="weather-canvas"></canvas>
 
-    <div class="container">
-        <div class="main-header">
-            <h1>GeoGraça</h1>
-            <p>Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
-            <div class="title-divider"></div>
-        </div>
-
-        <div class="hero-banner">
-            <h2 style="font-family: 'Cinzel'; font-size: 2.2rem; margin: 0 0 10px 0;">Capital do Norte Pioneiro</h2>
-            <p>Descubra a riqueza histórica, a exuberância natural, o agronegócio de ponta e a posição logística privilegiada de Santo Antônio da Platina.</p>
-        </div>
-
-        <h3 class="section-title"><i class="fa-solid fa-compass"></i> Explore por Categoria</h3>
-        <div class="menu-grid">
-            <a href="historia.html" class="menu-card">
-                <i class="fa-solid fa-landmark"></i>
-                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">História</h3>
-            </a>
-            <a href="geografia.html" class="menu-card">
-                <i class="fa-solid fa-mountain-sun"></i>
-                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Geografia</h3>
-            </a>
-            <a href="indicadores.html" class="menu-card">
-                <i class="fa-solid fa-chart-pie"></i>
-                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Indicadores</h3>
-            </a>
-            <a href="infraestrutura.html" class="menu-card">
-                <i class="fa-solid fa-building-columns"></i>
-                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Infraestrutura</h3>
-            </a>
-            <a href="localizacao.html" class="menu-card">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Localização</h3>
-            </a>
-        </div>
-
-        <h3 class="section-title"><i class="fa-solid fa-camera"></i> Pontos de Destaque</h3>
-        <div class="photo-gallery">
-            <div class="gallery-card">
-                <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz" onerror="this.src='https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80'">
-                <div>
-                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Igreja Matriz Santo Antônio</h4>
-                    <p style="margin:0; font-size: 0.95rem; color: #555;">Construída em estilo românico no Marco Zero da cidade.</p>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Morro do Bim" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'">
-                <div>
-                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Morro do Bim</h4>
-                    <p style="margin:0; font-size: 0.95rem; color: #555;">Ponto mais alto com vista panorâmica do município.</p>
-                </div>
-            </div>
-            <div class="gallery-card">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Terra Roxa" onerror="this.src='https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=600&q=80'">
-                <div>
-                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Campos Agrícolas</h4>
-                    <p style="margin:0; font-size: 0.95rem; color: #555;">Solos férteis de Terra Roxa impulsionando a agricultura.</p>
-                </div>
-            </div>
-        </div>
-
-        <h3 class="section-title"><i class="fa-solid fa-map"></i> Mapa Interativo Inicial</h3>
-        <div id="map-home"></div>
-
-        <h3 class="section-title"><i class="fa-solid fa-video"></i> Apresentação em Vídeo</h3>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <!-- Menu de Configurações (Canto Superior Esquerdo) -->
+  <div class="settings-container">
+    <button class="dots-btn" id="dotsBtn" title="Configurações de Tema">⋮</button>
+    <div class="settings-dropdown" id="settingsMenu">
+      <h4>Evento Climático</h4>
+      <select id="themeSelect">
+        <option value="sol">☀️ Ensolarado</option>
+        <option value="chuva">🌧️ Chuva</option>
+        <option value="tempestade">🌩️ Tempestade</option>
+        <option value="neblina">🌫️ Neblina</option>
+      </select>
     </div>
+  </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        var map = L.map('map-home').setView([-23.295, -50.077], 14);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+  <!-- Cabeçalho -->
+  <header>
+    <h1>Santo Antônio da Platina</h1>
+    <p>A Rainha do Norte Credenciada do Paraná</p>
+  </header>
 
-        var pontos = [
-            { lat: -23.2952, lng: -50.0772, title: "Igreja Matriz Santo Antônio", desc: "Marco Zero da cidade." },
-            { lat: -23.2875, lng: -50.0710, title: "Morro do Bim", desc: "Mirante da Cidade e Cristo." },
-            { lat: -23.2910, lng: -50.0820, title: "Estação Ferroviária Histórica", desc: "Patrimônio Cultural." }
-        ];
+  <!-- Conteúdo Informativo -->
+  <main class="container">
 
-        pontos.forEach(function(p) {
-            L.marker([p.lat, p.lng]).addTo(map).bindPopup("<b>" + p.title + "</b><br>" + p.desc);
+    <!-- História -->
+    <article class="card">
+      <div class="card-text">
+        <h2>História e Fundação</h2>
+        <p>Fundada no início do século XX e oficialmente emancipada em 1914, Santo Antônio da Platina é um dos municípios mais tradicionais do Norte Pioneiro do Paraná. Originou-se através do povoamento impulsionado pela cafeicultura na região do Vale do Rio Cinzas.</p>
+      </div>
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" alt="História da Cidade">
+      </div>
+    </article>
+
+    <!-- Geografia e Clima -->
+    <article class="card reverse">
+      <div class="card-text">
+        <h2>Geografia e Clima</h2>
+        <p>Localizada no Norte Pioneiro paranaense, possui clima subtropical úmido. A cidade é marcada pelo relevo levemente ondulado e terras férteis (terra roxa), propícias para a agricultura de grãos e cana-de-açúcar.</p>
+      </div>
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Campos e Geografia">
+      </div>
+    </article>
+
+    <!-- Economia -->
+    <article class="card">
+      <div class="card-text">
+        <h2>Economia e Serviços</h2>
+        <p>A cidade destaca-se como polo comercial, médico e educacional da microregião. Possui setor de serviços forte, além de indústrias no ramo alimentício, vestuário e agropecuário.</p>
+      </div>
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Economia e Cidade">
+      </div>
+    </article>
+
+    <!-- Turismo e Cultura -->
+    <article class="card reverse">
+      <div class="card-text">
+        <h2>Turismo e Pontos Turísticos</h2>
+        <p>Entre seus atrativos estão a <strong>Igreja Matriz de Santo Antônio de Pádua</strong>, o Morro do Feitosa (ponto mais alto com vista panorâmica) e a tradicional EFAPI (Exposição Feira Agropecuária e Industrial), um dos maiores eventos da região.</p>
+      </div>
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80" alt="Igreja e Arquitetura">
+      </div>
+    </article>
+
+  </main>
+
+  <script>
+    /* --- LÓGICA DO MENU DE CONFIGURAÇÕES --- */
+    const dotsBtn = document.getElementById('dotsBtn');
+    const settingsMenu = document.getElementById('settingsMenu');
+    const themeSelect = document.getElementById('themeSelect');
+
+    // Alternar visibilidade do menu
+    dotsBtn.addEventListener('click', () => {
+      settingsMenu.classList.toggle('active');
+    });
+
+    // Fechar menu ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!dotsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
+        settingsMenu.classList.remove('active');
+      }
+    });
+
+    /* --- LÓGICA DE TROCA E SALVAMENTO DE TEMA --- */
+    function applyTheme(theme) {
+      // Remove classes de temas antigos
+      document.body.className = '';
+      // Adiciona o tema atual
+      document.body.classList.add(`theme-${theme}`);
+      themeSelect.value = theme;
+      
+      // Atualiza a animação correspondente
+      initWeatherAnimation(theme);
+    }
+
+    // Carrega tema salvo ou padrão (sol)
+    const savedTheme = localStorage.getItem('platina_theme') || 'sol';
+    applyTheme(savedTheme);
+
+    // Evento de alteração no select
+    themeSelect.addEventListener('change', (e) => {
+      const selectedTheme = e.target.value;
+      localStorage.setItem('platina_theme', selectedTheme);
+      applyTheme(selectedTheme);
+    });
+
+    /* --- ANIMAÇÕES DE FUNDO (CANVAS) --- */
+    const canvas = document.getElementById('weather-canvas');
+    const ctx = canvas.getContext('2d');
+    let animationId;
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function initWeatherAnimation(theme) {
+      cancelAnimationFrame(animationId);
+      particles = [];
+      
+      const particleCount = theme === 'tempestade' ? 150 : (theme === 'chuva' ? 80 : 30);
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 3 + 1,
+          speedY: Math.random() * 5 + 2,
+          speedX: Math.random() * 2 - 1,
+          opacity: Math.random() * 0.5 + 0.3
         });
-    </script>
+      }
+
+      animate(theme);
+    }
+
+    function animate(theme) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (theme === 'sol') {
+        // Raios/Partículas de luz flutuantes
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 223, 0, ${p.opacity * 0.3})`;
+          ctx.fill();
+
+          p.y -= p.speedY * 0.2;
+          if (p.y < 0) p.y = canvas.height;
+        });
+      } 
+      else if (theme === 'chuva' || theme === 'tempestade') {
+        // Gotas de chuva
+        ctx.strokeStyle = theme === 'tempestade' ? 'rgba(180, 200, 255, 0.6)' : 'rgba(150, 180, 255, 0.4)';
+        ctx.lineWidth = theme === 'tempestade' ? 2 : 1;
+
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + p.speedX, p.y + p.speedY * 2);
+          ctx.stroke();
+
+          p.y += p.speedY * (theme === 'tempestade' ? 2.5 : 1.5);
+          p.x += p.speedX;
+
+          if (p.y > canvas.height) {
+            p.y = -10;
+            p.x = Math.random() * canvas.width;
+          }
+        });
+      } 
+      else if (theme === 'neblina') {
+        // Névoa suave fluindo
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 15, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 210, 220, 0.05)`;
+          ctx.fill();
+
+          p.x += p.speedX * 0.3;
+          if (p.x > canvas.width) p.x = 0;
+        });
+      }
+
+      animationId = requestAnimationFrame(() => animate(theme));
+    }
+  </script>
 </body>
 </html>
