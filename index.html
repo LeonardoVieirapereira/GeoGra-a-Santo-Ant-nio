@@ -30,7 +30,6 @@
             transition: background-color 0.8s ease, color 0.8s ease;
         }
 
-        /* --- Camada para animações climáticas de fundo --- */
         #weather-overlay {
             position: fixed;
             top: 0;
@@ -42,7 +41,6 @@
             overflow: hidden;
         }
 
-        /* --- NAVEGAÇÃO --- */
         nav {
             position: fixed;
             top: 0;
@@ -78,7 +76,6 @@
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
-        /* Menu do Clima */
         .weather-dropdown { position: relative; display: inline-block; }
         .weather-btn {
             background: none;
@@ -125,7 +122,6 @@
         }
         .weather-menu button:hover { background-color: rgba(184, 134, 11, 0.1); color: var(--accent-dark); }
 
-        /* --- CONTAINER E CONTEÚDO --- */
         .container {
             max-width: 1150px;
             margin: 2rem auto;
@@ -140,7 +136,16 @@
 
         .main-header { text-align: center; margin-bottom: 2.5rem; }
         .main-header h1 { font-family: 'Cinzel', serif; font-size: 3rem; color: var(--primary); margin: 0; transition: color 0.8s; }
-        .main-header p { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--accent-dark); font-weight: 700; text-transform: uppercase; margin-top: 5px; transition: color 0.8s; }
+        .main-header .slogan {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+            font-style: italic;
+            margin: 8px 0 12px 0;
+            transition: color 0.8s;
+        }
+        .main-header p.subtitle { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-dark); font-weight: 600; text-transform: uppercase; margin-top: 5px; transition: color 0.8s; }
 
         .title-divider {
             border: none;
@@ -223,11 +228,7 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); border: 3px solid var(--accent-dark); transition: border-color 0.8s; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* ==========================================================
-           ESTILOS E ANIMAÇÕES ESPECÍFICAS PARA CADA TEMA CLIMÁTICO
-           ========================================================== */
-
-        /* ☀️️ ENSOLARADO */
+        /* TEMAS CLIMÁTICOS */
         body.theme-sol {
             --primary: #D35400;
             --accent-dark: #F39C12;
@@ -245,7 +246,6 @@
             100% { box-shadow: 0 0 50px rgba(243, 156, 18, 0.5); }
         }
 
-        /* 🌧️ CHUVOSO */
         body.theme-chuva {
             --primary: #1A5276;
             --accent-dark: #2980B9;
@@ -267,7 +267,6 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* 🌩️ TEMPESTADE */
         body.theme-tempestade {
             --primary: #E5E8E8;
             --accent-dark: #F4D03F;
@@ -281,15 +280,12 @@
         body.theme-tempestade .menu-card, body.theme-tempestade .gallery-card { background: #273746; }
         body.theme-tempestade .gallery-card p { color: #ABB2B9; }
         
-        .lightning-flash {
-            animation: lightning 5s infinite;
-        }
+        .lightning-flash { animation: lightning 5s infinite; }
         @keyframes lightning {
             0%, 90%, 94%, 98%, 100% { background-color: #1C2833; }
             92%, 96% { background-color: #34495E; }
         }
 
-        /* ❄️ NEVE */
         body.theme-neve {
             --primary: #2C3E50;
             --accent-dark: #5DADE2;
@@ -310,7 +306,6 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0.2; }
         }
 
-        /* 🌵 SECA */
         body.theme-seca {
             --primary: #78281F;
             --accent-dark: #E67E22;
@@ -331,14 +326,12 @@
             100% { transform: scaleY(1.02) translateY(-5px); }
         }
 
-        /* KEYFRAMES GERAIS */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); } }
     </style>
 </head>
 <body>
 
-    <!-- Camada reservada para animações visuais de fundo -->
     <div id="weather-overlay"></div>
 
     <nav>
@@ -351,7 +344,6 @@
             <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
-            <!-- Botão de três pontos para selecionar clima -->
             <li class="weather-dropdown">
                 <button class="weather-btn" id="weatherToggleBtn" title="Mudar tema do clima">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -371,7 +363,8 @@
     <div class="container">
         <div class="main-header">
             <h1>GeoGraça</h1>
-            <p>Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
+            <div class="slogan">“GeoGraça não é Ave-Maria, mas é cheia de graça!”</div>
+            <p class="subtitle">Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
             <div class="title-divider"></div>
         </div>
 
@@ -440,7 +433,6 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Configuração do Mapa
         var map = L.map('map-home').setView([-23.295, -50.077], 14);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
@@ -456,7 +448,6 @@
             L.marker([p.lat, p.lng]).addTo(map).bindPopup("<b>" + p.title + "</b><br>" + p.desc);
         });
 
-        // Controles do Menu Dropdown
         const weatherToggleBtn = document.getElementById('weatherToggleBtn');
         const weatherMenu = document.getElementById('weatherMenu');
         const overlay = document.getElementById('weather-overlay');
@@ -470,11 +461,10 @@
             weatherMenu.classList.remove('show');
         });
 
-        // Troca de Temas Climáticos e Animações Dinâmicas
         function setWeatherTheme(themeClass) {
             document.body.className = themeClass === 'default' ? '' : themeClass;
             weatherMenu.classList.remove('show');
-            overlay.innerHTML = ''; // Limpa animações anteriores
+            overlay.innerHTML = '';
 
             if (themeClass === 'theme-chuva') {
                 for (let i = 0; i < 40; i++) {
