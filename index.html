@@ -3,404 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Santo Antônio da Platina - PR</title>
+  <title>Eventos Climáticos</title>
   <style>
-    /* --- VARIÁVEIS DE TEMA (PADRÃO: ENSOLARADO) --- */
-    :root {
-      --bg-color: #f4f7f6;
-      --text-color: #2c3e50;
-      --card-bg: #ffffff;
-      --accent-color: #f39c12;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    /* Temas Climáticos */
-    body.theme-sol {
-      --bg-color: #fff9e6;
-      --text-color: #4a3b00;
-      --card-bg: #ffffff;
-      --accent-color: #e67e22;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body.theme-chuva {
-      --bg-color: #1a252f;
-      --text-color: #ecf0f1;
-      --card-bg: #2c3e50;
-      --accent-color: #3498db;
-      --font-family: 'Courier New', Courier, monospace;
-    }
-
-    body.theme-tempestade {
-      --bg-color: #0f0f1d;
-      --text-color: #e0e0fc;
-      --card-bg: #1c1c3c;
-      --accent-color: #9b59b6;
-      --font-family: 'Impact', Charcoal, sans-serif;
-    }
-
-    body.theme-neblina {
-      --bg-color: #e0e6ed;
-      --text-color: #34495e;
-      --card-bg: #f2f5f8;
-      --accent-color: #7f8c8d;
-      --font-family: 'Georgia', serif;
-    }
-
-    /* --- ESTILOS GERAIS --- */
-    * {
-      box-sizing: border-box;
-      transition: background-color 0.4s, color 0.4s, font-family 0.4s;
-    }
-
     body {
       margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: var(--font-family);
+      font-family: Arial, sans-serif;
+      transition: background-color 0.5s ease;
       min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
+      background-color: #f0f0f0;
     }
 
-    /* --- CANVAS DE ANIMAÇÃO DE FUNDO --- */
-    #weather-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* --- MENU DE CONFIGURAÇÕES (...) --- */
-    .settings-container {
+    /* Botão de três pontos no canto superior direito */
+    .menu-container {
       position: fixed;
       top: 15px;
-      left: 15px;
-      z-index: 100;
+      right: 15px;
+      z-index: 1000;
     }
 
     .dots-btn {
-      background: var(--card-bg);
-      color: var(--text-color);
-      border: 2px solid var(--accent-color);
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
+      background: none;
+      border: none;
       font-size: 24px;
-      font-weight: bold;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      padding: 5px 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    .settings-dropdown {
+    .dots-btn:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    /* Menu dropdown */
+    .dropdown-menu {
       display: none;
       position: absolute;
-      top: 55px;
-      left: 0;
-      background-color: var(--card-bg);
-      border: 1px solid var(--accent-color);
+      right: 0;
+      top: 40px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
       border-radius: 8px;
-      padding: 15px;
-      width: 220px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      overflow: hidden;
+      min-width: 160px;
     }
 
-    .settings-dropdown.active {
+    .dropdown-menu.active {
       display: block;
-      animation: fadeIn 0.3s ease;
     }
 
-    .settings-dropdown h4 {
-      margin: 0 0 10px 0;
-      font-size: 16px;
-      border-bottom: 2px solid var(--accent-color);
-      padding-bottom: 5px;
-    }
-
-    .settings-dropdown select {
+    .dropdown-menu button {
       width: 100%;
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid var(--accent-color);
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: inherit;
+      padding: 10px 15px;
+      border: none;
+      background: none;
+      text-align: left;
       cursor: pointer;
+      font-size: 14px;
     }
 
-    /* --- CONTEÚDO PRINCIPAL --- */
-    header {
-      text-align: center;
-      padding: 60px 20px 20px;
-      position: relative;
-      z-index: 2;
+    .dropdown-menu button:hover {
+      background-color: #f0f0f0;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      animation: slideUp 0.6s ease-out;
-    }
-
-    @media (min-width: 768px) {
-      .card {
-        flex-direction: row;
-        align-items: center;
-      }
-      .card.reverse {
-        flex-direction: row-reverse;
-      }
-      .card-text {
-        flex: 1;
-      }
-      .card-img {
-        flex: 1;
-      }
-    }
-
-    .card-img img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    /* --- ANIMAÇÕES --- */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Cores personalizadas para os temas climáticos */
+    .theme-sol { background-color: #fff9c4; }      /* Amarelo claro */
+    .theme-chuva { background-color: #b3e5fc; }    /* Azul claro */
+    .theme-tempestade { background-color: #37474f; color: white; } /* Cinza escuro */
+    .theme-neve { background-color: #e0f7fa; }     /* Ciano bem claro */
+    .theme-seca { background-color: #d7ccc8; }     /* Marrom claro/seco */
   </style>
 </head>
-<body class="theme-sol">
+<body>
 
-  <!-- Canvas de Animação Climática -->
-  <canvas id="weather-canvas"></canvas>
-
-  <!-- Menu de Configurações (Canto Superior Esquerdo) -->
-  <div class="settings-container">
-    <button class="dots-btn" id="dotsBtn" title="Configurações de Tema">⋮</button>
-    <div class="settings-dropdown" id="settingsMenu">
-      <h4>Evento Climático</h4>
-      <select id="themeSelect">
-        <option value="sol">☀️ Ensolarado</option>
-        <option value="chuva">🌧️ Chuva</option>
-        <option value="tempestade">🌩️ Tempestade</option>
-        <option value="neblina">🌫️ Neblina</option>
-      </select>
+  <!-- Botão e Menu -->
+  <div class="menu-container">
+    <button class="dots-btn" id="menuBtn">&#8942;</button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <button onclick="mudarTema('theme-sol')">☀️ Ensolarado</button>
+      <button onclick="mudarTema('theme-chuva')">🌧️ Chuvoso</button>
+      <button onclick="mudarTema('theme-tempestade')">🌩️ Tempestade</button>
+      <button onclick="mudarTema('theme-neve')">❄️ Neve</button>
+      <button onclick="mudarTema('theme-seca')">🌵 Seca</button>
     </div>
   </div>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h1>Santo Antônio da Platina</h1>
-    <p>A Rainha do Norte Credenciada do Paraná</p>
-  </header>
-
-  <!-- Conteúdo Informativo -->
-  <main class="container">
-
-    <!-- História -->
-    <article class="card">
-      <div class="card-text">
-        <h2>História e Fundação</h2>
-        <p>Fundada no início do século XX e oficialmente emancipada em 1914, Santo Antônio da Platina é um dos municípios mais tradicionais do Norte Pioneiro do Paraná. Originou-se através do povoamento impulsionado pela cafeicultura na região do Vale do Rio Cinzas.</p>
-      </div>
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" alt="História da Cidade">
-      </div>
-    </article>
-
-    <!-- Geografia e Clima -->
-    <article class="card reverse">
-      <div class="card-text">
-        <h2>Geografia e Clima</h2>
-        <p>Localizada no Norte Pioneiro paranaense, possui clima subtropical úmido. A cidade é marcada pelo relevo levemente ondulado e terras férteis (terra roxa), propícias para a agricultura de grãos e cana-de-açúcar.</p>
-      </div>
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Campos e Geografia">
-      </div>
-    </article>
-
-    <!-- Economia -->
-    <article class="card">
-      <div class="card-text">
-        <h2>Economia e Serviços</h2>
-        <p>A cidade destaca-se como polo comercial, médico e educacional da microregião. Possui setor de serviços forte, além de indústrias no ramo alimentício, vestuário e agropecuário.</p>
-      </div>
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Economia e Cidade">
-      </div>
-    </article>
-
-    <!-- Turismo e Cultura -->
-    <article class="card reverse">
-      <div class="card-text">
-        <h2>Turismo e Pontos Turísticos</h2>
-        <p>Entre seus atrativos estão a <strong>Igreja Matriz de Santo Antônio de Pádua</strong>, o Morro do Feitosa (ponto mais alto com vista panorâmica) e a tradicional EFAPI (Exposição Feira Agropecuária e Industrial), um dos maiores eventos da região.</p>
-      </div>
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80" alt="Igreja e Arquitetura">
-      </div>
-    </article>
-
-  </main>
-
   <script>
-    /* --- LÓGICA DO MENU DE CONFIGURAÇÕES --- */
-    const dotsBtn = document.getElementById('dotsBtn');
-    const settingsMenu = document.getElementById('settingsMenu');
-    const themeSelect = document.getElementById('themeSelect');
+    const menuBtn = document.getElementById('menuBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
 
-    // Alternar visibilidade do menu
-    dotsBtn.addEventListener('click', () => {
-      settingsMenu.classList.toggle('active');
+    // Alterna a exibição do menu ao clicar nos três pontos
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
     });
 
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', (e) => {
-      if (!dotsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
-        settingsMenu.classList.remove('active');
-      }
+    // Fecha o menu se o usuário clicar fora dele
+    document.addEventListener('click', () => {
+      dropdownMenu.classList.remove('active');
     });
 
-    /* --- LÓGICA DE TROCA E SALVAMENTO DE TEMA --- */
-    function applyTheme(theme) {
-      // Remove classes de temas antigos
-      document.body.className = '';
-      // Adiciona o tema atual
-      document.body.classList.add(`theme-${theme}`);
-      themeSelect.value = theme;
-      
-      // Atualiza a animação correspondente
-      initWeatherAnimation(theme);
-    }
-
-    // Carrega tema salvo ou padrão (sol)
-    const savedTheme = localStorage.getItem('platina_theme') || 'sol';
-    applyTheme(savedTheme);
-
-    // Evento de alteração no select
-    themeSelect.addEventListener('change', (e) => {
-      const selectedTheme = e.target.value;
-      localStorage.setItem('platina_theme', selectedTheme);
-      applyTheme(selectedTheme);
-    });
-
-    /* --- ANIMAÇÕES DE FUNDO (CANVAS) --- */
-    const canvas = document.getElementById('weather-canvas');
-    const ctx = canvas.getContext('2d');
-    let animationId;
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function initWeatherAnimation(theme) {
-      cancelAnimationFrame(animationId);
-      particles = [];
-      
-      const particleCount = theme === 'tempestade' ? 150 : (theme === 'chuva' ? 80 : 30);
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 3 + 1,
-          speedY: Math.random() * 5 + 2,
-          speedX: Math.random() * 2 - 1,
-          opacity: Math.random() * 0.5 + 0.3
-        });
-      }
-
-      animate(theme);
-    }
-
-    function animate(theme) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (theme === 'sol') {
-        // Raios/Partículas de luz flutuantes
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 223, 0, ${p.opacity * 0.3})`;
-          ctx.fill();
-
-          p.y -= p.speedY * 0.2;
-          if (p.y < 0) p.y = canvas.height;
-        });
-      } 
-      else if (theme === 'chuva' || theme === 'tempestade') {
-        // Gotas de chuva
-        ctx.strokeStyle = theme === 'tempestade' ? 'rgba(180, 200, 255, 0.6)' : 'rgba(150, 180, 255, 0.4)';
-        ctx.lineWidth = theme === 'tempestade' ? 2 : 1;
-
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p.x + p.speedX, p.y + p.speedY * 2);
-          ctx.stroke();
-
-          p.y += p.speedY * (theme === 'tempestade' ? 2.5 : 1.5);
-          p.x += p.speedX;
-
-          if (p.y > canvas.height) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-          }
-        });
-      } 
-      else if (theme === 'neblina') {
-        // Névoa suave fluindo
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 15, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(200, 210, 220, 0.05)`;
-          ctx.fill();
-
-          p.x += p.speedX * 0.3;
-          if (p.x > canvas.width) p.x = 0;
-        });
-      }
-
-      animationId = requestAnimationFrame(() => animate(theme));
+    // Função para alterar a cor/tema da página
+    function mudarTema(classeTema) {
+      document.body.className = classeTema;
+      dropdownMenu.classList.remove('active');
     }
   </script>
+
 </body>
 </html>
