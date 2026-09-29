@@ -1,115 +1,413 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos Climáticos</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      transition: background-color 0.5s ease;
-      min-height: 100vh;
-      background-color: #f0f0f0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGraça - Santo Antônio da Platina</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #1A261D;
+            --primary-light: #2D3A30;
+            --accent: #D4AF37;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
+            --text-dark: #2C3531;
+            --card-bg: rgba(255, 255, 255, 0.96);
+        }
 
-    /* Botão de três pontos no canto superior direito */
-    .menu-container {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      z-index: 1000;
-    }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 90px;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
 
-    .dots-btn {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .dots-btn:hover {
-      background-color: rgba(255, 255, 255, 1);
-    }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+        }
 
-    /* Menu dropdown */
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 40px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      border-radius: 8px;
-      overflow: hidden;
-      min-width: 160px;
-    }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 242, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--accent-dark);
+        }
 
-    .dropdown-menu.active {
-      display: block;
-    }
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
 
-    .dropdown-menu button {
-      width: 100%;
-      padding: 10px 15px;
-      border: none;
-      background: none;
-      text-align: left;
-      cursor: pointer;
-      font-size: 14px;
-    }
+        .logo:hover { transform: scale(1.03); }
 
-    .dropdown-menu button:hover {
-      background-color: #f0f0f0;
-    }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
-    /* Cores personalizadas para os temas climáticos */
-    .theme-sol { background-color: #fff9c4; }      /* Amarelo claro */
-    .theme-chuva { background-color: #b3e5fc; }    /* Azul claro */
-    .theme-tempestade { background-color: #37474f; color: white; } /* Cinza escuro */
-    .theme-neve { background-color: #e0f7fa; }     /* Ciano bem claro */
-    .theme-seca { background-color: #d7ccc8; }     /* Marrom claro/seco */
-  </style>
+        /* Estilos do Menu de Opções (Três Pontos) */
+        .weather-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .weather-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .weather-btn:hover {
+            background-color: rgba(184, 134, 11, 0.15);
+        }
+
+        .weather-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background-color: #FFFFFF;
+            min-width: 170px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            overflow: hidden;
+            z-index: 1001;
+        }
+
+        .weather-menu.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .weather-menu button {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .weather-menu button:hover {
+            background-color: rgba(184, 134, 11, 0.1);
+            color: var(--accent-dark);
+        }
+
+        /* Temas Climáticos */
+        body.theme-sol { background-color: #FFFDE7; }
+        body.theme-chuva { background-color: #E0F7FA; }
+        body.theme-tempestade { background-color: #37474F; color: #ECEFF1; }
+        body.theme-tempestade .container { background: rgba(38, 50, 56, 0.95); color: #ECEFF1; }
+        body.theme-tempestade .main-header h1, 
+        body.theme-tempestade .section-title,
+        body.theme-tempestade .menu-card h3,
+        body.theme-tempestade .gallery-card h4 { color: #FFF; }
+        body.theme-tempestade .menu-card,
+        body.theme-tempestade .gallery-card { background: #263238; color: #ECEFF1; }
+        body.theme-tempestade .gallery-card p { color: #CFD8DC; }
+        body.theme-neve { background-color: #F0F8FF; }
+        body.theme-seca { background-color: #F5EBE0; }
+
+        .container {
+            max-width: 1150px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .main-header { text-align: center; margin-bottom: 2.5rem; }
+        .main-header h1 { font-family: 'Cinzel', serif; font-size: 3rem; color: var(--primary); margin: 0; }
+        .main-header p { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--accent-dark); font-weight: 700; text-transform: uppercase; margin-top: 5px; }
+
+        .title-divider {
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+            width: 200px;
+            margin: 15px auto 0 auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(rgba(26, 38, 29, 0.85), rgba(26, 38, 29, 0.85)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 4px solid var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: pulseGlow 4s infinite;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 2.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid var(--accent-dark);
+            padding-left: 15px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-card {
+            background: #FFF;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.4s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-dark);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.25);
+            background: #FCFBF7;
+        }
+
+        .menu-card i { font-size: 2.6rem; color: var(--accent-dark); margin-bottom: 1rem; transition: transform 0.3s; }
+        .menu-card:hover i { transform: rotate(8deg) scale(1.1); }
+
+        .photo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        .gallery-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, background 0.5s ease;
+        }
+
+        .gallery-card:hover { transform: translateY(-5px); }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent-dark);
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover img { transform: scale(1.06); }
+
+        .gallery-card div { padding: 1.2rem; }
+
+        #map-home {
+            height: 420px;
+            width: 100%;
+            border-radius: 20px;
+            border: 3px solid var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            border: 3px solid var(--accent-dark);
+        }
+
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    </style>
 </head>
 <body>
 
-  <!-- Botão e Menu -->
-  <div class="menu-container">
-    <button class="dots-btn" id="menuBtn">&#8942;</button>
-    <div class="dropdown-menu" id="dropdownMenu">
-      <button onclick="mudarTema('theme-sol')">☀️ Ensolarado</button>
-      <button onclick="mudarTema('theme-chuva')">🌧️ Chuvoso</button>
-      <button onclick="mudarTema('theme-tempestade')">🌩️ Tempestade</button>
-      <button onclick="mudarTema('theme-neve')">❄️ Neve</button>
-      <button onclick="mudarTema('theme-seca')">🌵 Seca</button>
+    <nav>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
+        <ul class="nav-links">
+            <li><a href="historia.html">História</a></li>
+            <li><a href="geografia.html">Geografia</a></li>
+            <li><a href="indicadores.html">Indicadores</a></li>
+            <li><a href="infraestrutura.html">Infraestrutura</a></li>
+            <li><a href="localizacao.html">Localização</a></li>
+            <!-- Botão de três pontos para selecionar clima -->
+            <li class="weather-dropdown">
+                <button class="weather-btn" id="weatherToggleBtn" title="Mudar tema do clima">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div class="weather-menu" id="weatherMenu">
+                    <button onclick="setWeatherTheme('default')"><i class="fa-solid fa-rotate-left"></i> Padrão</button>
+                    <button onclick="setWeatherTheme('theme-sol')"><i class="fa-solid fa-sun" style="color: #f39c12;"></i> Ensolarado</button>
+                    <button onclick="setWeatherTheme('theme-chuva')"><i class="fa-solid fa-cloud-rain" style="color: #3498db;"></i> Chuvoso</button>
+                    <button onclick="setWeatherTheme('theme-tempestade')"><i class="fa-solid fa-cloud-bolt" style="color: #2c3e50;"></i> Tempestade</button>
+                    <button onclick="setWeatherTheme('theme-neve')"><i class="fa-solid fa-snowflake" style="color: #74b9ff;"></i> Neve</button>
+                    <button onclick="setWeatherTheme('theme-seca')"><i class="fa-solid fa-wind" style="color: #e67e22;"></i> Seca</button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="main-header">
+            <h1>GeoGraça</h1>
+            <p>Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
+            <div class="title-divider"></div>
+        </div>
+
+        <div class="hero-banner">
+            <h2 style="font-family: 'Cinzel'; font-size: 2.2rem; margin: 0 0 10px 0;">Capital do Norte Pioneiro</h2>
+            <p>Descubra a riqueza histórica, a exuberância natural, o agronegócio de ponta e a posição logística privilegiada de Santo Antônio da Platina.</p>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-compass"></i> Explore por Categoria</h3>
+        <div class="menu-grid">
+            <a href="historia.html" class="menu-card">
+                <i class="fa-solid fa-landmark"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">História</h3>
+            </a>
+            <a href="geografia.html" class="menu-card">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Geografia</h3>
+            </a>
+            <a href="indicadores.html" class="menu-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Indicadores</h3>
+            </a>
+            <a href="infraestrutura.html" class="menu-card">
+                <i class="fa-solid fa-building-columns"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Infraestrutura</h3>
+            </a>
+            <a href="localizacao.html" class="menu-card">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Localização</h3>
+            </a>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-camera"></i> Pontos de Destaque</h3>
+        <div class="photo-gallery">
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz" onerror="this.src='https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Igreja Matriz Santo Antônio</h4>
+                    <p style="margin:0; font-size: 0.95rem; color: #555;">Construída em estilo românico no Marco Zero da cidade.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Morro do Bim" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Morro do Bim</h4>
+                    <p style="margin:0; font-size: 0.95rem; color: #555;">Ponto mais alto com vista panorâmica do município.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Terra Roxa" onerror="this.src='https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Campos Agrícolas</h4>
+                    <p style="margin:0; font-size: 0.95rem; color: #555;">Solos férteis de Terra Roxa impulsionando a agricultura.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-map"></i> Mapa Interativo Inicial</h3>
+        <div id="map-home"></div>
+
+        <h3 class="section-title"><i class="fa-solid fa-video"></i> Apresentação em Vídeo</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const dropdownMenu = document.getElementById('dropdownMenu');
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Configuração do Mapa
+        var map = L.map('map-home').setView([-23.295, -50.077], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-    // Alterna a exibição do menu ao clicar nos três pontos
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('active');
-    });
+        var pontos = [
+            { lat: -23.2952, lng: -50.0772, title: "Igreja Matriz Santo Antônio", desc: "Marco Zero da cidade." },
+            { lat: -23.2875, lng: -50.0710, title: "Morro do Bim", desc: "Mirante da Cidade e Cristo." },
+            { lat: -23.2910, lng: -50.0820, title: "Estação Ferroviária Histórica", desc: "Patrimônio Cultural." }
+        ];
 
-    // Fecha o menu se o usuário clicar fora dele
-    document.addEventListener('click', () => {
-      dropdownMenu.classList.remove('active');
-    });
+        pontos.forEach(function(p) {
+            L.marker([p.lat, p.lng]).addTo(map).bindPopup("<b>" + p.title + "</b><br>" + p.desc);
+        });
 
-    // Função para alterar a cor/tema da página
-    function mudarTema(classeTema) {
-      document.body.className = classeTema;
-      dropdownMenu.classList.remove('active');
-    }
-  </script>
+        // Lógica do Menu Dropdown e Alteração dos Temas Climáticos
+        const weatherToggleBtn = document.getElementById('weatherToggleBtn');
+        const weatherMenu = document.getElementById('weatherMenu');
 
+        weatherToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            weatherMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            weatherMenu.classList.remove('show');
+        });
+
+        function setWeatherTheme(themeClass) {
+            document.body.className = themeClass === 'default' ? '' : themeClass;
+            weatherMenu.classList.remove('show');
+        }
+    </script>
 </body>
 </html>
