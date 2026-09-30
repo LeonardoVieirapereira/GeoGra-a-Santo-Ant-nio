@@ -1,0 +1,31 @@
+/* Tema Claro (Padrão) */
+body {
+  background-color: #f8f9fa;
+  color: #212529;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav a {
+  color: #0d6efd;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+/* Tema Escuro */
+body.dark-theme {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-theme nav a {
+  color: #6ea8fe;
+}
+
+button#theme-toggle {
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
