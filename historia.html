@@ -13,6 +13,7 @@
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
             --card-bg: rgba(255, 255, 255, 0.96);
+            --card-border: rgba(184, 134, 11, 0.3);
         }
 
         body {
@@ -22,17 +23,23 @@
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
-            transition: background-color 0.5s ease;
+            transition: all 0.5s ease;
         }
 
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         nav {
             position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
             background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
+            transition: all 0.5s ease;
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
@@ -40,7 +47,6 @@
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
-        /* Menu de Três Pontinhos (Clima/Tema) */
         .weather-dropdown { position: relative; }
         .weather-btn {
             background: transparent; border: none; font-size: 1.3rem; color: var(--text-dark);
@@ -48,49 +54,92 @@
         }
         .weather-btn:hover { background: rgba(184, 134, 11, 0.15); color: var(--accent-dark); }
         .dropdown-menu {
-            display: none; position: absolute; right: 0; top: 120%; background: #FFF; border: 1px solid var(--accent-dark);
+            display: none; position: absolute; right: 0; top: 120%; background: var(--card-bg); border: 1px solid var(--accent-dark);
             border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); min-width: 170px; z-index: 1001; overflow: hidden;
         }
-        .dropdown-menu.show { display: block; animation: slideInLeft 0.3s ease; }
+        .dropdown-menu.show { display: block; animation: popIn 0.3s ease; }
         .dropdown-menu button {
             width: 100%; background: none; border: none; padding: 10px 15px; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;
         }
-        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.1); color: var(--accent-dark); }
+        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.2); color: var(--accent-dark); }
 
-        /* Overlay e Temas do Clima */
         #weather-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
-        body.rainy { background-color: #2b3a42; }
-        body.snowy { background-color: #e0f7fa; }
-        body.stormy { background-color: #1a1a2e; }
-        body.drought { background-color: #f4e8c1; filter: sepia(0.3); }
 
-        .rain-drop, .snow-flake { position: absolute; background: rgba(255, 255, 255, 0.6); pointer-events: none; }
-        .rain-drop { width: 1px; height: 15px; animation: fall linear infinite; }
-        .snow-flake { width: 6px; height: 6px; border-radius: 50%; animation: fall linear infinite; }
+        /* TEMAS DINÂMICOS DE CLIMA */
+        body.rainy {
+            --bg-light: #1e293b;
+            --text-dark: #e2e8f0;
+            --primary: #94a3b8;
+            --accent-dark: #38bdf8;
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(56, 189, 248, 0.3);
+        }
+        body.snowy {
+            --bg-light: #e0f2fe;
+            --text-dark: #0f172a;
+            --primary: #0369a1;
+            --accent-dark: #0284c7;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(2, 132, 199, 0.3);
+        }
+        body.stormy {
+            --bg-light: #0f172a;
+            --text-dark: #f1f5f9;
+            --primary: #cbd5e1;
+            --accent-dark: #facc15;
+            --card-bg: rgba(15, 23, 42, 0.94);
+            --card-border: rgba(250, 204, 21, 0.3);
+        }
+        body.drought {
+            --bg-light: #2c1d11;
+            --text-dark: #fef08a;
+            --primary: #fde047;
+            --accent-dark: #f97316;
+            --card-bg: rgba(44, 29, 17, 0.92);
+            --card-border: rgba(249, 115, 22, 0.4);
+        }
+
+        .rain-drop, .snow-flake, .dust-particle { position: absolute; pointer-events: none; }
+        .rain-drop { width: 1px; height: 18px; background: rgba(56, 189, 248, 0.7); animation: fall linear infinite; }
+        .snow-flake { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: fall linear infinite; }
+        .dust-particle { width: 4px; height: 4px; background: rgba(249, 115, 22, 0.5); border-radius: 50%; animation: floatDust linear infinite; }
         @keyframes fall { to { transform: translateY(100vh); } }
+        @keyframes floatDust { 
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
+        @keyframes flashLightning {
+            0%, 90%, 100% { background-color: var(--bg-light); }
+            92%, 96% { background-color: #38bdf8; }
+        }
+        body.stormy { animation: flashLightning 7s infinite; }
 
         .container {
             max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.3); animation: slideInLeft 0.8s ease-out;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid var(--card-border); animation: fadeInUp 0.8s ease-out;
+            transition: all 0.5s ease;
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
-        .btn-back:hover { color: var(--accent-dark); transform: translateX(-5px); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--accent-dark); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { transform: translateX(-5px); }
 
         .banner-header {
             background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');
             background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
         }
 
-        .timeline { position: relative; margin: 2rem 0; padding-left: 30px; border-left: 3px solid var(--accent-dark); }
-        .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 20px; transition: transform 0.3s ease; }
-        .timeline-item:hover { transform: translateX(8px); }
-        .timeline-item::before { content: ''; position: absolute; left: -39px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--accent-dark); border: 3px solid #fff; }
-
-        .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .img-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-dark); transition: transform 0.4s ease; }
-        .img-grid img:hover { transform: scale(1.03); }
+        .timeline-item {
+            padding: 1.5rem; border-left: 3px solid var(--accent-dark); margin-left: 1rem; position: relative; background: rgba(0,0,0,0.03);
+            border-radius: 0 12px 12px 0; margin-bottom: 1.5rem; transition: all 0.3s ease;
+        }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -9px; top: 24px; width: 15px; height: 15px;
+            border-radius: 50%; background: var(--accent-dark);
+        }
+        .timeline-item h3 { margin: 0 0 8px 0; color: var(--accent-dark); font-family: 'Cinzel', serif; }
+        .timeline-item p { margin: 0; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -124,43 +173,23 @@
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
         <div class="banner-header">
-            <h1 style="font-family: 'Cinzel'; margin: 0;">HISTÓRIA & ORIGENS PLATINENSES</h1>
-            <p style="margin: 10px 0 0 0; color: var(--accent);">Mais de um século de tradição, fé e pioneirismo no Paraná</p>
+            <h1 style="font-family: 'Cinzel'; margin: 0;">HISTÓRIA & PATRIMÔNIO</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Origens, ciclos econômicos e a construção cultural do município</p>
         </div>
 
-        <p style="font-size: 1.1rem; line-height: 1.8;">A história de Santo Antônio da Platina está intimamente ligada ao avanço dos desbravadores paulistas e mineiros pelo Norte Pioneiro do Paraná, atraídos pela alta fertilidade das terras roxas e pelo cultivo promissor do café.</p>
-
-        <div class="img-grid">
-            <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz Histórica" onerror="this.src='https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80'">
-            <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=600&q=80" alt="Documentos Históricos" onerror="this.src='https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80'">
+        <div class="timeline-item">
+            <h3>Século XIX - As Origens</h3>
+            <p>O povoamento da região teve início com a chegada de pioneiros e tropeiros que utilizavam as rotas do Norte Pioneiro para o transporte de reses e alimentos.</p>
         </div>
 
-        <h2 style="font-family: 'Cinzel'; color: var(--primary); margin-top: 3rem;"><i class="fa-solid fa-timeline" style="color: var(--accent-dark);"></i> Linha do Tempo Histórica</h2>
+        <div class="timeline-item">
+            <h3>Ciclo do Café & Expansão Ferroviária</h3>
+            <p>Com o solo fértil de terra roxa, a região prosperou imensamente durante a era de ouro do café, impulsionando a construção da ferrovia estratégica.</p>
+        </div>
 
-        <div class="timeline">
-            <div class="timeline-item">
-                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">Finais do Século XIX</div>
-                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Chegada dos Primeiros Pioneiros</h3>
-                <p>Manoel da Silva e desbravadores estabelecem-se no vale do Ribeirão das Anhumas. Acredita-se que o nome "Platina" derivou de antigas especulações de geólogos sobre jazidas platiníferas na região.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">1900</div>
-                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Criação do Distrito Policial e Capela</h3>
-                <p>É construída a primeira capela em honra a Santo Antônio de Pádua, marcando a fundação oficial do povoado.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">20 de Agosto de 1914</div>
-                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Emancipação Política</h3>
-                <p>Pela Lei Estadual nº 1.413, Santo Antônio da Platina torna-se oficialmente um município emancipado.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div style="font-family: 'Cinzel'; font-weight: 700; color: var(--accent-dark); font-size: 1.2rem;">1929</div>
-                <h3 style="margin: 5px 0 10px 0; color: var(--primary);">Pedra Fundamental da Igreja Matriz</h3>
-                <p>Início da construção do monumental templo em estilo românico no centro da cidade.</p>
-            </div>
+        <div class="timeline-item">
+            <h3>Emancipação e Consolidação</h3>
+            <p>A elevação a município consolidou a cidade como um polo de serviços, cultura e fé no Norte Pioneiro do Estado do Paraná.</p>
         </div>
     </div>
 
@@ -217,6 +246,14 @@
                 }
             } else if (type === 'drought') {
                 document.body.classList.add('drought');
+                for (let i = 0; i < 40; i++) {
+                    const dust = document.createElement('div');
+                    dust.className = 'dust-particle';
+                    dust.style.left = `${Math.random() * 100}vw`;
+                    dust.style.animationDuration = `${3 + Math.random() * 4}s`;
+                    dust.style.animationDelay = `${Math.random() * 2}s`;
+                    weatherOverlay.appendChild(dust);
+                }
             }
         }
     </script>
