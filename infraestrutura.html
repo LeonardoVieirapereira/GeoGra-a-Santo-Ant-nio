@@ -22,11 +22,17 @@
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
+            transition: background-color 0.5s ease;
         }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         nav {
@@ -35,9 +41,39 @@
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+
+        /* Menu de Três Pontinhos (Clima/Tema) */
+        .weather-dropdown { position: relative; }
+        .weather-btn {
+            background: transparent; border: none; font-size: 1.3rem; color: var(--text-dark);
+            cursor: pointer; padding: 5px 10px; border-radius: 50%; transition: all 0.3s;
+        }
+        .weather-btn:hover { background: rgba(184, 134, 11, 0.15); color: var(--accent-dark); }
+        .dropdown-menu {
+            display: none; position: absolute; right: 0; top: 120%; background: #FFF; border: 1px solid var(--accent-dark);
+            border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); min-width: 170px; z-index: 1001; overflow: hidden;
+        }
+        .dropdown-menu.show { display: block; animation: popIn 0.3s ease; }
+        .dropdown-menu button {
+            width: 100%; background: none; border: none; padding: 10px 15px; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;
+        }
+        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.1); color: var(--accent-dark); }
+
+        /* Overlay e Temas do Clima */
+        #weather-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+        body.rainy { background-color: #2b3a42; }
+        body.snowy { background-color: #e0f7fa; }
+        body.stormy { background-color: #1a1a2e; }
+        body.drought { background-color: #f4e8c1; filter: sepia(0.3); }
+
+        .rain-drop, .snow-flake { position: absolute; background: rgba(255, 255, 255, 0.6); pointer-events: none; }
+        .rain-drop { width: 1px; height: 15px; animation: fall linear infinite; }
+        .snow-flake { width: 6px; height: 6px; border-radius: 50%; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
 
         .container {
             max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
@@ -86,6 +122,8 @@
 </head>
 <body>
 
+    <div id="weather-overlay"></div>
+
     <nav>
         <a href="index.html" class="logo">
             <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
@@ -96,6 +134,16 @@
             <li><a href="indicadores.html">Indicadores</a></li>
             <li><a href="infraestrutura.html" class="active">Infraestrutura</a></li>
             <li><a href="localizacao.html">Localização</a></li>
+            <li class="weather-dropdown">
+                <button class="weather-btn" id="weatherToggle"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                <div class="dropdown-menu" id="weatherMenu">
+                    <button onclick="setWeather('clear')"><i class="fa-solid fa-sun" style="color: #f39c12;"></i> Ensolarado</button>
+                    <button onclick="setWeather('rain')"><i class="fa-solid fa-cloud-showers-heavy" style="color: #3498db;"></i> Chuva</button>
+                    <button onclick="setWeather('snow')"><i class="fa-solid fa-snowflake" style="color: #81ecec;"></i> Neve</button>
+                    <button onclick="setWeather('storm')"><i class="fa-solid fa-bolt" style="color: #f1c40f;"></i> Tempestade</button>
+                    <button onclick="setWeather('drought')"><i class="fa-solid fa-temperature-high" style="color: #e67e22;"></i> Seca</button>
+                </div>
+            </li>
         </ul>
     </nav>
 
@@ -129,10 +177,66 @@
             <div class="infra-card">
                 <i class="fa-solid fa-road"></i>
                 <h3>Tronco Rodoviário BR-153</h3>
-                <p>Localização privilegiada na Rodovia Transbrasiliana (BR-153), garantindo escoamento eficiente de mercadorias entre São Paulo e o Sul.</p>
+                <p>Localização privilegeda na Rodovia Transbrasiliana (BR-153), garantindo escoamento eficiente de mercadorias entre São Paulo e o Sul.</p>
             </div>
         </div>
     </div>
 
+    <script>
+        const weatherToggle = document.getElementById('weatherToggle');
+        const weatherMenu = document.getElementById('weatherMenu');
+        const weatherOverlay = document.getElementById('weather-overlay');
+
+        weatherToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            weatherMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            weatherMenu.classList.remove('show');
+        });
+
+        function clearWeather() {
+            document.body.className = '';
+            weatherOverlay.innerHTML = '';
+        }
+
+        function setWeather(type) {
+            clearWeather();
+            if (type === 'rain') {
+                document.body.classList.add('rainy');
+                for (let i = 0; i < 60; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+                    drop.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(drop);
+                }
+            } else if (type === 'snow') {
+                document.body.classList.add('snowy');
+                for (let i = 0; i < 50; i++) {
+                    const flake = document.createElement('div');
+                    flake.className = 'snow-flake';
+                    flake.style.left = `${Math.random() * 100}vw`;
+                    flake.style.animationDuration = `${2 + Math.random() * 3}s`;
+                    flake.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(flake);
+                }
+            } else if (type === 'storm') {
+                document.body.classList.add('stormy');
+                for (let i = 0; i < 80; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDuration = `${0.3 + Math.random() * 0.3}s`;
+                    drop.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(drop);
+                }
+            } else if (type === 'drought') {
+                document.body.classList.add('drought');
+            }
+        }
+    </script>
 </body>
 </html>
