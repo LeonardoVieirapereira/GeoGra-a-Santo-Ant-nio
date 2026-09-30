@@ -13,6 +13,7 @@
             --bg-light: #F8F7F2;
             --text-dark: #2C3531;
             --card-bg: rgba(255, 255, 255, 0.96);
+            --card-border: rgba(184, 134, 11, 0.3);
         }
 
         body {
@@ -22,7 +23,12 @@
             color: var(--text-dark);
             margin: 0;
             padding-top: 90px;
-            transition: background-color 0.5s ease;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes popIn {
@@ -33,6 +39,7 @@
         nav {
             position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
             background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
+            transition: all 0.5s ease;
         }
 
         .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
@@ -40,7 +47,6 @@
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
 
-        /* Menu de Três Pontinhos (Clima/Tema) */
         .weather-dropdown { position: relative; }
         .weather-btn {
             background: transparent; border: none; font-size: 1.3rem; color: var(--text-dark);
@@ -48,7 +54,7 @@
         }
         .weather-btn:hover { background: rgba(184, 134, 11, 0.15); color: var(--accent-dark); }
         .dropdown-menu {
-            display: none; position: absolute; right: 0; top: 120%; background: #FFF; border: 1px solid var(--accent-dark);
+            display: none; position: absolute; right: 0; top: 120%; background: var(--card-bg); border: 1px solid var(--accent-dark);
             border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); min-width: 170px; z-index: 1001; overflow: hidden;
         }
         .dropdown-menu.show { display: block; animation: popIn 0.3s ease; }
@@ -56,48 +62,82 @@
             width: 100%; background: none; border: none; padding: 10px 15px; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;
         }
-        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.1); color: var(--accent-dark); }
+        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.2); color: var(--accent-dark); }
 
-        /* Overlay e Temas do Clima */
         #weather-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
-        body.rainy { background-color: #2b3a42; }
-        body.snowy { background-color: #e0f7fa; }
-        body.stormy { background-color: #1a1a2e; }
-        body.drought { background-color: #f4e8c1; filter: sepia(0.3); }
 
-        .rain-drop, .snow-flake {
-            position: absolute; background: rgba(255, 255, 255, 0.6); pointer-events: none;
+        /* TEMAS DINÂMICOS DE CLIMA */
+        body.rainy {
+            --bg-light: #1e293b;
+            --text-dark: #e2e8f0;
+            --primary: #94a3b8;
+            --accent-dark: #38bdf8;
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(56, 189, 248, 0.3);
         }
-        .rain-drop { width: 1px; height: 15px; animation: fall linear infinite; }
-        .snow-flake { width: 6px; height: 6px; border-radius: 50%; animation: fall linear infinite; }
-        @keyframes fall {
-            to { transform: translateY(100vh); }
+        body.snowy {
+            --bg-light: #e0f2fe;
+            --text-dark: #0f172a;
+            --primary: #0369a1;
+            --accent-dark: #0284c7;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(2, 132, 199, 0.3);
         }
+        body.stormy {
+            --bg-light: #0f172a;
+            --text-dark: #f1f5f9;
+            --primary: #cbd5e1;
+            --accent-dark: #facc15;
+            --card-bg: rgba(15, 23, 42, 0.94);
+            --card-border: rgba(250, 204, 21, 0.3);
+        }
+        body.drought {
+            --bg-light: #2c1d11;
+            --text-dark: #fef08a;
+            --primary: #fde047;
+            --accent-dark: #f97316;
+            --card-bg: rgba(44, 29, 17, 0.92);
+            --card-border: rgba(249, 115, 22, 0.4);
+        }
+
+        .rain-drop, .snow-flake, .dust-particle { position: absolute; pointer-events: none; }
+        .rain-drop { width: 1px; height: 18px; background: rgba(56, 189, 248, 0.7); animation: fall linear infinite; }
+        .snow-flake { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: fall linear infinite; }
+        .dust-particle { width: 4px; height: 4px; background: rgba(249, 115, 22, 0.5); border-radius: 50%; animation: floatDust linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
+        @keyframes floatDust { 
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
+        @keyframes flashLightning {
+            0%, 90%, 100% { background-color: var(--bg-light); }
+            92%, 96% { background-color: #38bdf8; }
+        }
+        body.stormy { animation: flashLightning 7s infinite; }
 
         .container {
             max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(184, 134, 11, 0.3); animation: popIn 0.7s ease-out;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid var(--card-border); animation: fadeInUp 0.8s ease-out;
+            transition: all 0.5s ease;
         }
 
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--primary); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
-        .btn-back:hover { color: var(--accent-dark); transform: translateX(-5px); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--accent-dark); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { transform: translateX(-5px); }
 
         .banner-header {
             background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80');
             background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
         }
 
-        .geo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-        .geo-photo-card { position: relative; height: 240px; border-radius: 16px; overflow: hidden; border: 2px solid var(--accent-dark); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .geo-photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .geo-photo-card:hover img { transform: scale(1.1); }
-        .geo-photo-card .overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(26, 38, 29, 0.9)); color: #fff; padding: 1.2rem; font-family: 'Cinzel', serif; font-weight: 700; }
-
-        .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
-        .geo-card { background: #FFF; border: 1px solid rgba(184, 134, 11, 0.3); border-radius: 16px; padding: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; }
-        .geo-card:hover { transform: translateY(-8px); border-color: var(--accent-dark); box-shadow: 0 12px 25px rgba(184, 134, 11, 0.2); }
-        .geo-card i { font-size: 2.2rem; color: var(--accent-dark); margin-bottom: 1rem; transition: transform 0.3s; }
-        .geo-card:hover i { transform: scale(1.15) rotate(5deg); }
+        .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .geo-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.8rem; transition: all 0.3s ease;
+        }
+        .geo-card:hover { transform: translateY(-5px); border-color: var(--accent-dark); }
+        .geo-card i { font-size: 2rem; color: var(--accent-dark); margin-bottom: 1rem; }
+        .geo-card h3 { font-family: 'Cinzel', serif; color: var(--accent-dark); margin: 0 0 10px 0; }
+        .geo-card p { margin: 0; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -131,49 +171,25 @@
         <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
 
         <div class="banner-header">
-            <h1 style="font-family: 'Cinzel'; margin: 0;">GEOGRAFIA & MEIO AMBIENTE</h1>
-            <p style="margin: 10px 0 0 0; color: var(--accent);">Terra Roxa, Relevo Ondulado e Recursos Hídricos</p>
-        </div>
-
-        <h3 style="font-family: 'Cinzel'; color: var(--primary);"><i class="fa-solid fa-images" style="color: var(--accent-dark);"></i> Paisagens Geográficas</h3>
-        <div class="geo-gallery">
-            <div class="geo-photo-card">
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Morro do Bim" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'">
-                <div class="overlay">Relevo - Morro do Bim</div>
-            </div>
-            <div class="geo-photo-card">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Solo de Terra Roxa" onerror="this.src='https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=600&q=80'">
-                <div class="overlay">Solo Fértil de Terra Roxa</div>
-            </div>
-            <div class="geo-photo-card">
-                <img src="https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=600&q=80" alt="Recursos Hídricos" onerror="this.src='https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80'">
-                <div class="overlay">Bacia do Rio das Cinzas</div>
-            </div>
+            <h1 style="font-family: 'Cinzel'; margin: 0;">GEOGRAFIA & CLIMA</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Relevo, hidrografia e ecossistemas da região</p>
         </div>
 
         <div class="geo-grid">
             <div class="geo-card">
-                <i class="fa-solid fa-mountain"></i>
-                <h3 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 10px 0;">Relevo e Altitude</h3>
-                <p>Inserido no Terceiro Planalto Paranaense com relevo suave a ondulado, atingindo altitudes médias entre 496m e 520m.</p>
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3>Relevo e Solo</h3>
+                <p>Planalto ondulado com solos de altíssima fertilidade (Terra Roxa), excelentes para agricultura de precisão.</p>
             </div>
-
             <div class="geo-card">
                 <i class="fa-solid fa-cloud-sun-rain"></i>
-                <h3 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 10px 0;">Clima Subtropical (Cfa)</h3>
-                <p>Verões quentes com chuvas bem distribuídas e invernos amenos, apresentando temperatura média anual em torno de 20.5 °C.</p>
+                <h3>Clima Subtropical</h3>
+                <p>Cfa de Köppen: Verões quentes e chuvosos e invernos brandos com geadas ocasionais.</p>
             </div>
-
             <div class="geo-card">
                 <i class="fa-solid fa-water"></i>
-                <h3 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 10px 0;">Hidrografia</h3>
-                <p>Drenado pela Bacia do Rio das Cinzas e rios como Ubá, Jacaré e Ribeirão das Anhumas, fundamentais para a irrigação.</p>
-            </div>
-
-            <div class="geo-card">
-                <i class="fa-solid fa-seedling"></i>
-                <h3 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 10px 0;">Solo de Basalto</h3>
-                <p>Latossolos Vermelhos vulcânicos (Terra Roxa) de alta fertilidade natural para culturas de grãos e cana.</p>
+                <h3>Hidrografia</h3>
+                <p>Bacia hidrográfica rica com rios permanentes que alimentam reservatórios regionais.</p>
             </div>
         </div>
     </div>
@@ -231,6 +247,14 @@
                 }
             } else if (type === 'drought') {
                 document.body.classList.add('drought');
+                for (let i = 0; i < 40; i++) {
+                    const dust = document.createElement('div');
+                    dust.className = 'dust-particle';
+                    dust.style.left = `${Math.random() * 100}vw`;
+                    dust.style.animationDuration = `${3 + Math.random() * 4}s`;
+                    dust.style.animationDelay = `${Math.random() * 2}s`;
+                    weatherOverlay.appendChild(dust);
+                }
             }
         }
     </script>
