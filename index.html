@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGraça - Santo Antônio da Platina</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #1A261D;
+            --primary-light: #2D3A30;
+            --accent: #D4AF37;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
+            --text-dark: #2C3531;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-border: rgba(184, 134, 11, 0.3);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 90px;
+            overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+
+        #weather-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248, 247, 242, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+            border-bottom: 2px solid var(--accent-dark);
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s, color 0.5s;
+        }
+
+        .logo:hover { transform: scale(1.03); }
+
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+
+        .weather-dropdown { position: relative; display: inline-block; }
+        .weather-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s, color 0.5s;
+        }
+        .weather-btn:hover { background-color: rgba(184, 134, 11, 0.15); }
+
+        .weather-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background-color: #FFFFFF;
+            min-width: 170px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            border: 1px solid var(--accent-dark);
+            overflow: hidden;
+            z-index: 1001;
+        }
+
+        .weather-menu.show { display: block; animation: fadeInUp 0.3s ease; }
+
+        .weather-menu button {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: #2C3531;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+        }
+        .weather-menu button:hover { background-color: rgba(184, 134, 11, 0.1); color: var(--accent-dark); }
+
+        .container {
+            max-width: 1150px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid var(--card-border);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.8s ease, color 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        .main-header { text-align: center; margin-bottom: 2.5rem; }
+        .main-header h1 { font-family: 'Cinzel', serif; font-size: 3rem; color: var(--primary); margin: 0; transition: color 0.8s; }
+        .main-header .slogan {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+            font-style: italic;
+            margin: 8px 0 12px 0;
+            transition: color 0.8s;
+        }
+        .main-header p.subtitle { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-dark); font-weight: 600; text-transform: uppercase; margin-top: 5px; transition: color 0.8s; }
+
+        .title-divider {
+            border: none;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-dark), transparent);
+            width: 200px;
+            margin: 15px auto 0 auto;
+            transition: background 0.8s;
+        }
+
+        .hero-banner {
+            background: linear-gradient(rgba(26, 38, 29, 0.85), rgba(26, 38, 29, 0.85)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 4px solid var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: pulseGlow 4s infinite;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 2.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid var(--accent-dark);
+            padding-left: 15px;
+            transition: color 0.8s, border-color 0.8s;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+
+        .menu-card {
+            background: #FFF;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.4s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-dark);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.25);
+        }
+
+        .menu-card i { font-size: 2.6rem; color: var(--accent-dark); margin-bottom: 1rem; transition: transform 0.3s, color 0.8s; }
+        .menu-card:hover i { transform: rotate(8deg) scale(1.1); }
+        .menu-card h3 { transition: color 0.8s; }
+
+        .photo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        .gallery-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, background 0.8s ease, border-color 0.8s ease;
+        }
+
+        .gallery-card:hover { transform: translateY(-5px); }
+        .gallery-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent-dark); transition: transform 0.5s ease; }
+        .gallery-card:hover img { transform: scale(1.06); }
+        .gallery-card div { padding: 1.2rem; }
+        .gallery-card h4 { transition: color 0.8s; }
+        .gallery-card p { transition: color 0.8s; }
+
+        #map-home { height: 420px; width: 100%; border-radius: 20px; border: 3px solid var(--accent-dark); box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 3rem; transition: border-color 0.8s; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); border: 3px solid var(--accent-dark); transition: border-color 0.8s; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* TEMAS CLIMÁTICOS */
+        body.theme-sol {
+            --primary: #D35400;
+            --accent-dark: #F39C12;
+            --text-dark: #4A235A;
+            --bg-light: #FFFDE7;
+            --card-bg: rgba(255, 253, 231, 0.95);
+            --card-border: rgba(243, 156, 18, 0.4);
+        }
+        body.theme-sol .container {
+            box-shadow: 0 0 40px rgba(241, 196, 15, 0.4);
+            animation: sunPulse 3s infinite alternate;
+        }
+        @keyframes sunPulse {
+            0% { box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(243, 156, 18, 0.5); }
+        }
+
+        body.theme-chuva {
+            --primary: #1A5276;
+            --accent-dark: #2980B9;
+            --text-dark: #154360;
+            --bg-light: #E5E8E8;
+            --card-bg: rgba(235, 245, 251, 0.95);
+            --card-border: rgba(41, 128, 185, 0.4);
+        }
+        .rain-drop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(41, 128, 185, 0.7));
+            width: 2px;
+            height: 25px;
+            opacity: 0.7;
+            animation: rainFall linear infinite;
+        }
+        @keyframes rainFall {
+            0% { transform: translateY(-30px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        body.theme-tempestade {
+            --primary: #E5E8E8;
+            --accent-dark: #F4D03F;
+            --text-dark: #BDC3C7;
+            --bg-light: #1C2833;
+            --card-bg: rgba(30, 44, 57, 0.96);
+            --card-border: rgba(244, 208, 63, 0.3);
+        }
+        body.theme-tempestade nav { background: rgba(28, 40, 51, 0.96); }
+        body.theme-tempestade .nav-links a { color: #E5E8E8; }
+        body.theme-tempestade .menu-card, body.theme-tempestade .gallery-card { background: #273746; }
+        body.theme-tempestade .gallery-card p { color: #ABB2B9; }
+        
+        .lightning-flash { animation: lightning 5s infinite; }
+        @keyframes lightning {
+            0%, 90%, 94%, 98%, 100% { background-color: #1C2833; }
+            92%, 96% { background-color: #34495E; }
+        }
+
+        body.theme-neve {
+            --primary: #2C3E50;
+            --accent-dark: #5DADE2;
+            --text-dark: #34495E;
+            --bg-light: #EBF5FB;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --card-border: rgba(93, 173, 226, 0.4);
+        }
+        .snowflake {
+            position: absolute;
+            color: #AED6F1;
+            font-size: 1rem;
+            user-select: none;
+            animation: snowFall linear infinite;
+        }
+        @keyframes snowFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        body.theme-seca {
+            --primary: #78281F;
+            --accent-dark: #E67E22;
+            --text-dark: #4A235A;
+            --bg-light: #F5EBE0;
+            --card-bg: rgba(250, 240, 230, 0.96);
+            --card-border: rgba(230, 126, 34, 0.4);
+        }
+        .heat-wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(230, 126, 34, 0.05), transparent);
+            animation: heatHaze 2s ease-in-out infinite alternate;
+        }
+        @keyframes heatHaze {
+            0% { transform: scaleY(1) translateY(0); }
+            100% { transform: scaleY(1.02) translateY(-5px); }
+        }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); } }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="weather-overlay"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
+        <ul class="nav-links">
+            <li><a href="historia.html">História</a></li>
+            <li><a href="geografia.html">Geografia</a></li>
+            <li><a href="indicadores.html">Indicadores</a></li>
+            <li><a href="infraestrutura.html">Infraestrutura</a></li>
+            <li><a href="localizacao.html">Localização</a></li>
+            <li class="weather-dropdown">
+                <button class="weather-btn" id="weatherToggleBtn" title="Mudar tema do clima">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div class="weather-menu" id="weatherMenu">
+                    <button onclick="setWeatherTheme('default')"><i class="fa-solid fa-rotate-left"></i> Padrão</button>
+                    <button onclick="setWeatherTheme('theme-sol')"><i class="fa-solid fa-sun" style="color: #f39c12;"></i> Ensolarado</button>
+                    <button onclick="setWeatherTheme('theme-chuva')"><i class="fa-solid fa-cloud-rain" style="color: #3498db;"></i> Chuvoso</button>
+                    <button onclick="setWeatherTheme('theme-tempestade')"><i class="fa-solid fa-cloud-bolt" style="color: #2c3e50;"></i> Tempestade</button>
+                    <button onclick="setWeatherTheme('theme-neve')"><i class="fa-solid fa-snowflake" style="color: #74b9ff;"></i> Neve</button>
+                    <button onclick="setWeatherTheme('theme-seca')"><i class="fa-solid fa-wind" style="color: #e67e22;"></i> Seca</button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="main-header">
+            <h1>GeoGraça</h1>
+            <div class="slogan">“GeoGraça não é Ave-Maria, mas é cheia de graça!”</div>
+            <p class="subtitle">Portal Geográfico, Histórico e Turístico de Santo Antônio da Platina - PR</p>
+            <div class="title-divider"></div>
+        </div>
+
+        <div class="hero-banner">
+            <h2 style="font-family: 'Cinzel'; font-size: 2.2rem; margin: 0 0 10px 0;">Capital do Norte Pioneiro</h2>
+            <p>Descubra a riqueza histórica, a exuberância natural, o agronegócio de ponta e a posição logística privilegiada de Santo Antônio da Platina.</p>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-compass"></i> Explore por Categoria</h3>
+        <div class="menu-grid">
+            <a href="historia.html" class="menu-card">
+                <i class="fa-solid fa-landmark"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">História</h3>
+            </a>
+            <a href="geografia.html" class="menu-card">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Geografia</h3>
+            </a>
+            <a href="indicadores.html" class="menu-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Indicadores</h3>
+            </a>
+            <a href="infraestrutura.html" class="menu-card">
+                <i class="fa-solid fa-building-columns"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Infraestrutura</h3>
+            </a>
+            <a href="localizacao.html" class="menu-card">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3 style="font-family: 'Cinzel'; margin: 0; color: var(--primary);">Localização</h3>
+            </a>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-camera"></i> Pontos de Destaque</h3>
+        <div class="photo-gallery">
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1548625361-1851e3a1d471?auto=format&fit=crop&w=600&q=80" alt="Igreja Matriz" onerror="this.src='https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Igreja Matriz Santo Antônio</h4>
+                    <p style="margin:0; font-size: 0.95rem;">Construída em estilo românico no Marco Zero da cidade.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Morro do Bim" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Morro do Bim</h4>
+                    <p style="margin:0; font-size: 0.95rem;">Ponto mais alto com vista panorâmica do município.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Terra Roxa" onerror="this.src='https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=600&q=80'">
+                <div>
+                    <h4 style="font-family: 'Cinzel'; color: var(--primary); margin: 0 0 8px 0;">Campos Agrícolas</h4>
+                    <p style="margin:0; font-size: 0.95rem;">Solos férteis de Terra Roxa impulsionando a agricultura.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title"><i class="fa-solid fa-map"></i> Mapa Interativo Inicial</h3>
+        <div id="map-home"></div>
+
+        <h3 class="section-title"><i class="fa-solid fa-video"></i> Apresentação em Vídeo</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map-home').setView([-23.295, -50.077], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var pontos = [
+            { lat: -23.2952, lng: -50.0772, title: "Igreja Matriz Santo Antônio", desc: "Marco Zero da cidade." },
+            { lat: -23.2875, lng: -50.0710, title: "Morro do Bim", desc: "Mirante da Cidade e Cristo." },
+            { lat: -23.2910, lng: -50.0820, title: "Estação Ferroviária Histórica", desc: "Patrimônio Cultural." }
+        ];
+
+        pontos.forEach(function(p) {
+            L.marker([p.lat, p.lng]).addTo(map).bindPopup("<b>" + p.title + "</b><br>" + p.desc);
+        });
+
+        const weatherToggleBtn = document.getElementById('weatherToggleBtn');
+        const weatherMenu = document.getElementById('weatherMenu');
+        const overlay = document.getElementById('weather-overlay');
+
+        weatherToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            weatherMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            weatherMenu.classList.remove('show');
+        });
+
+        function setWeatherTheme(themeClass) {
+            document.body.className = themeClass === 'default' ? '' : themeClass;
+            weatherMenu.classList.remove('show');
+            overlay.innerHTML = '';
+
+            if (themeClass === 'theme-chuva') {
+                for (let i = 0; i < 40; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = Math.random() * 100 + 'vw';
+                    drop.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+                    drop.style.animationDelay = Math.random() * 2 + 's';
+                    overlay.appendChild(drop);
+                }
+            } else if (themeClass === 'theme-neve') {
+                const flakes = ['❄', '❅', '❆'];
+                for (let i = 0; i < 30; i++) {
+                    const flake = document.createElement('div');
+                    flake.className = 'snowflake';
+                    flake.innerText = flakes[Math.floor(Math.random() * flakes.length)];
+                    flake.style.left = Math.random() * 100 + 'vw';
+                    flake.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    flake.style.animationDelay = Math.random() * 3 + 's';
+                    flake.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
+                    overlay.appendChild(flake);
+                }
+            } else if (themeClass === 'theme-tempestade') {
+                document.body.classList.add('lightning-flash');
+            } else if (themeClass === 'theme-seca') {
+                const heat = document.createElement('div');
+                heat.className = 'heat-wave';
+                overlay.appendChild(heat);
+            }
+        }
+    </script>
+    <script src="script.js" defer></script>
+</body>
+</html>
