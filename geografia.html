@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia - GeoGraça</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A261D;
+            --accent-dark: #B8860B;
+            --bg-light: #F8F7F2;
+            --text-dark: #2C3531;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-border: rgba(184, 134, 11, 0.3);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8860b' fill-opacity='0.12'%3E%3Cpath d='M30 20 a 10 10 0 1 0 0.001 0 Z M30 14 a 16 16 0 1 1 -0.001 0 Z'/%3E%3Cpolygon points='30,22 35,32 30,29 25,32'/%3E%3Cpath d='M95 20 h20 v16 h-20 z M95 24 h16 v2 h-16 z M95 29 h12 v2 h-12 z'/%3E%3Cpath d='M20 90 h6 v20 h-6 z M30 80 h6 v30 h-6 z M40 98 h6 v12 h-6 z'/%3E%3Ccircle cx='105' cy='100' r='12' stroke='%23b8860b' stroke-width='2' fill='none'/%3E%3Cpath d='M93 100 h24 M105 88 v24' stroke='%23b8860b' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text-dark);
+            margin: 0;
+            padding-top: 90px;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1rem 8%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(248, 247, 242, 0.96); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 2px solid var(--accent-dark); box-sizing: border-box;
+            transition: all 0.5s ease;
+        }
+
+        .logo { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; margin: 0; padding: 0; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-dark); }
+
+        .weather-dropdown { position: relative; }
+        .weather-btn {
+            background: transparent; border: none; font-size: 1.3rem; color: var(--text-dark);
+            cursor: pointer; padding: 5px 10px; border-radius: 50%; transition: all 0.3s;
+        }
+        .weather-btn:hover { background: rgba(184, 134, 11, 0.15); color: var(--accent-dark); }
+        .dropdown-menu {
+            display: none; position: absolute; right: 0; top: 120%; background: var(--card-bg); border: 1px solid var(--accent-dark);
+            border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); min-width: 170px; z-index: 1001; overflow: hidden;
+        }
+        .dropdown-menu.show { display: block; animation: popIn 0.3s ease; }
+        .dropdown-menu button {
+            width: 100%; background: none; border: none; padding: 10px 15px; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;
+        }
+        .dropdown-menu button:hover { background: rgba(184, 134, 11, 0.2); color: var(--accent-dark); }
+
+        #weather-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+
+        /* TEMAS DINÂMICOS DE CLIMA */
+        body.rainy {
+            --bg-light: #1e293b;
+            --text-dark: #e2e8f0;
+            --primary: #94a3b8;
+            --accent-dark: #38bdf8;
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(56, 189, 248, 0.3);
+        }
+        body.snowy {
+            --bg-light: #e0f2fe;
+            --text-dark: #0f172a;
+            --primary: #0369a1;
+            --accent-dark: #0284c7;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(2, 132, 199, 0.3);
+        }
+        body.stormy {
+            --bg-light: #0f172a;
+            --text-dark: #f1f5f9;
+            --primary: #cbd5e1;
+            --accent-dark: #facc15;
+            --card-bg: rgba(15, 23, 42, 0.94);
+            --card-border: rgba(250, 204, 21, 0.3);
+        }
+        body.drought {
+            --bg-light: #2c1d11;
+            --text-dark: #fef08a;
+            --primary: #fde047;
+            --accent-dark: #f97316;
+            --card-bg: rgba(44, 29, 17, 0.92);
+            --card-border: rgba(249, 115, 22, 0.4);
+        }
+
+        .rain-drop, .snow-flake, .dust-particle { position: absolute; pointer-events: none; }
+        .rain-drop { width: 1px; height: 18px; background: rgba(56, 189, 248, 0.7); animation: fall linear infinite; }
+        .snow-flake { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: fall linear infinite; }
+        .dust-particle { width: 4px; height: 4px; background: rgba(249, 115, 22, 0.5); border-radius: 50%; animation: floatDust linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
+        @keyframes floatDust { 
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
+        @keyframes flashLightning {
+            0%, 90%, 100% { background-color: var(--bg-light); }
+            92%, 96% { background-color: #38bdf8; }
+        }
+        body.stormy { animation: flashLightning 7s infinite; }
+
+        .container {
+            max-width: 1100px; margin: 2rem auto; padding: 3rem; background: var(--card-bg); border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid var(--card-border); animation: fadeInUp 0.8s ease-out;
+            transition: all 0.5s ease;
+        }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem; color: var(--accent-dark); font-weight: bold; text-decoration: none; transition: transform 0.3s; }
+        .btn-back:hover { transform: translateX(-5px); }
+
+        .banner-header {
+            background: linear-gradient(rgba(26, 38, 29, 0.82), rgba(26, 38, 29, 0.82)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; color: #fff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; border-left: 6px solid var(--accent-dark);
+        }
+
+        .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .geo-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.8rem; transition: all 0.3s ease;
+        }
+        .geo-card:hover { transform: translateY(-5px); border-color: var(--accent-dark); }
+        .geo-card i { font-size: 2rem; color: var(--accent-dark); margin-bottom: 1rem; }
+        .geo-card h3 { font-family: 'Cinzel', serif; color: var(--accent-dark); margin: 0 0 10px 0; }
+        .geo-card p { margin: 0; line-height: 1.6; }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="weather-overlay"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-earth-americas" style="color: var(--accent-dark);"></i> GeoGraça
+        </a>
+        <ul class="nav-links">
+            <li><a href="historia.html">História</a></li>
+            <li><a href="geografia.html" class="active">Geografia</a></li>
+            <li><a href="indicadores.html">Indicadores</a></li>
+            <li><a href="infraestrutura.html">Infraestrutura</a></li>
+            <li><a href="localizacao.html">Localização</a></li>
+            <li class="weather-dropdown">
+                <button class="weather-btn" id="weatherToggle"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                <div class="dropdown-menu" id="weatherMenu">
+                    <button onclick="setWeather('clear')"><i class="fa-solid fa-sun" style="color: #f39c12;"></i> Ensolarado</button>
+                    <button onclick="setWeather('rain')"><i class="fa-solid fa-cloud-showers-heavy" style="color: #3498db;"></i> Chuva</button>
+                    <button onclick="setWeather('snow')"><i class="fa-solid fa-snowflake" style="color: #81ecec;"></i> Neve</button>
+                    <button onclick="setWeather('storm')"><i class="fa-solid fa-bolt" style="color: #f1c40f;"></i> Tempestade</button>
+                    <button onclick="setWeather('drought')"><i class="fa-solid fa-temperature-high" style="color: #e67e22;"></i> Seca</button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Início</a>
+
+        <div class="banner-header">
+            <h1 style="font-family: 'Cinzel'; margin: 0;">GEOGRAFIA & CLIMA</h1>
+            <p style="margin: 10px 0 0 0; color: var(--accent);">Relevo, hidrografia e ecossistemas da região</p>
+        </div>
+
+        <div class="geo-grid">
+            <div class="geo-card">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <h3>Relevo e Solo</h3>
+                <p>Planalto ondulado com solos de altíssima fertilidade (Terra Roxa), excelentes para agricultura de precisão.</p>
+            </div>
+            <div class="geo-card">
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+                <h3>Clima Subtropical</h3>
+                <p>Cfa de Köppen: Verões quentes e chuvosos e invernos brandos com geadas ocasionais.</p>
+            </div>
+            <div class="geo-card">
+                <i class="fa-solid fa-water"></i>
+                <h3>Hidrografia</h3>
+                <p>Bacia hidrográfica rica com rios permanentes que alimentam reservatórios regionais.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weatherToggle = document.getElementById('weatherToggle');
+        const weatherMenu = document.getElementById('weatherMenu');
+        const weatherOverlay = document.getElementById('weather-overlay');
+
+        weatherToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            weatherMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            weatherMenu.classList.remove('show');
+        });
+
+        function clearWeather() {
+            document.body.className = '';
+            weatherOverlay.innerHTML = '';
+        }
+
+        function setWeather(type) {
+            clearWeather();
+            if (type === 'rain') {
+                document.body.classList.add('rainy');
+                for (let i = 0; i < 60; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+                    drop.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(drop);
+                }
+            } else if (type === 'snow') {
+                document.body.classList.add('snowy');
+                for (let i = 0; i < 50; i++) {
+                    const flake = document.createElement('div');
+                    flake.className = 'snow-flake';
+                    flake.style.left = `${Math.random() * 100}vw`;
+                    flake.style.animationDuration = `${2 + Math.random() * 3}s`;
+                    flake.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(flake);
+                }
+            } else if (type === 'storm') {
+                document.body.classList.add('stormy');
+                for (let i = 0; i < 80; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDuration = `${0.3 + Math.random() * 0.3}s`;
+                    drop.style.animationDelay = `${Math.random()}s`;
+                    weatherOverlay.appendChild(drop);
+                }
+            } else if (type === 'drought') {
+                document.body.classList.add('drought');
+                for (let i = 0; i < 40; i++) {
+                    const dust = document.createElement('div');
+                    dust.className = 'dust-particle';
+                    dust.style.left = `${Math.random() * 100}vw`;
+                    dust.style.animationDuration = `${3 + Math.random() * 4}s`;
+                    dust.style.animationDelay = `${Math.random() * 2}s`;
+                    weatherOverlay.appendChild(dust);
+                }
+            }
+        }
+    </script>
+    <script src="script.js" defer></script>
+<section class="gg-research-section"><div class="gg-section-head"><span class="gg-eyebrow">TERRITÓRIO E PAISAGEM</span><h2>Geografia física e humana</h2><p>O município deve ser estudado relacionando relevo, águas, clima, uso do solo, população e atividades econômicas.</p></div><div class="gg-info-grid"><article><h3>🗺️ Área e organização do território</h3><p>O IBGE registra área territorial de 720,385 km² (referência 2025). O território inclui sede urbana e áreas rurais. Mapas municipais permitem observar limites, estradas, drenagem e núcleos habitados, mas a cartografia de 2020/2021 pode não refletir todas as mudanças recentes.</p></article><article><h3>🌧️ Clima e estações</h3><p>Como município do Norte Pioneiro paranaense, Santo Antônio da Platina tem variações sazonais de temperatura e precipitação. Para valores médios e alertas atuais, use séries meteorológicas oficiais; não confunda médias climáticas com previsão do tempo de um dia específico.</p></article><article><h3>💧 Hidrografia</h3><p>Os cursos d’água são importantes para abastecimento, drenagem, biodiversidade e atividades rurais. Nascentes e margens precisam de proteção vegetal. A ocupação de áreas sujeitas a alagamento deve considerar mapas de risco e orientações da Defesa Civil.</p></article><article><h3>🌾 Uso do solo</h3><p>O espaço rural combina propriedades, lavouras, pastagens e áreas naturais em proporções que variam. A conservação do solo, as curvas de nível onde adequadas, a cobertura vegetal e a proteção das margens reduzem erosão e perda de sedimentos.</p></article><article><h3>🏙️ Geografia urbana</h3><p>A cidade concentra comércio, serviços, equipamentos públicos e circulação de pessoas. Questões importantes incluem expansão urbana, calçadas acessíveis, arborização, drenagem, segurança viária e acesso equilibrado aos serviços entre centro e bairros.</p></article><article><h3>🌎 Relações regionais</h3><p>Santo Antônio da Platina participa da rede de cidades do Norte Pioneiro e mantém relações de deslocamento por trabalho, estudo, comércio, saúde e serviços com municípios próximos. A intensidade desses fluxos deve ser medida com dados de transporte, emprego e atendimento regional.</p></article></div><div class="gg-source-box"><h3>Mapas e dados geográficos</h3><ul><li><a href="https://geoftp.ibge.gov.br/cartas_e_mapas/mapas_municipais/colecao_de_mapas_municipais/2020/PR/santo_antonio_da_platina/4124103_MM.pdf" target="_blank" rel="noopener noreferrer">Mapa municipal do IBGE</a></li><li><a href="https://www.ibge.gov.br/cidades-e-estados/pr/santo-antonio-da-platina.html" target="_blank" rel="noopener noreferrer">IBGE — território e indicadores</a></li><li><a href="https://www.ipardes.pr.gov.br/Pagina/Base-de-Dados-do-Estado" target="_blank" rel="noopener noreferrer">IPARDES — dados territoriais e ambientais</a></li></ul></div></section>
+</body>
+</html>
