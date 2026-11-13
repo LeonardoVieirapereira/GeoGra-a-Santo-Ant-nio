@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>História — GeoGraça</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i> GeoGraça
+    </a>
+    <ul class="nav-links">
+      <li><a href="historia.html" class="active">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li class="weather-dropdown">
+        <button class="weather-btn" id="weatherToggleBtn" type="button" aria-label="Abrir personalização visual" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="weather-menu" id="weatherMenu">
+          <strong class="weather-menu-title">Personalização visual</strong>
+          <p class="weather-menu-note">Escolha uma cor e um fenômeno natural para o site inteiro.</p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="gg-page-topbar">
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Início</a>
+      <nav class="gg-breadcrumb" aria-label="Caminho da página">
+        <a href="index.html">Início</a> <span>/</span> <strong>História</strong>
+      </nav>
+    </div>
+
+    <div class="banner-header" style="background-image: linear-gradient(rgba(22, 34, 26, 0.84), rgba(22, 34, 26, 0.84)), url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');">
+      <span class="gg-hero-kicker">FORMAÇÃO TERRITORIAL E CULTURA</span>
+      <h1>HISTÓRIA & PATRIMÔNIO</h1>
+      <p>Das rotas tropeiras e do ciclo do café à emancipação política e à construção da identidade platinense.</p>
+    </div>
+
+    <nav class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#linha-tempo"><i class="fa-solid fa-timeline" aria-hidden="true"></i> Linha do tempo</a>
+      <a href="#ciclos"><i class="fa-solid fa-train" aria-hidden="true"></i> Café e ferrovia</a>
+      <a href="#origem-nome"><i class="fa-solid fa-scroll" aria-hidden="true"></i> Origem do nome</a>
+      <a href="#fontes-historia"><i class="fa-solid fa-book" aria-hidden="true"></i> Documentação</a>
+    </nav>
+
+    <h2 id="linha-tempo" class="section-title"><i class="fa-solid fa-timeline" aria-hidden="true"></i> Marcos da Formação Municipal</h2>
+    <div class="gg-timeline">
+      <article>
+        <time>Final do século XIX</time>
+        <h3>Primeiros núcleos e caminhos</h3>
+        <p>Em um território originalmente habitado por povos indígenas da bacia do Paranapanema, o povoamento moderno teve início com a chegada de famílias pioneiras e tropeiros pelas rotas do Norte Pioneiro, formando um núcleo próximo ao Morro do Bim e aos ribeirões Boi Pintado e Aldeia.</p>
+      </article>
+      <article>
+        <time>1901</time>
+        <h3>Criação do distrito</h3>
+        <p>Com o crescimento das lavouras e do comércio local, foi criado em 1901 o distrito de Santo Antônio da Platina, então pertencente ao território administrativo de Jacarezinho.</p>
+      </article>
+      <article>
+        <time>31 de março de 1914</time>
+        <h3>Emancipação política</h3>
+        <p>A Lei Estadual nº 1.424 elevou o distrito à categoria de vila e desmembrou o novo município de Jacarezinho. A instalação oficial do município ocorreu em 20 de agosto de 1914, conforme os registros históricos do IBGE.</p>
+      </article>
+      <article>
+        <time>12 de abril de 1929</time>
+        <h3>Elevação à categoria de cidade</h3>
+        <p>A sede municipal recebeu o foro de cidade em 1929, impulsionada pelo dinamismo da cafeicultura, pela chegada dos trilhos ferroviários e pela ampliação dos equipamentos urbanos.</p>
+      </article>
+    </div>
+  </main>
+
+  <section id="ciclos" class="gg-research-section">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">MEMÓRIA E PATRIMÔNIO</span>
+      <h2>Ciclos econômicos e tradições locais</h2>
+      <p>A trajetória de Santo Antônio da Platina combina a fertilidade agrícola do Norte Pioneiro com a preservação de seu patrimônio arquitetônico e cultural.</p>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>☕ Ciclo do café e Terra Roxa</h3>
+        <p>A alta fertilidade dos solos de Terra Roxa atraiu migrantes de Minas Gerais, São Paulo e de outras regiões do Paraná, transformando a cafeicultura no principal motor econômico da primeira metade do século XX e estruturando fazendas, bairros rurais e o comércio urbano.</p>
+      </article>
+      <article>
+        <h3>🚂 Expansão ferroviária</h3>
+        <p>A chegada da ferrovia integrou Santo Antônio da Platina aos grandes centros consumidores e aos portos de exportação. A histórica Estação Ferroviária da Platina permanece como símbolo desse período de intenso fluxo de mercadorias e pessoas.</p>
+      </article>
+      <article id="origem-nome">
+        <h3>📜 Origem do nome</h3>
+        <p>Os registros históricos e a memória oral apontam duas inspirações complementares: a devoção católica a <strong>Santo Antônio</strong>, padroeiro da comunidade, e o termo <strong>Platina</strong>, associado tanto ao reflexo prateado das águas dos ribeirões locais quanto à antiga busca por metais preciosos na região.</p>
+      </article>
+      <article>
+        <h3>⛪ Arquitetura e fé</h3>
+        <p>A Igreja Matriz Santo Antônio, construída em estilo românico no Marco Zero, sintetiza a religiosidade e o esforço coletivo da população na edificação dos principais espaços públicos da cidade.</p>
+      </article>
+      <article>
+        <h3>⛰️ Paisagem histórica</h3>
+        <p>O entorno do Morro do Bim e dos ribeirões Boi Pintado e Aldeia guarda a relação direta entre a geografia natural e a escolha do sítio urbano onde se desenvolveu o centro histórico platinense.</p>
+      </article>
+      <article>
+        <h3>🗂️ Preservação da memória</h3>
+        <p>Fotografias, atas municipais, periódicos locais, acervos escolares e relatos de antigos moradores constituem fontes essenciais para compreender as transformações sociais e urbanas do município ao longo de mais de um século.</p>
+      </article>
+    </div>
+
+    <div id="fontes-historia" class="gg-source-box">
+      <h3>Documentação e fontes históricas</h3>
+      <ul>
+        <li><a href="https://www.santoantoniodaplatina.pr.gov.br/cidadao/pagina/historia" target="_blank" rel="noopener noreferrer">Prefeitura Municipal — História de Santo Antônio da Platina</a></li>
+        <li><a href="https://www.ibge.gov.br/biblioteca/visualizacao/dtb/parana/santoantoniodaplatina.pdf" target="_blank" rel="noopener noreferrer">IBGE — Histórico e formação administrativa (DTB)</a></li>
+        <li><a href="https://www.santoantoniodaplatina.pr.leg.br/institucional/noticias/2021/santo-antonio-da-platina-107-anos" target="_blank" rel="noopener noreferrer">Câmara Municipal — Registros da memória histórica local</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Portal Geográfico, Histórico e Cultural de Santo Antônio da Platina — PR</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
