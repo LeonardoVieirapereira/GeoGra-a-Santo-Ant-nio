@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoGraça — Santo Antônio da Platina - PR</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i> GeoGraça
+    </a>
+    <ul class="nav-links">
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li class="weather-dropdown">
+        <button class="weather-btn" id="weatherToggleBtn" type="button" aria-label="Abrir personalização visual" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="weather-menu" id="weatherMenu">
+          <strong class="weather-menu-title">Personalização visual</strong>
+          <p class="weather-menu-note">Escolha uma cor e um fenômeno natural para o site inteiro.</p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <header class="main-header">
+      <h1>GeoGraça</h1>
+      <div class="slogan">“GeoGraça não é Ave-Maria, mas é cheia de graça!”</div>
+      <p class="subtitle">Portal Geográfico, Histórico e Cultural de Santo Antônio da Platina — PR</p>
+      <div class="title-divider"></div>
+    </header>
+
+    <div class="hero-banner gg-hero-upgraded">
+      <span class="gg-hero-kicker">NORTE PIONEIRO • PARANÁ</span>
+      <h2>Santo Antônio da Platina</h2>
+      <p>Conheça a formação histórica, as paisagens naturais, os dados socioeconômicos, a infraestrutura regional e os marcos que constroem a identidade platinense.</p>
+      <div class="gg-hero-tags">
+        <span class="gg-hero-tag"><i class="fa-solid fa-users" aria-hidden="true"></i> 44.369 hab. (Censo 2022)</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-map" aria-hidden="true"></i> 720,385 km²</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-landmark" aria-hidden="true"></i> Emancipação em 1914</span>
+      </div>
+    </div>
+
+    <nav class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#categorias"><i class="fa-solid fa-compass" aria-hidden="true"></i> Categorias</a>
+      <a href="#destaques"><i class="fa-solid fa-camera" aria-hidden="true"></i> Pontos de destaque</a>
+      <a href="#mapa-inicial"><i class="fa-solid fa-map" aria-hidden="true"></i> Mapa inicial</a>
+      <a href="#video-apresentacao"><i class="fa-solid fa-video" aria-hidden="true"></i> Vídeo</a>
+      <a href="#guia-completo"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Panorama municipal</a>
+    </nav>
+
+    <h3 id="categorias" class="section-title"><i class="fa-solid fa-compass" aria-hidden="true"></i> Explore por Categoria</h3>
+    <div class="menu-grid">
+      <a href="historia.html" class="menu-card">
+        <i class="fa-solid fa-landmark" aria-hidden="true"></i>
+        <h3>História</h3>
+        <span>Origens, ciclo do café, ferrovia e formação política</span>
+      </a>
+      <a href="geografia.html" class="menu-card">
+        <i class="fa-solid fa-mountain-sun" aria-hidden="true"></i>
+        <h3>Geografia</h3>
+        <span>Relevo de Terra Roxa, clima Cfa e bacias hidrográficas</span>
+      </a>
+      <a href="indicadores.html" class="menu-card">
+        <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
+        <h3>Indicadores</h3>
+        <span>População, IDHM, escolarização e PIB per capita</span>
+      </a>
+      <a href="infraestrutura.html" class="menu-card">
+        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+        <h3>Infraestrutura</h3>
+        <span>Saúde regional, ensino técnico, BR-153 e saneamento</span>
+      </a>
+      <a href="localizacao.html" class="menu-card">
+        <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+        <h3>Localização</h3>
+        <span>Coordenadas, mapa interativo e distâncias regionais</span>
+      </a>
+    </div>
+
+    <h3 id="destaques" class="section-title"><i class="fa-solid fa-camera" aria-hidden="true"></i> Pontos de Destaque</h3>
+    <div class="photo-gallery">
+      <article class="gallery-card">
+        <img src="https://www.santoantoniodaplatina.pr.leg.br/institucional/fotos/2021/a-minha-sap-e-assim/01.jpg/@@images/image" alt="Igreja Matriz Santo Antônio em Santo Antônio da Platina" onerror="this.src='https://www.santoantoniodaplatina.pr.leg.br/institucional/fotos/2021/a-minha-sap-e-assim/02.JPG/@@images/image'">
+        <div>
+          <h4>Igreja Matriz Santo Antônio</h4>
+          <p>Erguida em estilo românico no Marco Zero da cidade, é referência arquitetônica, religiosa e afetiva da comunidade platinense.</p>
+        </div>
+      </article>
+      <article class="gallery-card">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Morro%20do%20Bim.jpg" alt="Vista do Morro do Bim em Santo Antônio da Platina" onerror="this.src='https://www.santoantoniodaplatina.pr.leg.br/institucional/fotos/2021/a-minha-sap-e-assim/15.jpg/@@images/image'">
+        <div>
+          <h4>Morro do Bim</h4>
+          <p>Elevação emblemática ligada à fundação do povoado, oferecendo vista panorâmica da área urbana e da paisagem rural do entorno.</p>
+        </div>
+      </article>
+      <article class="gallery-card">
+        <img src="https://www.santoantoniodaplatina.pr.leg.br/institucional/fotos/2021/a-minha-sap-e-assim/03.jpg/@@images/image" alt="Estação Ferroviária da Platina, patrimônio histórico local" onerror="this.src='https://www.santoantoniodaplatina.pr.leg.br/institucional/fotos/2021/a-minha-sap-e-assim/17.jpg/@@images/image'">
+        <div>
+          <h4>Estação Ferroviária da Platina</h4>
+          <p>Marco do ciclo cafeeiro e da integração ferroviária que impulsionou o desenvolvimento econômico do Norte Pioneiro do Paraná.</p>
+        </div>
+      </article>
+    </div>
+
+    <h3 id="mapa-inicial" class="section-title"><i class="fa-solid fa-map" aria-hidden="true"></i> Mapa Interativo Inicial</h3>
+    <div id="map-home"></div>
+
+    <h3 id="video-apresentacao" class="section-title"><i class="fa-solid fa-video" aria-hidden="true"></i> Apresentação em Vídeo</h3>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/u_ed9mKAYJI" title="Santo Antônio da Platina Paraná" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </main>
+
+  <section class="gg-research-section" id="guia-completo">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">GUIA MUNICIPAL</span>
+      <h2>Santo Antônio da Platina: panorama completo</h2>
+      <p>Síntese organizada sobre o território, a demografia, a economia, os serviços públicos e a identidade cultural do município paranaense.</p>
+    </div>
+
+    <div class="gg-fact-grid">
+      <article class="gg-fact">
+        <span>População (Censo 2022)</span>
+        <strong>44.369</strong>
+        <small>habitantes — IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>Área territorial</span>
+        <strong>720,385 km²</strong>
+        <small>referência territorial IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>Densidade demográfica</span>
+        <strong>61,50 hab/km²</strong>
+        <small>Censo 2022 — IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>PIB per capita</span>
+        <strong>R$ 41.422,70</strong>
+        <small>ano-base 2023 — IBGE</small>
+      </article>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>📍 Identidade e localização</h3>
+        <p>Situada no Norte Pioneiro do Paraná, Santo Antônio da Platina tem como gentílico <strong>platinense</strong>. Seu território reúne bairros urbanos consolidados, comunidades rurais produtivas, cursos d’água da bacia do Paranapanema/Cinzas e áreas remanescentes de Mata Atlântica.</p>
+      </article>
+      <article>
+        <h3>🏛️ Administração e cidadania</h3>
+        <p>A organização institucional do município é exercida pela Prefeitura Municipal (Poder Executivo) e pela Câmara Municipal (Poder Legislativo). Os portais oficiais concentram serviços digitais, legislação, licitações, atendimentos de ouvidoria e dados de transparência pública.</p>
+      </article>
+      <article>
+        <h3>🌱 Economia e trabalho</h3>
+        <p>A base econômica local articula comércio e prestação de serviços de alcance regional com forte produção agropecuária — beneficiada pela fertilidade da Terra Roxa — além de agroindústrias e pequenas e médias empresas instaladas ao longo do eixo da BR-153.</p>
+      </article>
+      <article>
+        <h3>🎓 Educação e formação</h3>
+        <p>O município conta com rede de educação básica municipal e estadual e atinge <strong>99,04% de escolarização</strong> na faixa de 6 a 14 anos (IBGE, Censo 2022). Também oferece ensino técnico e superior por meio do campus do IFPR e de instituições universitárias da região.</p>
+      </article>
+      <article>
+        <h3>🏥 Saúde e bem-estar</h3>
+        <p>Integrada ao Sistema Único de Saúde (SUS), a rede local abrange Unidades Básicas de Saúde nos bairros, ações de vigilância epidemiológica e atendimento especializado de referência no Hospital Regional do Norte Pioneiro, que atende moradores de dezenas de municípios vizinhos.</p>
+      </article>
+      <article>
+        <h3>🚌 Mobilidade e infraestrutura</h3>
+        <p>A ligação entre a sede urbana, os distritos rurais e os centros regionais é estruturada pela Rodovia Transbrasiliana (BR-153) e por rodovias estaduais, apoiada por redes de abastecimento de água, energia elétrica, telecomunicações e equipamentos comunitários.</p>
+      </article>
+      <article>
+        <h3>🌳 Ambiente e recursos naturais</h3>
+        <p>Inserido no bioma Mata Atlântica, o município possui nascentes, ribeirões e áreas de drenagem onde a preservação das matas ciliares, o manejo conservacionista do solo e a drenagem urbana são fundamentais para equilibrar produção agrícola e conservação ambiental.</p>
+      </article>
+      <article>
+        <h3>🎭 Cultura, memória e comunidade</h3>
+        <p>A vida cultural platinense expressa-se em celebrações religiosas tradicionais, eventos agropecuários como a Expo-EFAPI, espaços históricos preservados e iniciativas escolares e comunitárias que mantêm viva a memória das gerações pioneiras.</p>
+      </article>
+    </div>
+
+    <div class="gg-source-box">
+      <h3>Fontes oficiais para aprofundar a pesquisa</h3>
+      <ul>
+        <li><a href="https://www.ibge.gov.br/cidades-e-estados/pr/santo-antonio-da-platina.html" target="_blank" rel="noopener noreferrer">IBGE — Cidades e Estados: indicadores municipais</a></li>
+        <li><a href="https://www.santoantoniodaplatina.pr.gov.br/" target="_blank" rel="noopener noreferrer">Prefeitura Municipal — serviços, notícias e transparência</a></li>
+        <li><a href="https://www.santoantoniodaplatina.pr.gov.br/cidadao/pagina/historia" target="_blank" rel="noopener noreferrer">Prefeitura — história do município</a></li>
+        <li><a href="https://www.ipardes.pr.gov.br/Pagina/Base-de-Dados-do-Estado" target="_blank" rel="noopener noreferrer">IPARDES — Base de Dados do Estado do Paraná</a></li>
+        <li><a href="https://geoftp.ibge.gov.br/cartas_e_mapas/mapas_municipais/colecao_de_mapas_municipais/2020/PR/santo_antonio_da_platina/4124103_MM.pdf" target="_blank" rel="noopener noreferrer">IBGE — mapa municipal em PDF</a></li>
+      </ul>
+      <p class="gg-data-note">Nota metodológica: os indicadores apresentados utilizam o ano de referência mais recente publicado por cada órgão oficial (Censo Demográfico 2022, PIB Municipal 2023 e Base Territorial IBGE).</p>
+    </div>
+  </section>
+
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Portal Geográfico, Histórico e Cultural de Santo Antônio da Platina — PR</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map-home').setView([-23.295, -50.077], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var pontos = [
+      { lat: -23.2952, lng: -50.0772, title: 'Igreja Matriz Santo Antônio', desc: 'Marco Zero da cidade.' },
+      { lat: -23.2875, lng: -50.0710, title: 'Morro do Bim', desc: 'Mirante panorâmico do município.' },
+      { lat: -23.2910, lng: -50.0820, title: 'Estação Ferroviária da Platina', desc: 'Patrimônio histórico e ferroviário.' }
+    ];
+
+    pontos.forEach(function (p) {
+      L.marker([p.lat, p.lng]).addTo(map).bindPopup('<b>' + p.title + '</b><br>' + p.desc);
+    });
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
