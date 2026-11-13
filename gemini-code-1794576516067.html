@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indicadores — GeoGraça</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i> GeoGraça
+    </a>
+    <ul class="nav-links">
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html" class="active">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li class="weather-dropdown">
+        <button class="weather-btn" id="weatherToggleBtn" type="button" aria-label="Abrir personalização visual" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="weather-menu" id="weatherMenu">
+          <strong class="weather-menu-title">Personalização visual</strong>
+          <p class="weather-menu-note">Escolha uma cor e um fenômeno natural para o site inteiro.</p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="gg-page-topbar">
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Início</a>
+      <nav class="gg-breadcrumb" aria-label="Caminho da página">
+        <a href="index.html">Início</a> <span>/</span> <strong>Indicadores</strong>
+      </nav>
+    </div>
+
+    <div class="banner-header" style="background-image: linear-gradient(rgba(22, 34, 26, 0.84), rgba(22, 34, 26, 0.84)), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80');">
+      <span class="gg-hero-kicker">DEMOGRAFIA, EDUCAÇÃO E ECONOMIA</span>
+      <h1>INDICADORES SOCIOECONÔMICOS</h1>
+      <p>Estatísticas oficiais do IBGE e do IPARDES sobre população, desenvolvimento humano, escolarização e produção econômica.</p>
+    </div>
+
+    <nav class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#painel-numeros"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Painel de dados</a>
+      <a href="#leitura-indicadores"><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i> Análise por dimensão</a>
+      <a href="#fontes-indicadores"><i class="fa-solid fa-database" aria-hidden="true"></i> Bases oficiais</a>
+    </nav>
+
+    <h2 id="painel-numeros" class="section-title"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Principais Indicadores Oficiais</h2>
+    <div class="gg-fact-grid">
+      <article class="gg-fact">
+        <span>População (Censo 2022)</span>
+        <strong>44.369</strong>
+        <small>habitantes — IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>Estimativa populacional</span>
+        <strong>45.730</strong>
+        <small>projeção IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>Escolarização (6 a 14 anos)</span>
+        <strong>99,04%</strong>
+        <small>taxa bruta — IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>IDHM (Alto Desenvolvimento)</span>
+        <strong>0,718</strong>
+        <small>base censitária 2010 — PNUD/IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>PIB per capita</span>
+        <strong>R$ 41.422,70</strong>
+        <small>ano-base 2023 — IBGE</small>
+      </article>
+      <article class="gg-fact">
+        <span>Densidade demográfica</span>
+        <strong>61,50 hab/km²</strong>
+        <small>Censo 2022 — IBGE</small>
+      </article>
+    </div>
+  </main>
+
+  <section id="leitura-indicadores" class="gg-research-section">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">LEITURA SOCIOECONÔMICA</span>
+      <h2>O que revelam os dados do município</h2>
+      <p>Cada indicador ilumina uma dimensão específica da realidade platinense, sempre acompanhado de sua unidade de medida e ano de referência.</p>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>👥 População e densidade</h3>
+        <p>O Censo Demográfico de 2022 contabilizou <strong>44.369 moradores</strong> em Santo Antônio da Platina, resultando em densidade média de <strong>61,50 habitantes por km²</strong>, com a maior parcela concentrada na sede urbana e comunidades distribuídas pela zona rural.</p>
+      </article>
+      <article>
+        <h3>🎓 Escolarização básica</h3>
+        <p>A taxa de escolarização de crianças e adolescentes de 6 a 14 anos alcança <strong>99,04%</strong> segundo o IBGE, evidenciando ampla cobertura do ensino fundamental nas redes municipal, estadual e privada.</p>
+      </article>
+      <article>
+        <h3>📈 Desenvolvimento Humano (IDHM)</h3>
+        <p>O Índice de Desenvolvimento Humano Municipal é de <strong>0,718</strong> (referência 2010), situando Santo Antônio da Platina na faixa considerada de <strong>alto desenvolvimento humano</strong> ao combinar longevidade, educação e renda.</p>
+      </article>
+      <article>
+        <h3>💰 Produto Interno Bruto (PIB)</h3>
+        <p>Com <strong>PIB per capita de R$ 41.422,70</strong> (ano-base 2023, IBGE), o indicador reflete o valor total de bens e serviços produzidos no município dividido pelo número de habitantes.</p>
+      </article>
+      <article>
+        <h3>🌾 Estrutura produtiva</h3>
+        <p>A geração de riquezas e empregos apoia-se no setor de comércio e serviços — que atende também municípios vizinhos — na agropecuária diversificada e em indústrias locais ligadas ao processamento de alimentos e manufaturas.</p>
+      </article>
+      <article>
+        <h3>🏛️ Gestão fiscal e transparência</h3>
+        <p>O acompanhamento detalhado de receitas, investimentos em saúde e educação e execução orçamentária municipal pode ser consultado diretamente nos relatórios oficiais do Portal da Transparência e do IPARDES.</p>
+      </article>
+    </div>
+
+    <div id="fontes-indicadores" class="gg-source-box">
+      <h3>Bases estatísticas e fontes oficiais</h3>
+      <ul>
+        <li><a href="https://www.ibge.gov.br/cidades-e-estados/pr/santo-antonio-da-platina.html" target="_blank" rel="noopener noreferrer">IBGE — Cidades e Estados: Santo Antônio da Platina</a></li>
+        <li><a href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html?c=4124103&t=pib-por-municipio" target="_blank" rel="noopener noreferrer">IBGE — Produto Interno Bruto dos Municípios</a></li>
+        <li><a href="https://www.ipardes.pr.gov.br/Pagina/Base-de-Dados-do-Estado" target="_blank" rel="noopener noreferrer">IPARDES — Caderno Estatístico Municipal</a></li>
+        <li><a href="https://www.santoantoniodaplatina.pr.gov.br/" target="_blank" rel="noopener noreferrer">Prefeitura Municipal — Portal da Transparência</a></li>
+      </ul>
+      <p class="gg-data-note">Nota metodológica: os indicadores possuem períodos de apuração próprios definidos pelos institutos oficiais (Censo Demográfico 2022, Contas Regionais/PIB 2023 e Atlas do Desenvolvimento Humano 2010).</p>
+    </div>
+  </section>
+
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Portal Geográfico, Histórico e Cultural de Santo Antônio da Platina — PR</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
