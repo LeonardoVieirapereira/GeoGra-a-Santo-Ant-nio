@@ -48,7 +48,7 @@
 
     <nav class="gg-quick-nav" aria-label="Atalhos desta página">
       <a href="#caracteristicas-fisicas"><i class="fa-solid fa-mountain-sun" aria-hidden="true"></i> Síntese física</a>
-      <a href="#laboratorio-paisagem"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Laboratório da paisagem</a>
+      <a href="#laboratorio-paisagem"><i class="fa-solid fa-cube" aria-hidden="true"></i> Maquete 3D</a>
       <a href="#geografia-detalhada"><i class="fa-solid fa-water" aria-hidden="true"></i> Território e bacias</a>
     </nav>
 
@@ -74,25 +74,42 @@
 
   <section id="laboratorio-paisagem" class="gg-landscape-lab">
     <div class="gg-section-head">
-      <span class="gg-eyebrow">LABORATÓRIO INTERATIVO</span>
+      <span class="gg-eyebrow">MAQUETE INTERATIVA 3D</span>
       <h2>Explore a paisagem platinense</h2>
-      <p>Selecione cada camada para compreender como atmosfera, relevo, águas, uso rural e área urbana interagem no território.</p>
+      <p>Arraste para girar a maquete em 360°, aproxime com o zoom ou selecione cada camada para observar como clima, relevo, águas, uso rural e área urbana interagem.</p>
     </div>
-    <div class="gg-landscape-scene">
-      <div class="gg-layer gg-sky"><span>Atmosfera e clima</span><i class="gg-cloud"></i><i class="gg-cloud cloud-two"></i></div>
-      <div class="gg-layer gg-hills"><span>Relevo ondulado</span></div>
-      <div class="gg-layer gg-river"><span>Rede de drenagem</span></div>
-      <div class="gg-layer gg-fields"><span>Áreas rurais e vegetação</span></div>
-      <div class="gg-layer gg-city"><span>Área urbana</span></div>
+
+    <div class="gg-maquete-wrapper">
+      <div id="ggMaquete3D" class="gg-maquete-canvas" role="img" aria-label="Maquete 3D interativa do relevo, corte geológico, hidrografia, áreas rurais e área urbana de Santo Antônio da Platina">
+        <div id="ggMaquetePins" class="gg-maquete-pins"></div>
+
+        <div class="gg-maquete-hud">
+          <button type="button" id="ggCamRotate" class="active" aria-pressed="true" title="Ativar ou pausar rotação automática">
+            <i class="fa-solid fa-rotate" aria-hidden="true"></i> Girar
+          </button>
+          <button type="button" id="ggCamReset" title="Voltar à vista geral da maquete">
+            <i class="fa-solid fa-expand" aria-hidden="true"></i> Vista geral
+          </button>
+        </div>
+
+        <span class="gg-maquete-hint">
+          <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Arraste para girar • Pinça ou scroll para zoom
+        </span>
+      </div>
     </div>
+
     <div class="gg-landscape-tabs">
-      <button type="button" data-landscape="clima" class="active">☁️ Clima</button>
-      <button type="button" data-landscape="relevo">⛰️ Relevo</button>
-      <button type="button" data-landscape="agua">💧 Água</button>
-      <button type="button" data-landscape="uso">🌱 Uso do solo</button>
-      <button type="button" data-landscape="cidade">🏘️ Cidade</button>
+      <button type="button" data-maquete="geral" class="active">🌐 Vista geral</button>
+      <button type="button" data-maquete="clima">☁️ Clima</button>
+      <button type="button" data-maquete="relevo">⛰️ Relevo</button>
+      <button type="button" data-maquete="agua">💧 Água</button>
+      <button type="button" data-maquete="uso">🌱 Uso do solo</button>
+      <button type="button" data-maquete="cidade">🏘️ Cidade</button>
     </div>
-    <p class="gg-landscape-caption" aria-live="polite">O clima subtropical úmido (Cfa) influencia o regime de chuvas, a agricultura regional, a recarga dos mananciais e o conforto térmico ao longo das quatro estações.</p>
+
+    <p id="ggMaqueteCaption" class="gg-landscape-caption" aria-live="polite">
+      Vista panorâmica da maquete de Santo Antônio da Platina: observe o corte geológico com Terra Roxa e basalto, o Morro do Bim, a drenagem natural, as áreas rurais e a sede urbana.
+    </p>
   </section>
 
   <section id="geografia-detalhada" class="gg-research-section">
@@ -154,6 +171,15 @@
     </div>
   </footer>
 
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="maquete3d.js"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
