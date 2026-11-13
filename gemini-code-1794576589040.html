@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infraestrutura — GeoGraça</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i> GeoGraça
+    </a>
+    <ul class="nav-links">
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html" class="active">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li class="weather-dropdown">
+        <button class="weather-btn" id="weatherToggleBtn" type="button" aria-label="Abrir personalização visual" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="weather-menu" id="weatherMenu">
+          <strong class="weather-menu-title">Personalização visual</strong>
+          <p class="weather-menu-note">Escolha uma cor e um fenômeno natural para o site inteiro.</p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="gg-page-topbar">
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Início</a>
+      <nav class="gg-breadcrumb" aria-label="Caminho da página">
+        <a href="index.html">Início</a> <span>/</span> <strong>Infraestrutura</strong>
+      </nav>
+    </div>
+
+    <div class="banner-header" style="background-image: linear-gradient(rgba(22, 34, 26, 0.84), rgba(22, 34, 26, 0.84)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80');">
+      <span class="gg-hero-kicker">EQUIPAMENTOS, LOGÍSTICA E SERVIÇOS</span>
+      <h1>INFRAESTRUTURA & SERVIÇOS</h1>
+      <p>Saúde regional, formação técnica e superior, eixo rodoviário BR-153, saneamento e espaços de eventos.</p>
+    </div>
+
+    <nav class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#pilares-infra"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Pilares regionais</a>
+      <a href="#servicos-urbanos"><i class="fa-solid fa-faucet-drip" aria-hidden="true"></i> Saneamento e serviços</a>
+      <a href="#fontes-infra"><i class="fa-solid fa-link" aria-hidden="true"></i> Portais oficiais</a>
+    </nav>
+
+    <h2 id="pilares-infra" class="section-title"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Pilares de Infraestrutura Regional</h2>
+    <div class="infra-grid">
+      <div class="infra-card">
+        <i class="fa-solid fa-hospital-user" aria-hidden="true"></i>
+        <h3>Polo Regional de Saúde</h3>
+        <p>Com o Hospital Regional do Norte Pioneiro, unidades básicas e clínicas especializadas, oferece atendimento hospitalar e ambulatorial para a população local e de mais de 20 municípios da região.</p>
+      </div>
+
+      <div class="infra-card">
+        <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+        <h3>Educação & Ensino Técnico</h3>
+        <p>Abriga campus do IFPR (Instituto Federal do Paraná), instituições de ensino superior e polos universitários que ampliam a qualificação profissional no Norte Pioneiro.</p>
+      </div>
+
+      <div class="infra-card">
+        <i class="fa-solid fa-wheat-awn" aria-hidden="true"></i>
+        <h3>Parque de Exposições Expo-EFAPI</h3>
+        <p>Sede do Parque Alicio Dias dos Santos, palco da tradicional Expo-EFAPI, uma das maiores feiras agropecuárias, industriais e comerciais do interior paranaense.</p>
+      </div>
+
+      <div class="infra-card">
+        <i class="fa-solid fa-road" aria-hidden="true"></i>
+        <h3>Eixo Rodoviário BR-153</h3>
+        <p>Posição estratégica às margens da Rodovia Transbrasiliana (BR-153), facilitando o escoamento agroindustrial e a ligação logística entre São Paulo e o Sul do Brasil.</p>
+      </div>
+    </div>
+  </main>
+
+  <section id="servicos-urbanos" class="gg-research-section">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">SERVIÇOS ESSENCIAIS E QUALIDADE DE VIDA</span>
+      <h2>Saneamento, mobilidade e equipamentos públicos</h2>
+      <p>O funcionamento cotidiano da cidade depende da integração entre saneamento básico, conservação viária, energia, conectividade e atendimento comunitário.</p>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>🚰 Abastecimento de água e esgotamento</h3>
+        <p>O abastecimento público de água tratada é operado pela <strong>Sanepar</strong>, acompanhado pela rede de coleta e tratamento de esgoto sanitário, fundamentais para a saúde pública e a proteção dos ribeirões locais.</p>
+      </article>
+      <article>
+        <h3>🛣️ Malha viária e estradas rurais</h3>
+        <p>A conservação de avenidas, ruas urbanas e estradas vicinais garante o transporte escolar, o acesso aos serviços de saúde e o escoamento contínuo da produção agrícola das comunidades rurais.</p>
+      </article>
+      <article>
+        <h3>🚌 Mobilidade e acessibilidade</h3>
+        <p>Calçadas regulares, rampas de acessibilidade, sinalização viária, ciclovias e pontos de transporte coletivo contribuem para deslocamentos mais seguros para pedestres, estudantes, idosos e pessoas com deficiência.</p>
+      </article>
+      <article>
+        <h3>⚡ Energia e telecomunicações</h3>
+        <p>A infraestrutura de distribuição elétrica e redes de fibra óptica e telefonia móvel dá suporte ao comércio, às escolas, às unidades de saúde e às propriedades rurais conectadas.</p>
+      </article>
+      <article>
+        <h3>♻️ Resíduos sólidos e limpeza urbana</h3>
+        <p>A coleta regular de resíduos domiciliares, a coleta seletiva e a limpeza de vias e galerias pluviais mantêm a salubridade dos bairros e evitam o entupimento da drenagem em dias de chuva forte.</p>
+      </article>
+      <article>
+        <h3>🏛️ Espaços públicos e lazer</h3>
+        <p>Praças arborizadas, ginásios esportivos, centros culturais e equipamentos comunitários fortalecem a convivência social, a prática esportiva e as atividades educativas nos diferentes bairros.</p>
+      </article>
+    </div>
+
+    <div id="fontes-infra" class="gg-source-box">
+      <h3>Portais e indicadores de serviços públicos</h3>
+      <ul>
+        <li><a href="https://www.santoantoniodaplatina.pr.gov.br/" target="_blank" rel="noopener noreferrer">Prefeitura Municipal — Serviços urbanos, obras e cronogramas</a></li>
+        <li><a href="https://www.aguaesaneamento.org.br/municipios-e-saneamento/pr/santo-antonio-da-platina" target="_blank" rel="noopener noreferrer">Instituto Água e Saneamento — Indicadores de Santo Antônio da Platina</a></li>
+        <li><a href="https://infosanbas.org.br/municipio/santo-antonio-da-platina-pr/" target="_blank" rel="noopener noreferrer">Infosanbas — Panorama municipal de saneamento básico</a></li>
+        <li><a href="https://www.ipardes.pr.gov.br/Pagina/Base-de-Dados-do-Estado" target="_blank" rel="noopener noreferrer">IPARDES — Infraestrutura, energia e frota municipal</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Portal Geográfico, Histórico e Cultural de Santo Antônio da Platina — PR</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="localizacao.html">Localização</a>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
