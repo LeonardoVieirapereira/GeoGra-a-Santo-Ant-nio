@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal Geográfico e Histórico de Santo Antônio da Platina — PR">
+  <title>GeoGraça — Santo Antônio da Platina, PR</title>
+
+  <!-- Fontes Tipográficas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Mapa Interativo Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de Navegação Superior -->
+  <nav aria-label="Navegação principal">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i>
+      GeoGraça
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Início</a></li>
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li class="weather-dropdown">
+        <button
+          type="button"
+          id="weatherToggleBtn"
+          class="weather-btn"
+          aria-label="Personalizar tema visual"
+          aria-expanded="false"
+          aria-controls="weatherMenu"
+        >
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div id="weatherMenu" class="weather-menu" role="region" aria-label="Menu de temas">
+          <span class="weather-menu-title">Personalização</span>
+          <p class="weather-menu-note">Escolha o clima e as cores do portal.</p>
+          <button type="button" class="gg-theme-launcher">
+            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            Abrir painel de temas
+          </button>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Container Principal -->
+  <main class="container">
+    <header class="main-header">
+      <h1>GeoGraça</h1>
+      <p class="subtitle">Portal Geográfico e Histórico de Santo Antônio da Platina — PR</p>
+      <hr class="title-divider">
+    </header>
+
+    <!-- Banner de Destaque -->
+    <section class="banner-header gg-hero-upgraded" aria-label="Apresentação do município">
+      <span class="gg-hero-kicker">Norte Pioneiro do Paraná</span>
+      <h2>Território, Memória e Paisagem Platinense</h2>
+      <p>
+        Explore a formação histórica, o relevo de Terra Roxa, a hidrografia da Bacia do Rio das Cinzas
+        e os indicadores socioeconômicos de Santo Antônio da Platina.
+      </p>
+      <div class="gg-hero-tags">
+        <span class="gg-hero-tag"><i class="fa-solid fa-mountain-sun" aria-hidden="true"></i> Morro do Bim</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Emancipação: 1914</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-map-pin" aria-hidden="true"></i> 23°17'S • 50°04'O</span>
+      </div>
+    </section>
+
+    <!-- Atalhos Rápidos -->
+    <div class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#secoes-portal"><i class="fa-solid fa-compass" aria-hidden="true"></i> Seções do Portal</a>
+      <a href="#marcos-paisagens"><i class="fa-solid fa-images" aria-hidden="true"></i> Marcos e Paisagens</a>
+      <a href="#mapa-sede"><i class="fa-solid fa-map" aria-hidden="true"></i> Mapa da Sede</a>
+      <a href="#panorama-geral"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Panorama Geral</a>
+    </div>
+
+    <!-- Menu de Seções -->
+    <h2 id="secoes-portal" class="section-title">
+      <i class="fa-solid fa-compass" aria-hidden="true"></i>
+      Explore o Portal
+    </h2>
+    <div class="menu-grid">
+      <a href="historia.html" class="menu-card">
+        <i class="fa-solid fa-landmark" aria-hidden="true"></i>
+        <h3>História</h3>
+        <span>Origens, emancipação em 1914 e ciclo do café</span>
+      </a>
+      <a href="geografia.html" class="menu-card">
+        <i class="fa-solid fa-mountain" aria-hidden="true"></i>
+        <h3>Geografia</h3>
+        <span>Relevo, Terra Roxa, clima Cfa e hidrografia</span>
+      </a>
+      <a href="indicadores.html" class="menu-card">
+        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+        <h3>Indicadores</h3>
+        <span>Demografia, IDHM, educação, saúde e PIB</span>
+      </a>
+      <a href="infraestrutura.html" class="menu-card">
+        <i class="fa-solid fa-road" aria-hidden="true"></i>
+        <h3>Infraestrutura</h3>
+        <span>Logística BR-153, saneamento e energia</span>
+      </a>
+      <a href="localizacao.html" class="menu-card">
+        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+        <h3>Localização</h3>
+        <span>Coordenadas, limites e distâncias regionais</span>
+      </a>
+    </div>
+
+    <!-- Galeria de Marcos e Paisagens Reais de Santo Antônio da Platina -->
+    <h2 id="marcos-paisagens" class="section-title">
+      <i class="fa-solid fa-camera-retro" aria-hidden="true"></i>
+      Marcos e Paisagens
+    </h2>
+    <div class="photo-gallery">
+      <article class="gallery-card">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Bim.jpg?width=1000"
+          alt="Vista real de Santo Antônio da Platina com o Morro do Bim ao fundo"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div>
+          <h4>Morro do Bim</h4>
+          <p>
+            Principal marco geomorfológico de Santo Antônio da Platina, elevação basáltica
+            que domina o horizonte da cidade e preserva remanescentes de Mata Atlântica.
+          </p>
+        </div>
+      </article>
+
+      <article class="gallery-card">
+        <img
+          src="https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21095.jpg"
+          alt="Igreja Matriz e Praça Frei Cristóvão em Santo Antônio da Platina — PR (Acervo IBGE)"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src='https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21098.jpg';"
+        >
+        <div>
+          <h4>Igreja Matriz e Praça Frei Cristóvão</h4>
+          <p>
+            Marco zero e coração histórico do município (Acervo IBGE), ponto de encontro
+            da vida religiosa, cívica e cultural da comunidade platinense.
+          </p>
+        </div>
+      </article>
+
+      <article class="gallery-card">
+        <img
+          src="https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21094.jpg"
+          alt="Vista panorâmica da sede urbana de Santo Antônio da Platina — PR (Acervo IBGE)"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src='https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21098.jpg';"
+        >
+        <div>
+          <h4>Panorama da Sede Municipal</h4>
+          <p>
+            Vista aérea e urbana de Santo Antônio da Platina (Acervo IBGE), assentada sobre
+            as colinas do Terceiro Planalto entre os ribeirões Boi Pintado e Aldeia.
+          </p>
+        </div>
+      </article>
+
+      <article class="gallery-card">
+        <img
+          src="https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21098.jpg"
+          alt="Centro histórico e conjunto arquitetônico de Santo Antônio da Platina — PR (Acervo IBGE)"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src='https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21094.jpg';"
+        >
+        <div>
+          <h4>Centro Histórico Platinense</h4>
+          <p>
+            Núcleo comercial e residencial consolidado durante o ciclo do café no Norte
+            Pioneiro (Acervo IBGE), preservando a memória da emancipação de 1914.
+          </p>
+        </div>
+      </article>
+
+      <article class="gallery-card">
+        <img
+          src="https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21097.jpg"
+          alt="Logradouro e arquitetura institucional de Santo Antônio da Platina — PR (Acervo IBGE)"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src='https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR21096.jpg';"
+        >
+        <div>
+          <h4>Eixo Cívico e Urbano</h4>
+          <p>
+            Registro histórico dos espaços públicos e avenidas centrais (Acervo IBGE) que
+            estruturaram Santo Antônio da Platina como polo microrregional.
+          </p>
+        </div>
+      </article>
+
+      <article class="gallery-card">
+        <img
+          src="https://biblioteca.ibge.gov.br/visualizacao/fotografias/GEBIS%20-%20RJ/PR24448.jpg"
+          alt="Campos e relevo ondulado no município de Santo Antônio da Platina — PR (Acervo IBGE)"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null;this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Bim.jpg?width=1000';"
+        >
+        <div>
+          <h4>Campos e Terra Roxa</h4>
+          <p>
+            Paisagem rural de colinas onduladas e solos férteis originados do basalto
+            (Acervo IBGE), base da cafeicultura histórica e da agropecuária atual.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Mapa Leaflet -->
+    <h2 id="mapa-sede" class="section-title">
+      <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+      Mapa Interativo da Sede Municipal
+    </h2>
+    <div id="map-home" role="region" aria-label="Mapa interativo de Santo Antônio da Platina"></div>
+  </main>
+
+  <!-- Seção Editorial e Síntese de Dados -->
+  <section id="panorama-geral" class="gg-research-section" aria-labelledby="titulo-panorama">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">Síntese Territorial • Dados Oficiais</span>
+      <h2 id="titulo-panorama">Panorama de Santo Antônio da Platina</h2>
+      <p>
+        Indicadores fundamentais e eixos estruturantes do município no contexto do Norte Pioneiro paranaense.
+      </p>
+    </div>
+
+    <div class="gg-fact-grid">
+      <div class="gg-fact">
+        <span>População (Censo 2022)</span>
+        <strong>44.369</strong>
+        <small>Habitantes — IBGE</small>
+      </div>
+      <div class="gg-fact">
+        <span>Área Territorial</span>
+        <strong>720,385 km²</strong>
+        <small>Malha Municipal — IBGE</small>
+      </div>
+      <div class="gg-fact">
+        <span>IDHM</span>
+        <strong>0,718</strong>
+        <small>Alto Desenvolvimento — PNUD</small>
+      </div>
+      <div class="gg-fact">
+        <span>PIB per capita</span>
+        <strong>R$ 41.422,70</strong>
+        <small>Base 2023 — IBGE</small>
+      </div>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>Formação Histórica e Emancipação</h3>
+        <p>
+          Originado a partir de rotas tropeiras e do povoamento mineiro e paulista no século XIX,
+          o município conquistou autonomia política pela Lei Estadual nº 1.424 em 1914.
+        </p>
+      </article>
+
+      <article>
+        <h3>Relevo Basáltico e Terra Roxa</h3>
+        <p>
+          Situado no Terceiro Planalto Paranaense, apresenta colinas onduladas, destaque para o Morro do Bim
+          e solos profundos originados da decomposição do basalto.
+        </p>
+      </article>
+
+      <article>
+        <h3>Articulação Regional no Norte Pioneiro</h3>
+        <p>
+          Atua como polo de comércio, serviços e saúde microrregional, conectado estrategicamente
+          pela rodovia federal BR-153 aos estados de São Paulo e Paraná.
+        </p>
+      </article>
+    </div>
+
+    <div class="gg-source-box">
+      <h3>Fontes Institucionais</h3>
+      <ul>
+        <li>
+          <strong>IBGE Cidades:</strong>
+          <a href="https://cidades.ibge.gov.br/brasil/pr/santo-antonio-da-platina/panorama" target="_blank" rel="noopener noreferrer">
+            Panorama Municipal de Santo Antônio da Platina — PR
+          </a>
+        </li>
+        <li>
+          <strong>IPARDES:</strong> Caderno Estatístico do Município de Santo Antônio da Platina.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Explorador Cartográfico -->
+  <section class="gg-map-explorer" aria-labelledby="titulo-explorador-mapa">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">Cartografia e Referência Espacial</span>
+      <h2 id="titulo-explorador-mapa">Posição Geográfica no Paraná</h2>
+      <p>
+        Visualize o recorte cartográfico da área urbana e seus principais eixos de acesso rodoviário.
+      </p>
+    </div>
+
+    <div class="gg-map-frame">
+      <iframe
+        title="Mapa de Santo Antônio da Platina no OpenStreetMap"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-50.125%2C-23.325%2C-50.030%2C-23.265&amp;layer=mapnik&amp;marker=-23.2950%2C-50.0769"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <div class="gg-map-actions">
+      <a href="https://www.openstreetmap.org/?mlat=-23.2950&amp;mlon=-50.0769#map=13/-23.2950/-50.0769" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Ampliar no OpenStreetMap
+      </a>
+      <a href="localizacao.html">
+        <i class="fa-solid fa-route" aria-hidden="true"></i> Ver distâncias e acessos
+      </a>
+    </div>
+
+    <div class="gg-map-facts">
+      <article>
+        <strong>Coordenadas da Sede</strong>
+        <span>23° 17' 42" Sul • 50° 04' 37" Oeste</span>
+      </article>
+      <article>
+        <strong>Bacia Hidrográfica</strong>
+        <span>Bacia do Rio das Cinzas / Sub-bacia do Paranapanema</span>
+      </article>
+      <article>
+        <strong>Eixo Rodoviário</strong>
+        <span>BR-153 (Transbrasiliana) e rodovias estaduais integradas</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Portal Geográfico e Histórico de Santo Antônio da Platina — PR</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mapEl = document.getElementById('map-home');
+      if (mapEl && typeof L !== 'undefined') {
+        const map = L.map('map-home').setView([-23.295, -50.0769], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        L.marker([-23.295, -50.0769])
+          .addTo(map)
+          .bindPopup('<strong>Santo Antônio da Platina — PR</strong><br>Sede Municipal • Norte Pioneiro')
+          .openPopup();
+      }
+    });
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
