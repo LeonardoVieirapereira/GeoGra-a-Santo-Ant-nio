@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sobre o Projeto GeoGraça — Desenvolvido por Leonardo Vieira Pereira, Turma 1A-DS, sob orientação da Professora Graça Zurlo">
+  <title>Sobre o Projeto — GeoGraça</title>
+
+  <!-- Fontes Tipográficas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de Navegação Superior -->
+  <nav aria-label="Navegação principal">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i>
+      GeoGraça
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li><a href="sobre.html" class="active">Sobre</a></li>
+    </ul>
+
+    <!-- Botão de Três Pontinhos no Canto Superior Direito -->
+    <div class="weather-dropdown">
+      <button
+        type="button"
+        id="weatherToggleBtn"
+        class="weather-btn"
+        aria-label="Personalizar tema visual"
+        aria-expanded="false"
+        aria-controls="weatherMenu"
+      >
+        <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+      </button>
+      <div id="weatherMenu" class="weather-menu" role="region" aria-label="Menu de temas">
+        <span class="weather-menu-title">Personalização</span>
+        <p class="weather-menu-note">Escolha o clima e as cores do portal.</p>
+        <button type="button" class="gg-theme-launcher">
+          <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+          Abrir painel de temas
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container Principal -->
+  <main class="container">
+    <div class="gg-page-topbar">
+      <a href="index.html" class="btn-back">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Início
+      </a>
+      <div class="gg-breadcrumb" aria-label="Caminho da página">
+        <a href="index.html">Início</a>
+        <span>/</span>
+        <span>Sobre o Projeto</span>
+      </div>
+    </div>
+
+    <header class="main-header">
+      <h1>Sobre o Projeto</h1>
+      <p class="subtitle">Autoria, Turma e Orientação Pedagógica — Portal GeoGraça</p>
+      <hr class="title-divider">
+    </header>
+
+    <!-- Banner de Destaque -->
+    <section class="banner-header gg-hero-upgraded" aria-label="Apresentação da autoria do portal">
+      <span class="gg-hero-kicker">Projeto Acadêmico • Geografia &amp; Tecnologia</span>
+      <h2>GeoGraça: Conhecimento Territorial e Desenvolvimento Web</h2>
+      <p>
+        Portal interativo dedicado à história, geografia, indicadores e infraestrutura de
+        Santo Antônio da Platina — PR, desenvolvido como iniciativa educacional integrando
+        pesquisa geográfica e programação web.
+      </p>
+      <div class="gg-hero-tags">
+        <span class="gg-hero-tag"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Leonardo Vieira Pereira</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i> Turma 1A-DS</span>
+        <span class="gg-hero-tag"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i> Professora Graça Zurlo</span>
+      </div>
+    </section>
+
+    <!-- Atalhos Rápidos -->
+    <div class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#creditos-principais"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Ficha de Autoria</a>
+      <a href="#detalhes-projeto"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Sobre a Equipe e o Portal</a>
+      <a href="#tecnologias-fontes"><i class="fa-solid fa-code" aria-hidden="true"></i> Tecnologias e Fontes</a>
+    </div>
+
+    <!-- Identificação Principal -->
+    <h2 id="creditos-principais" class="section-title">
+      <i class="fa-solid fa-award" aria-hidden="true"></i>
+      Identificação e Créditos
+    </h2>
+
+    <div class="gg-fact-grid">
+      <div class="gg-fact">
+        <span>Autor e Desenvolvedor</span>
+        <strong>Leonardo Vieira Pereira</strong>
+        <small>Pesquisa, Conteúdo e Programação</small>
+      </div>
+      <div class="gg-fact">
+        <span>Turma</span>
+        <strong>1A-DS</strong>
+        <small>1º Ano A — Desenvolvimento de Sistemas</small>
+      </div>
+      <div class="gg-fact">
+        <span>Orientação Docente</span>
+        <strong>Professora Graça Zurlo</strong>
+        <small>Disciplina de Geografia</small>
+      </div>
+      <div class="gg-fact">
+        <span>Município Estudado</span>
+        <strong>Santo Antônio da Platina</strong>
+        <small>Norte Pioneiro — Paraná</small>
+      </div>
+    </div>
+
+    <!-- Navegação Rápida pelo Portal -->
+    <h2 class="section-title">
+      <i class="fa-solid fa-compass" aria-hidden="true"></i>
+      Seções Desenvolvidas no Portal
+    </h2>
+    <div class="menu-grid">
+      <a href="historia.html" class="menu-card">
+        <i class="fa-solid fa-landmark" aria-hidden="true"></i>
+        <h3>História</h3>
+        <span>Formação, emancipação e patrimônio</span>
+      </a>
+      <a href="geografia.html" class="menu-card">
+        <i class="fa-solid fa-mountain" aria-hidden="true"></i>
+        <h3>Geografia</h3>
+        <span>Relevo, Terra Roxa, clima e hidrografia</span>
+      </a>
+      <a href="indicadores.html" class="menu-card">
+        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+        <h3>Indicadores</h3>
+        <span>Dados demográficos, IDHM e economia</span>
+      </a>
+      <a href="infraestrutura.html" class="menu-card">
+        <i class="fa-solid fa-road" aria-hidden="true"></i>
+        <h3>Infraestrutura</h3>
+        <span>Rodovias, saneamento e serviços</span>
+      </a>
+      <a href="localizacao.html" class="menu-card">
+        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+        <h3>Localização</h3>
+        <span>Cartografia e distâncias regionais</span>
+      </a>
+    </div>
+  </main>
+
+  <!-- Seção Detalhada -->
+  <section id="detalhes-projeto" class="gg-research-section" aria-labelledby="titulo-sobre-equipe">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">Construção Acadêmica • Educação &amp; Inovação</span>
+      <h2 id="titulo-sobre-equipe">Sobre os Participantes e o Propósito</h2>
+      <p>
+        A união entre os estudos geográficos sobre o Norte Pioneiro do Paraná e as ferramentas
+        modernas de Desenvolvimento de Sistemas.
+      </p>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>Leonardo Vieira Pereira</h3>
+        <p>
+          Estudante da turma 1A-DS responsável pela idealização técnica, levantamento de dados
+          oficiais, estruturação das páginas, estilização responsiva e programação dos recursos
+          interativos do portal GeoGraça.
+        </p>
+      </article>
+
+      <article>
+        <h3>Turma 1A-DS</h3>
+        <p>
+          Turma do curso técnico de Desenvolvimento de Sistemas (1º Ano A), onde os fundamentos
+          de lógica de programação, HTML, CSS, JavaScript e arquitetura web são aplicados na
+          criação de soluções digitais educativas.
+        </p>
+      </article>
+
+      <article>
+        <h3>Professora Graça Zurlo</h3>
+        <p>
+          Professora orientadora de Geografia cujo incentivo ao estudo do espaço geográfico local
+          e à valorização de Santo Antônio da Platina inspirou diretamente o nome e os conteúdos
+          temáticos do portal GeoGraça.
+        </p>
+      </article>
+    </div>
+
+    <div id="tecnologias-fontes" class="gg-source-box">
+      <h3>Tecnologias e Fontes Utilizadas no Desenvolvimento</h3>
+      <ul>
+        <li>
+          <strong>Desenvolvimento Web:</strong> HTML5 semântico, CSS3 responsivo com temas atmosféricos dinâmicos e JavaScript interativo.
+        </li>
+        <li>
+          <strong>Dados Oficiais:</strong> Instituto Brasileiro de Geografia e Estatística (IBGE Cidades), IPARDES e Prefeitura Municipal de Santo Antônio da Platina.
+        </li>
+        <li>
+          <strong>Acervo Cartográfico e Fotográfico:</strong> Biblioteca Digital do IBGE, Wikimedia Commons e OpenStreetMap.
+        </li>
+      </ul>
+    </div>
+
+    <p class="gg-data-note">
+      <strong>Nota acadêmica:</strong> Projeto desenvolvido por <strong>Leonardo Vieira Pereira</strong> (Turma <strong>1A-DS</strong>)
+      sob orientação da <strong>Professora Graça Zurlo</strong>, com finalidade educativa e de divulgação científica sobre Santo Antônio da Platina — PR.
+    </p>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Leonardo Vieira Pereira • Turma 1A-DS • Professora Graça Zurlo</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+      <a href="sobre.html">Sobre</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
+</body>
+</html>
