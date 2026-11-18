@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leonardovieirapereira.github.io/GeoGra-a-Santo-Ant-nio/sitemap.xml
