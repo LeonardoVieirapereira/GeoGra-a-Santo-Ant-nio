@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima ao Vivo em Santo Antônio da Platina — GeoGraça</title>
+  <meta name="description" content="Acompanhe a temperatura, sensação térmica, umidade, vento e previsão do tempo ao vivo em Santo Antônio da Platina — PR.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fontes Tipográficas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Estilos Específicos do Painel Meteorológico -->
+  <style>
+    .gg-live-weather-box {
+      background: linear-gradient(135deg, #16221a 0%, #24382b 100%);
+      color: #f8f5ec;
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      border-radius: 18px;
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 14px 32px rgba(15, 24, 18, 0.16);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .gg-live-main {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .gg-live-icon {
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+      background: rgba(212, 175, 55, 0.14);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #f0d377;
+      flex-shrink: 0;
+    }
+
+    .gg-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0d377;
+      margin-bottom: 0.35rem;
+    }
+
+    .gg-live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.22);
+      animation: ggPulse 1.8s infinite;
+    }
+
+    @keyframes ggPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.7; }
+    }
+
+    .gg-live-temp {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.3rem, 5vw, 3.3rem);
+      font-weight: 800;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    .gg-live-desc {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #e5dec9;
+      margin-top: 0.35rem;
+    }
+
+    .gg-live-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.65rem;
+      text-align: right;
+    }
+
+    .gg-live-meta span {
+      font-size: 0.86rem;
+      color: #d6ceb8;
+    }
+
+    .gg-refresh-btn {
+      background: rgba(212, 175, 55, 0.18);
+      color: #f0d377;
+      border: 1px solid rgba(212, 175, 55, 0.48);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .gg-refresh-btn:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .gg-forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .gg-forecast-card {
+      background: var(--card-bg, #ffffff);
+      border: 1px solid var(--border-color, rgba(22, 34, 26, 0.12));
+      border-radius: 14px;
+      padding: 1.15rem 1rem;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .gg-forecast-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .gg-forecast-day {
+      font-weight: 800;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary-color, #1f3326);
+    }
+
+    .gg-forecast-date {
+      display: block;
+      font-size: 0.78rem;
+      opacity: 0.75;
+      margin-bottom: 0.65rem;
+    }
+
+    .gg-forecast-card i {
+      font-size: 1.75rem;
+      color: var(--accent-color, #b88917);
+      margin: 0.35rem 0 0.55rem;
+    }
+
+    .gg-forecast-cond {
+      font-size: 0.84rem;
+      font-weight: 600;
+      min-height: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gg-forecast-temps {
+      margin-top: 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .gg-forecast-temps .max {
+      color: #c2410c;
+    }
+
+    .gg-forecast-temps .min {
+      opacity: 0.7;
+      margin-left: 0.45rem;
+    }
+
+    .gg-forecast-rain {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: #0284c7;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .gg-live-meta {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação Superior -->
+  <nav aria-label="Navegação principal">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-earth-americas" aria-hidden="true"></i>
+      GeoGraça
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="historia.html">História</a></li>
+      <li><a href="geografia.html">Geografia</a></li>
+      <li><a href="clima.html" class="active">Clima</a></li>
+      <li><a href="indicadores.html">Indicadores</a></li>
+      <li><a href="infraestrutura.html">Infraestrutura</a></li>
+      <li><a href="localizacao.html">Localização</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+    </ul>
+
+    <!-- Botão de Três Pontinhos no Canto Superior Direito -->
+    <div class="weather-dropdown">
+      <button
+        type="button"
+        id="weatherToggleBtn"
+        class="weather-btn"
+        aria-label="Personalizar tema visual"
+        aria-expanded="false"
+        aria-controls="weatherMenu"
+      >
+        <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+      </button>
+      <div id="weatherMenu" class="weather-menu" role="region" aria-label="Menu de temas">
+        <span class="weather-menu-title">Personalização</span>
+        <p class="weather-menu-note">Escolha o clima e as cores do portal.</p>
+        <button type="button" class="gg-theme-launcher">
+          <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+          Abrir painel de temas
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container Principal -->
+  <main class="container">
+    <div class="gg-page-topbar">
+      <a href="index.html" class="btn-back">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Início
+      </a>
+      <nav class="gg-breadcrumb" aria-label="Caminho da página">
+        <a href="index.html">Início</a> <span>/</span> <strong>Clima ao Vivo</strong>
+      </nav>
+    </div>
+
+    <div class="banner-header" style="background-image: linear-gradient(rgba(22, 34, 26, 0.84), rgba(22, 34, 26, 0.84)), url('https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Bim.jpg?width=1200');">
+      <span class="gg-hero-kicker">MONITORAMENTO METEOROLÓGICO • TEMPO REAL</span>
+      <h1>CLIMA EM SANTO ANTÔNIO DA PLATINA</h1>
+      <p>Condições atmosféricas atualizadas ao vivo e previsão estendida para o Norte Pioneiro paranaense.</p>
+    </div>
+
+    <nav class="gg-quick-nav" aria-label="Atalhos desta página">
+      <a href="#tempo-agora"><i class="fa-solid fa-temperature-half" aria-hidden="true"></i> Tempo agora</a>
+      <a href="#previsao-dias"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Próximos 5 dias</a>
+      <a href="#caracteristicas-climaticas"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i> Clima Subtropical (Cfa)</a>
+    </nav>
+
+    <!-- Painel Principal ao Vivo -->
+    <h2 id="tempo-agora" class="section-title">
+      <i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i> Condições Atmosféricas Agora
+    </h2>
+
+    <section class="gg-live-weather-box" aria-live="polite">
+      <div class="gg-live-main">
+        <div class="gg-live-icon" id="weatherMainIcon">
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+        </div>
+        <div>
+          <div class="gg-live-badge">
+            <span class="gg-live-dot"></span>
+            <span>Ao Vivo • Sede Municipal (23°17'S, 50°04'O)</span>
+          </div>
+          <div class="gg-live-temp" id="liveTemp">--°C</div>
+          <div class="gg-live-desc" id="liveCondition">Carregando dados meteorológicos...</div>
+        </div>
+      </div>
+
+      <div class="gg-live-meta">
+        <span id="liveUpdatedAt">Sincronizando com estação virtual...</span>
+        <span id="liveLocalClock"><i class="fa-regular fa-clock" aria-hidden="true"></i> Horário de Brasília: --:--</span>
+        <button type="button" id="btnRefreshWeather" class="gg-refresh-btn">
+          <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Atualizar agora
+        </button>
+      </div>
+    </section>
+
+    <!-- Grade de Indicadores Meteorológicos -->
+    <div class="gg-fact-grid">
+      <article class="gg-fact">
+        <span>Sensação Térmica</span>
+        <strong id="liveApparent">--°C</strong>
+        <small>Conforto térmico estimado</small>
+      </article>
+      <article class="gg-fact">
+        <span>Umidade Relativa</span>
+        <strong id="liveHumidity">--%</strong>
+        <small>Teor de vapor d'água no ar</small>
+      </article>
+      <article class="gg-fact">
+        <span>Velocidade do Vento</span>
+        <strong id="liveWind">-- km/h</strong>
+        <small id="liveWindDir">Direção: --</small>
+      </article>
+      <article class="gg-fact">
+        <span>Precipitação Atual</span>
+        <strong id="livePrecip">-- mm</strong>
+        <small>Volume registrado na hora</small>
+      </article>
+      <article class="gg-fact">
+        <span>Cobertura de Nuvens</span>
+        <strong id="liveClouds">--%</strong>
+        <small>Nebulosidade observada</small>
+      </article>
+      <article class="gg-fact">
+        <span>Período do Dia</span>
+        <strong id="liveDayPeriod">--</strong>
+        <small>Fuso America/São_Paulo</small>
+      </article>
+    </div>
+
+    <!-- Previsão para 5 Dias -->
+    <h2 id="previsao-dias" class="section-title" style="margin-top: 2.2rem;">
+      <i class="fa-solid fa-calendar-week" aria-hidden="true"></i> Previsão para os Próximos 5 Dias
+    </h2>
+    <div id="forecastContainer" class="gg-forecast-grid">
+      <div class="gg-forecast-card">
+        <span class="gg-forecast-day">Carregando...</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Seção Geográfica sobre o Clima Local -->
+  <section id="caracteristicas-climaticas" class="gg-research-section">
+    <div class="gg-section-head">
+      <span class="gg-eyebrow">CLIMATOLOGIA • NORTE PIONEIRO DO PARANÁ</span>
+      <h2>O clima de Santo Antônio da Platina</h2>
+      <p>Entenda como a latitude, o relevo do Terceiro Planalto e as massas de ar moldam o tempo ao longo do ano.</p>
+    </div>
+
+    <div class="gg-info-grid">
+      <article>
+        <h3>🌡️ Classificação Climática Cfa</h3>
+        <p>Segundo a classificação de Köppen-Geiger, o município apresenta clima <strong>Subtropical Úmido Mesotérmico (Cfa)</strong>, caracterizado por verões quentes, chuvas bem distribuídas ao longo do ano e ausência de estação seca rigorosa.</p>
+      </article>
+      <article>
+        <h3>🌧️ Regime de Chuvas</h3>
+        <p>Os maiores volumes pluviométricos concentram-se entre a primavera e o verão (outubro a março), impulsionados pelo aquecimento convectivo e pela umidade trazida pela Zona de Convergência do Atlântico Sul (ZCAS).</p>
+      </article>
+      <article>
+        <h3>❄️ Frentes Frias e Inverno</h3>
+        <p>No outono e no inverno, o avanço da <strong>Massa Polar Atlântica (mPa)</strong> provoca quedas acentuadas de temperatura, manhãs frias nos vales dos ribeirões e ocorrência ocasional de geadas nas áreas rurais.</p>
+      </article>
+    </div>
+
+    <div class="gg-source-box">
+      <h3>Fontes Meteorológicas e Climáticas</h3>
+      <ul>
+        <li><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo — Dados meteorológicos de alta resolução em tempo real</a></li>
+        <li><a href="https://portal.inmet.gov.br/" target="_blank" rel="noopener noreferrer">INMET — Instituto Nacional de Meteorologia</a></li>
+        <li><a href="https://www.simepar.br/" target="_blank" rel="noopener noreferrer">SIMEPAR — Sistema de Tecnologia e Monitoramento Ambiental do Paraná</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="gg-footer">
+    <div class="gg-footer-brand">
+      <strong>GeoGraça</strong>
+      <p>Leonardo Vieira Pereira • Turma 1A-DS • Professora Graça Zurlo</p>
+    </div>
+    <div class="gg-footer-links">
+      <a href="index.html">Início</a>
+      <a href="historia.html">História</a>
+      <a href="geografia.html">Geografia</a>
+      <a href="clima.html">Clima</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="infraestrutura.html">Infraestrutura</a>
+      <a href="localizacao.html">Localização</a>
+      <a href="sobre.html">Sobre</a>
+    </div>
+  </footer>
+
+  <!-- Script de Clima ao Vivo -->
+  <script>
+    (function () {
+      const LAT = -23.2950;
+      const LON = -50.0769;
+      const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FSao_Paulo&forecast_days=5`;
+
+      function interpretarCodigoClima(code, isDay = 1) {
+        const mapa = {
+          0: { texto: 'Céu limpo', icone: isDay ? 'fa-sun' : 'fa-moon' },
+          1: { texto: 'Predominantemente limpo', icone: isDay ? 'fa-sun' : 'fa-moon' },
+          2: { texto: 'Parcialmente nublado', icone: isDay ? 'fa-cloud-sun' : 'fa-cloud-moon' },
+          3: { texto: 'Céu encoberto (nublado)', icone: 'fa-cloud' },
+          45: { texto: 'Nevoeiro / Neblina', icone: 'fa-smog' },
+          48: { texto: 'Nevoeiro com geada', icone: 'fa-smog' },
+          51: { texto: 'Garoa leve', icone: 'fa-cloud-rain' },
+          53: { texto: 'Garoa moderada', icone: 'fa-cloud-rain' },
+          55: { texto: 'Garoa intensa', icone: 'fa-cloud-rain' },
+          61: { texto: 'Chuva fraca', icone: 'fa-cloud-showers-heavy' },
+          63: { texto: 'Chuva moderada', icone: 'fa-cloud-showers-heavy' },
+          65: { texto: 'Chuva forte', icone: 'fa-cloud-showers-heavy' },
+          80: { texto: 'Pancadas de chuva leves', icone: 'fa-cloud-sun-rain' },
+          81: { texto: 'Pancadas de chuva moderadas', icone: 'fa-cloud-sun-rain' },
+          82: { texto: 'Pancadas de chuva fortes', icone: 'fa-cloud-showers-heavy' },
+          95: { texto: 'Tempestade com trovoadas', icone: 'fa-cloud-bolt' },
+          96: { texto: 'Tempestade com granizo leve', icone: 'fa-cloud-bolt' },
+          99: { texto: 'Tempestade severa com granizo', icone: 'fa-cloud-bolt' }
+        };
+        return mapa[code] || { texto: 'Condição variável', icone: 'fa-cloud-sun' };
+      }
+
+      function direcaoVento(graus) {
+        const pontos = ['Norte (N)', 'Nordeste (NE)', 'Leste (L)', 'Sudeste (SE)', 'Sul (S)', 'Sudoeste (SO)', 'Oeste (O)', 'Noroeste (NO)'];
+        const idx = Math.round(graus / 45) % 8;
+        return pontos[idx];
+      }
+
+      function atualizarRelogio() {
+        const agora = new Date();
+        const hora = agora.toLocaleTimeString('pt-BR', {
+          timeZone: 'America/Sao_Paulo',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        const el = document.getElementById('liveLocalClock');
+        if (el) {
+          el.innerHTML = `<i class="fa-regular fa-clock" aria-hidden="true"></i> Horário de Brasília: ${hora}`;
+        }
+      }
+
+      async function carregarClima() {
+        const btn = document.getElementById('btnRefreshWeather');
+        if (btn) btn.disabled = true;
+
+        try {
+          const resp = await fetch(API_URL);
+          if (!resp.ok) throw new Error('Falha na resposta meteorológica');
+          const dados = await resp.json();
+
+          const atual = dados.current;
+          const info = interpretarCodigoClima(atual.weather_code, atual.is_day);
+
+          document.getElementById('weatherMainIcon').innerHTML = `<i class="fa-solid ${info.icone}" aria-hidden="true"></i>`;
+          document.getElementById('liveTemp').textContent = `${Math.round(atual.temperature_2m)}°C`;
+          document.getElementById('liveCondition').textContent = info.texto;
+          document.getElementById('liveApparent').textContent = `${Math.round(atual.apparent_temperature)}°C`;
+          document.getElementById('liveHumidity').textContent = `${atual.relative_humidity_2m}%`;
+          document.getElementById('liveWind').textContent = `${atual.wind_speed_10m.toFixed(1)} km/h`;
+          document.getElementById('liveWindDir').textContent = `Direção: ${direcaoVento(atual.wind_direction_10m)}`;
+          document.getElementById('livePrecip').textContent = `${atual.precipitation.toFixed(1)} mm`;
+          document.getElementById('liveClouds').textContent = `${atual.cloud_cover}%`;
+          document.getElementById('liveDayPeriod').textContent = atual.is_day ? 'Dia' : 'Noite';
+
+          const horaAtualizacao = new Date().toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          document.getElementById('liveUpdatedAt').textContent = `Atualizado hoje às ${horaAtualizacao}`;
+
+          // Previsão de 5 dias
+          const daily = dados.daily;
+          const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+          let htmlDias = '';
+
+          for (let i = 0; i < daily.time.length; i++) {
+            const dataObj = new Date(daily.time[i] + 'T12:00:00');
+            const nomeDia = i === 0 ? 'Hoje' : diasSemana[dataObj.getDay()];
+            const dataFmt = dataObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+            const climaDia = interpretarCodigoClima(daily.weather_code[i], 1);
+            const probChuva = daily.precipitation_probability_max[i] ?? 0;
+
+            htmlDias += `
+              <article class="gg-forecast-card">
+                <div class="gg-forecast-day">${nomeDia}</div>
+                <span class="gg-forecast-date">${dataFmt}</span>
+                <i class="fa-solid ${climaDia.icone}" aria-hidden="true"></i>
+                <div class="gg-forecast-cond">${climaDia.texto}</div>
+                <div class="gg-forecast-temps">
+                  <span class="max">${Math.round(daily.temperature_2m_max[i])}°</span>
+                  <span class="min">${Math.round(daily.temperature_2m_min[i])}°</span>
+                </div>
+                <div class="gg-forecast-rain">
+                  <i class="fa-solid fa-droplet" aria-hidden="true"></i> ${probChuva}% chuva
+                </div>
+              </article>
+            `;
+          }
+
+          document.getElementById('forecastContainer').innerHTML = htmlDias;
+        } catch (erro) {
+          document.getElementById('weatherMainIcon').innerHTML = '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>';
+          document.getElementById('liveCondition').textContent = 'Não foi possível carregar o clima agora. Verifique sua conexão.';
+          document.getElementById('liveUpdatedAt').textContent = 'Erro de conexão';
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        atualizarRelogio();
+        setInterval(atualizarRelogio, 1000);
+        carregarClima();
+
+        const btn = document.getElementById('btnRefreshWeather');
+        if (btn) btn.addEventListener('click', carregarClima);
+      });
+    })();
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
